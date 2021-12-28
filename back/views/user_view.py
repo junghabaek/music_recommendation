@@ -1,6 +1,7 @@
 from flask import Blueprint, json, request, session, jsonify
 from models import Users, db
 from werkzeug.security import check_password_hash, generate_password_hash
+import re
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
