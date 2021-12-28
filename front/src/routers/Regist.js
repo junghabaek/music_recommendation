@@ -8,7 +8,6 @@ const Regist = ({ history }) => {
     const [Password2, setPassword2] = useState("");
     const [passwordError, setPasswordError] = useState(false);
     const [Name, setName] = useState("");
-    const [inputOtt, setInputOtt] = useState([]);
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value);
@@ -34,25 +33,37 @@ const Regist = ({ history }) => {
         console.log("Email", Email);
         console.log("Password", Password);
 
+        let ott = [];
+        const inputs = document.querySelectorAll(".ott");
+        console.log(inputs);
+        // querySelectorAll로 가져오면 list가 아니라 nodelist형태라 list로 바꿔준 코드입니다.
+        // 근데 생각해보니 nodelist는 forEach문법을 사용할 수 있어서 안바꿔도 될것같아요
+        const inputs_array = Array.prototype.slice.call(inputs);
+
+        inputs_array.forEach((el) => {
+            if (el.checked === true) {
+                ott.push(el.value);
+            }
+            console.log(el.checked);
+            console.log(el.value);
+        });
+
         let body = {
             email: Email,
             password: Password,
             password2: Password2,
             userName: Name,
+            ott: ott,
         };
 
-        axios.post("/users/signup", body).then((res) => {
-            console.log(res);
-            console.log("res.data.userId :: ", res.data.user_id);
-            console.log("res.data.result :: ", res.data.result);
-        });
-        alert("안녕하세요");
+        console.log("바디정보", body);
+        // axios.post("/users/signup", body).then((res) => {
+        //     console.log(res);
+        //     console.log("res.data.userId :: ", res.data.user_id);
+        //     console.log("res.data.result :: ", res.data.result);
+        // });
+        // alert("안녕하세요");
     };
-
-    const onClickOtt = (e) => {
-        setInputOtt((cur) => [e.target.value, ...cur]);
-    };
-    console.log(inputOtt);
 
     return (
         <div
@@ -94,31 +105,48 @@ const Regist = ({ history }) => {
                     </div>
                 )}
                 <div className={style.checkbox}>
-                    <label htmlFor="Netflix">Netflix</label>
-                    <input
-                        id="Netflix"
-                        value="Netflix"
-                        type="checkbox"
-                        onClick={onClickOtt}
-                    />
+                    <label htmlFor="Netflix">
+                        Netflix
+                        <input
+                            id="Netflix"
+                            value="Netflix"
+                            type="checkbox"
+                            name="ott"
+                            className="ott"
+                        />
+                    </label>
                     <label htmlFor="disney">
                         디즈니+
                         <input
                             id="disney"
                             value="disney"
                             type="checkbox"
-                            onClick={onClickOtt}
+                            name="ott"
+                            className="ott"
                         />
                     </label>
                     <label>
                         훌루
-                        <input type="checkbox" />
+                        <input
+                            id="hulu"
+                            value="hulu"
+                            type="checkbox"
+                            name="ott"
+                            className="ott"
+                        />
                     </label>
                     <label>
                         아마존프라임
-                        <input type="checkbox" />
+                        <input
+                            id="prime"
+                            value="prime"
+                            type="checkbox"
+                            name="ott"
+                            className="ott"
+                        />
                     </label>
                 </div>
+
                 <br />
                 <button type="submit" disabled={!Password || !Password2}>
                     회원 가입
