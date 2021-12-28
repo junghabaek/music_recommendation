@@ -1,10 +1,31 @@
 from flask import Blueprint, json, request, session, jsonify
-from models import Users
+from models import Users, db
 from werkzeug.security import check_password_hash, generate_password_hash
 import re
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
+
+def pwdValidation(pwd):
+    special_char = ['!', '@', '#', '$', '%', '^', '&', '+', '=']
+
+    if len(pwd) < 8:
+        #('비밀번호는 최소 8자 이상이어야 합니다.')
+        return False
+    elif re.search('[0-9]+', pwd) is None:
+        #('비밀번호는 최소 1개 이상의 숫자가 포함되어야 합니다.')
+        return False
+    elif re.search('[a-z]+', pwd) is None and re.search('[A-Z]+', pwd) is None:
+        #('비밀번호는 최소 1개 이상의 영문자가 포함되어야 합니다.')
+        return False
+    elif not any(c in special_char for c in pwd):
+        # (
+        #     "비밀번호는 최소 1개 이상의 '!', '@', '#', '$', '%', '^', '&', '+', '=' 특수문자가 포함되어야 합니다.")
+        return False
+    return True
+
+
+#로그인 구현
 @bp.route('/login', methods=["POST"])
 def login():
   try:
@@ -57,3 +78,56 @@ def login():
 
   except:
     return jsonify('에러에요~~')
+
+
+#회원가입 구현
+@bp.route('/signup', methods=["POST"])
+def signup():
+    try:
+        # result에 받은 데이터를 저장합니다.
+        result = request.get_json()
+        email = result['email']
+        password = result['password']
+        #password2 = result['password2']
+        hash_pw = generate_password_hash(password)
+        nickname = result['nickname']
+        #Netflix = True if result['Netflix'] is not None else False
+
+        #이메일이 데이터베이스에 있다면 not None 반환,
+        # 이메일이 데이터베이스에 없다면 None 반환
+        already_existing_email = Users.query.filter(
+            Users.email == email).first()
+
+        # 이미 가입된 이메일이라면
+        if already_existing_email is not None:
+            response = {
+                'result': 'existing_email',
+                'info': '이미 가입된 이메일입니다.'
+            }
+
+        # 패스워드가 포맷에 맞지 않는다면
+
+        elif pwdValidation(password):
+            response = {
+                'result': 'pw_format_error',
+                'info': '비밀번호 형식에 맞지 않습니다.'
+            }
+
+        # 모든 검사를 통과했다면
+
+        else:
+
+            #Users table에 회원 row 추가합니다.
+            db.session.add(Users(email, nickname, hash_pw,
+                           Netflix, Disney, Prime, Hulu))
+            db.commit()
+
+            response = {
+                'result': 'sign_up_success',
+                'info': '회원가입이 성공적으로 됐습니다.'
+            }
+
+        return jsonify(response)
+
+    except:
+        return jsonify('에러에요~~')
