@@ -51,11 +51,7 @@ const Login = ({ history }) => {
 
         setInputId("");
         setInputPwd("");
-        Setlogin((cur) => !cur);
         console.log(login);
-        if (login === true) {
-            history.push("/");
-        }
     };
     // res.data = 닉네임
     return (
@@ -90,7 +86,13 @@ const Login = ({ history }) => {
                         placeholder="비밀번호를 입력해주세요"
                     />
                     <br></br>
-                    <button className={style.btn}> 로 그 인 </button>
+                    <button
+                        className={style.btn}
+                        disabled={!inputId || !inputPwd}
+                    >
+                        {" "}
+                        로 그 인{" "}
+                    </button>
                     <Link to="/regist">회원가입</Link>
                 </div>
             </form>
