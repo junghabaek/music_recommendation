@@ -10,11 +10,6 @@ const Login = ({ history }) => {
     const [inputPwd, setInputPwd] = useState("");
     const [login, Setlogin] = useRecoilState(loginState); //false
 
-    // if (inputId === "" || inputPwd === "") {
-    //     window.alert("아이디와 비밀번호를 입력해주세요.");
-    //     return;
-    // }
-
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -58,9 +53,9 @@ const Login = ({ history }) => {
         setInputPwd("");
         Setlogin((cur) => !cur);
         console.log(login);
-        // if (login === true) {
-        //     history.push("/");
-        // }
+        if (login === true) {
+            history.push("/");
+        }
     };
     // res.data = 닉네임
     return (

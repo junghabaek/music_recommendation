@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Regist = () => {
+const Regist = ({ history }) => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [Name, setName] = useState("");
@@ -40,6 +40,14 @@ const Regist = () => {
             console.log("res.data.userId :: ", res.data.user_id);
             console.log("res.data.result :: ", res.data.result);
         });
+        alert({
+            open: true,
+            title: "Confirm",
+            message: "Join Success!",
+            callback: function () {
+                history.push("/login");
+            },
+        });
     };
 
     return (
@@ -56,26 +64,24 @@ const Regist = () => {
                 style={{ display: "flex", flexDirection: "column" }}
                 onSubmit={onSubmitHandler}
             >
+                <br />
+                <h1>회원가입을 해봅시다.</h1>
                 <label>Email</label>
                 <input type="email" value={Email} onChange={onEmailHandler} />
-
                 <label>Name</label>
                 <input type="text" value={Name} onChange={onNameHandler} />
-
                 <label>Password</label>
                 <input
                     type="password"
                     value={Password}
                     onChange={onPasswordHandler}
                 />
-
                 <label>Confirm Password</label>
                 <input
                     type="password"
                     value={ConfirmPassword}
                     onChange={onConfirmPasswordHandler}
                 />
-
                 <br />
                 <button type="submit">회원 가입</button>
             </form>
