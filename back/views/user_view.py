@@ -86,20 +86,37 @@ def logout():
 #회원가입 구현
 @bp.route('/signup', methods=["POST"])
 def signup():
-    try:
+    # try:
         # result에 받은 데이터를 저장합니다.
         result = request.get_json()
         email = result['email']
         password = result['password']
         #password2 = result['password2']
         hash_pw = generate_password_hash(password)
-        nickname = result['nickname']
-        #Netflix = True if result['Netflix'] is not None else False
+        nickname = result['userName']
+        ott = result['ott']
 
+        # ott 정보넣기
+        Netflix = 0
+        Disney = 0
+        Prime = 0
+        Hulu = 0
+        for arg in ott:
+          if arg == 'Netflix':
+            Netflix = 1
+          elif arg == 'disney':
+            Disney = 1
+          elif arg == 'prime':
+            Prime = 1
+          else:
+            Hulu = 1
+
+        #Netflix = True if result['Netflix'] is not None else False
+        print(result)
         #이메일이 데이터베이스에 있다면 not None 반환,
         # 이메일이 데이터베이스에 없다면 None 반환
-        already_existing_email = Users.query.filter(
-            Users.email == email).first()
+
+        already_existing_email = Users.query.filter(Users.email == email).first()
 
         # 이미 가입된 이메일이라면
         if already_existing_email is not None:
@@ -121,9 +138,9 @@ def signup():
         else:
 
             #Users table에 회원 row 추가합니다.
-            db.session.add(Users(email, nickname, hash_pw,
-                           Netflix, Disney, Prime, Hulu))
-            db.commit()
+
+            db.session.add(Users(email, nickname, hash_pw, Netflix, Disney, Prime, Hulu))
+            db.session.commit()
 
             response = {
                 'result': 'sign_up_success',
@@ -132,6 +149,6 @@ def signup():
 
         return jsonify(response)
 
-    except:
-        return jsonify('에러에요~~')
+    # except:
+    #     return jsonify('에러에요~~')
 

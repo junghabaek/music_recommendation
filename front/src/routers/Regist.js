@@ -57,12 +57,12 @@ const Regist = ({ history }) => {
         };
 
         console.log("바디정보", body);
-        // axios.post("/users/signup", body).then((res) => {
-        //     console.log(res);
-        //     console.log("res.data.userId :: ", res.data.user_id);
-        //     console.log("res.data.result :: ", res.data.result);
-        // });
-        // alert("안녕하세요");
+        axios.post("/users/signup", body).then((res) => {
+            console.log(res);
+            console.log("res.data.userId :: ", res.data.user_id);
+            console.log("res.data.result :: ", res.data.result);
+        });
+        alert("안녕하세요");
     };
 
     return (
