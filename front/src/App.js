@@ -6,6 +6,7 @@ import Home from "./routers/Home";
 import Login from "./routers/Login";
 import Service from "./routers/Service";
 import Regist from "./routers/Regist";
+import MusicGenre from "./component/MusicGenre";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/regist" component={Regist} />
                 <Route path="/service" component={Service} />
+                <Route path="/MusicGenre" component={MusicGenre} />
             </Switch>
         </Router>
     );

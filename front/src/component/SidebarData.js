@@ -14,8 +14,8 @@ export const SidebarData = [
         cName: "nav-text",
     },
     {
-        title: "About",
-        path: "/About",
+        title: "영화추천",
+        path: "/service",
         icon: <BsIcons.BsFillInfoCircleFill />,
         cName: "nav-text",
     },
