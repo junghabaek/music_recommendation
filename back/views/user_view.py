@@ -139,7 +139,7 @@ def signup():
 
             #Users table에 회원 row 추가합니다.
 
-            db.session.add(Users(email, nickname, password, Netflix, Disney, Prime, Hulu))
+            db.session.add(Users(email, nickname, hash_pw, Netflix, Disney, Prime, Hulu))
             db.session.commit()
 
             response = {
