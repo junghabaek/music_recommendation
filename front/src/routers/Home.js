@@ -1,7 +1,16 @@
 import React from "react";
+import { genreState } from "../state/atoms";
+import { useRecoilState } from "recoil";
 
 const Home = ({ history }) => {
+    const [genre, setGenre] = useRecoilState(genreState);
+
     const onClick = () => {
+        setGenre({
+            genre: "",
+            music_genre: "",
+        });
+
         history.push("/service");
     };
 

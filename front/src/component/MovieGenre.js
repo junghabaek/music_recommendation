@@ -1,8 +1,11 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { genreState } from "../state/atoms";
+import { AudioPlayerProvider } from "react-use-audio-player";
+import MusicPlay from "./MusicPlay";
+import Always from "../routers/Always.mp3";
 
-const MovieGenre = () => {
+const MovieGenre = ({ setChangeGenre }) => {
     const Colors = [
         { name: "RED", hex: "#ffb598" },
         { name: "ORANGE", hex: "#ffdcaa" },
@@ -23,6 +26,10 @@ const MovieGenre = () => {
 
     return (
         <div>
+            <h1>🎞영화장르 선택입니다.</h1>
+            <AudioPlayerProvider>
+                <MusicPlay file={Always} api={null} />
+            </AudioPlayerProvider>
             {Colors.map((color) => (
                 <div key={color.name}>
                     <input
@@ -36,6 +43,13 @@ const MovieGenre = () => {
                     <label htmlFor={color.name}>{color.name}</label>
                 </div>
             ))}
+            <button
+                onClick={() => {
+                    setChangeGenre(false);
+                }}
+            >
+                음악장르 선택으로
+            </button>
         </div>
     );
 };
