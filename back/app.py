@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:root@localhost:3306/data_project"
+app.secret_key = "root"
 
 app.register_blueprint(user_view.bp)
 app.register_blueprint(main_service.bp)
