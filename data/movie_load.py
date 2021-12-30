@@ -13,7 +13,7 @@ db_connection = pymysql.connect(
 con = db_connection
 cur = con.cursor(pymysql.cursors.DictCursor)
 
-with open('modified_movie.csv', encoding='utf-8') as datas:
+with open('./../data/jungha_modified_movie.csv', encoding='utf-8') as datas:
     records = csv.DictReader(datas)
     result = [(w['ID'], w['Title'], w['Year'], w['Directors'], w['music_director'],
                w['IMDb'], w['Netflix'], w['Hulu'], w['Prime Video'], w['Disney+'], w['Country'],  w['Language'], w['Runtime'], w['Age'], w['poster']) for w in records]
