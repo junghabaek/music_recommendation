@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useRecoilState } from "recoil";
-import { genreState } from "../state/atoms";
+import { genreState, filterMovieState } from "../state/atoms";
+import axios from "axios";
 
-const MusicGenre = ({ history, setChangeGenre }) => {
+const MusicGenre = ({ onPrev, onNext }) => {
     const [genre, setGenre] = useRecoilState(genreState);
+    const [movieData, setMovieData] = useRecoilState(filterMovieState);
     const [input, setInput] = useState();
 
     function valuetext(value) {
@@ -30,16 +32,22 @@ const MusicGenre = ({ history, setChangeGenre }) => {
         });
     };
 
-    const onClickHandler = (e) => {
+    const onClickHandler = async (e) => {
         setGenre({
             ...genre,
             music_genre: input,
         });
-    };
 
+        //axios post
+        const res = await axios
+            .post(null)
+            .then((res) => setMovieData(res.data))
+            .catch((e) => console.log(e))
+            .then(() => onNext());
+    };
     console.log(input);
     useEffect(() => {
-        console.log("user 입력 데이터   ", genre);
+        console.log("user 입력 데이터   ", genre.music_genre["valence"]);
     }, [genre]);
 
     return (
@@ -60,17 +68,12 @@ const MusicGenre = ({ history, setChangeGenre }) => {
                             max={100}
                             onChange={onChangeHandle}
                             name={mg}
+                            checked={genre.music_genre[mg]}
                         />
                     </div>
                 ))}
             </Box>
-            <button
-                onClick={(e) => {
-                    setChangeGenre((cur) => !cur);
-                }}
-            >
-                뒤로가기 버튼
-            </button>
+            <button onClick={onPrev}>뒤로가기 버튼</button>
             <button disabled={!input} onClick={onClickHandler}>
                 좋아하는 영화 선택으로
             </button>

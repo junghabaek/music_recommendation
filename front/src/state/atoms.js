@@ -6,9 +6,11 @@ export const loginState = atom({
 });
 
 export const genreState = atom({
-    key: "login",
-    default: {
-        genre: "",
-        music_genre: "",
-    },
+    key: "genre",
+    default: {},
+});
+
+export const filterMovieState = atom({
+    key: "filterMovie",
+    default: [],
 });

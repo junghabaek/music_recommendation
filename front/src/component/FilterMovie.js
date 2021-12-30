@@ -3,7 +3,7 @@ import axios from "axios";
 
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
 
-const FilterMovie = () => {
+const FilterMovie = ({ onPrev, onNext }) => {
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     useEffect(() => {
@@ -24,7 +24,19 @@ const FilterMovie = () => {
 
     console.log(movies);
 
-    return <div></div>;
+    return (
+        <div>
+            {loading ? (
+                <h1>loading</h1>
+            ) : (
+                <div>
+                    <h1>사용자 영화선택 페이지</h1>
+                    <button onClick={onPrev}>뒤로가기 버튼</button>
+                    <button onClick={onNext}>좋아하는 영화 선택으로</button>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default FilterMovie;
