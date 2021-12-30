@@ -32,7 +32,7 @@ class Movies(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
   movie_title = db.Column(db.String(150), nullable=True)
   movie_year = db.Column(db.Integer, nullable=True)
-  movie_director = db.Column(db.String(150), nullable=True)
+  movie_director = db.Column(db.Text, nullable=True)
   sound_director = db.Column(db.String(150), nullable=True)
   imdb = db.Column(db.Float)
   Netflix = db.Column(db.Boolean)
@@ -63,26 +63,44 @@ class Favorites (db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
   user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
   movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
   def __init__(self, user_id, movie_id):
       self.user_id = user_id
       self.movie_id = movie_id
 
 
-# 여기는 아직은 옵셔널입니다
-'''
-class Comments (db.Model):
-  __tablename__ = "Comments"
+class Genres(db.Model):
+  __tablename__ = "Genres"
+
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-  user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
   movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
-  comment=db.Column(db.Text(), nullable=False)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  genre = db.Column(db.String(30), nullable=False)
+  genre_id = db.Column(db.Integer, nullable=False)
 
-  def __init__(self, user_id, movie_id, comment, time):
-      self.user_id = user_id
-      self.movie_id = movie_id
-      self.comment = comment
+  def __init__(self, movie_id, genre, genre_id):
+    self.movie_id = movie_id
+    self.genre = genre
+    self.genre_id = genre_id
 
-'''
+
+
+
+
+# 여기는 아직은 옵셔널입니다
+
+# class Comments (db.Model):
+#   __tablename__ = "Comments"
+#   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+#   user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
+#   movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
+#   comment=db.Column(db.Text(), nullable=False)
+#   created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+#   def __init__(self, user_id, movie_id, comment, time):
+#       self.user_id = user_id
+#       self.movie_id = movie_id
+#       self.comment = comment
+
+
