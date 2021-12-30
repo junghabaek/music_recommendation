@@ -30,16 +30,22 @@ class Movies(db.Model):
   __tablename__ = "Movies"
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-  movie_title = db.Column(db.String(150), nullable=False)
-  movie_director = db.Column(db.String(150), nullable=False)
-  sound_director = db.Column(db.String(150), nullable=False)
-  movie_description = db.Column(db.Text(), nullable=True)
-  likes = db.Column(db.Integer, default=0)
-  genre1 = db.Column(db.String(30), nullable=True)
-  genre2 = db.Column(db.String(30), nullable=True)
-  genre3 = db.Column(db.String(30), nullable=True)
-  genre4 = db.Column(db.String(30), nullable=True)
-  img_url = db.Column(db.String(200), nullable=True)
+  movie_title = db.Column(db.String(150), nullable=True)
+  movie_year = db.Column(db.Integer, nullable=True)
+  movie_director = db.Column(db.String(150), nullable=True)
+  sound_director = db.Column(db.String(150), nullable=True)
+  imdb = db.Column(db.Float)
+  Netflix = db.Column(db.Boolean)
+  Hulu = db.Column(db.Boolean)
+  Prime = db.Column(db.Boolean)
+  Disney = db.Column(db.Boolean)
+  country=db.Column(db.String(150), nullable=True)
+  Language = db.Column(db.String(150), nullable=True)
+  runtime= db.Column(db.String(10), nullable=True)
+  movie_age_rating = db.Column(db.String(10), nullable=True)
+  poster_url = db.Column(db.String(200), nullable=True)
+  like_count = db.Column(db.Integer, default=0)
+
 
 
 class Songs(db.Model):
