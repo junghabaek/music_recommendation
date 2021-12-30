@@ -5,8 +5,8 @@ from flask import Blueprint, json, request, session, jsonify
 bp = Blueprint('mypage', __name__, url_prefix='/mypage')
 
 #user_id는 get으로 받아온 값으로 추후에 query에 이용
-@bp.route('/{user_id}', methods=['GET'])
-def showData():
+@bp.route('/<int:user_id>', methods=['GET'])
+def showData(user_id):
     
     response = {
         'id' : 'movie_id',
