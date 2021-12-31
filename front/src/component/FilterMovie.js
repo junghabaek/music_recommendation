@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import GridCards from "./GridCards";
+import { Col, Row } from "antd";
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
 
 const FilterMovie = ({ onPrev, onNext }) => {
@@ -31,6 +32,20 @@ const FilterMovie = ({ onPrev, onNext }) => {
             ) : (
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
+                    <div>
+                        <Row gutter={[16, 16]}>
+                            {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
+                            {movies &&
+                                movies.map((movie, index) => (
+                                    <React.Fragment key={index}>
+                                        <GridCards
+                                            image={movie.medium_cover_image}
+                                            movieName={movie.title}
+                                        />
+                                    </React.Fragment>
+                                ))}
+                        </Row>
+                    </div>
                     <button onClick={onPrev}>뒤로가기 버튼</button>
                     <button onClick={onNext}>좋아하는 영화 선택으로</button>
                 </div>

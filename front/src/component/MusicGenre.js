@@ -47,7 +47,7 @@ const MusicGenre = ({ onPrev, onNext }) => {
     };
     console.log(input);
     useEffect(() => {
-        console.log("user 입력 데이터   ", genre.music_genre["valence"]);
+        console.log(genre);
     }, [genre]);
 
     return (
@@ -68,7 +68,6 @@ const MusicGenre = ({ onPrev, onNext }) => {
                             max={100}
                             onChange={onChangeHandle}
                             name={mg}
-                            checked={genre.music_genre[mg]}
                         />
                     </div>
                 ))}

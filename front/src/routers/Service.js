@@ -1,4 +1,3 @@
-import { Redirect, Switch, Route } from "react-router-dom";
 import MovieGenre from "../component/MovieGenre";
 import MusicGenre from "../component/MusicGenre";
 import FilterMovie from "../component/FilterMovie";

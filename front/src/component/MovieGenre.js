@@ -1,9 +1,9 @@
 import React from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { genreState } from "../state/atoms";
-import { AudioPlayerProvider } from "react-use-audio-player";
-import MusicPlay from "./MusicPlay";
+import Audios from "./MusicPlay";
 import Always from "../routers/Always.mp3";
+import styled from "styled-components";
 
 const MovieGenre = ({ onPrev, onNext, step }) => {
     const resetGenre = useResetRecoilState(genreState);
@@ -32,29 +32,64 @@ const MovieGenre = ({ onPrev, onNext, step }) => {
             ) : (
                 <div>
                     <h1>🎞영화장르 선택입니다.</h1>
-                    <AudioPlayerProvider>
-                        <MusicPlay file={Always} api={null} />
-                    </AudioPlayerProvider>
-                    {Colors.map((color) => (
-                        <div key={color.name}>
-                            <input
-                                id={color.name}
-                                type="radio"
-                                name="color-selector"
-                                value={color.name}
-                                checked={
-                                    genre.genre === color.name ? true : false
-                                }
-                                onChange={onChangeHandle}
-                            />
-                            <label htmlFor={color.name}>{color.name}</label>
-                        </div>
-                    ))}
+
+                    <Stations>
+                        {Colors.map((color) => (
+                            <Station key={color.name}>
+                                <div>
+                                    <input
+                                        id={color.name}
+                                        type="radio"
+                                        name="color-selector"
+                                        value={color.name}
+                                        checked={
+                                            genre.genre === color.name
+                                                ? true
+                                                : false
+                                        }
+                                        onChange={onChangeHandle}
+                                    />
+                                    <label htmlFor={color.name}>
+                                        {color.name}
+                                        <img
+                                            src="https://placeimg.com/200/100/animals/sepia"
+                                            alt=""
+                                        />
+                                    </label>
+                                </div>
+                                <div>
+                                    <Audios />
+                                </div>
+                            </Station>
+                        ))}
+                    </Stations>
                     <button onClick={onNext}>다음</button>
                 </div>
             )}
         </div>
     );
 };
+
+const Stations = styled.div`
+    display: grid;
+    grid-template-columns: repeat(1, 50%);
+    width: 100%;
+`;
+
+const Station = styled.div`
+
+font-size: 1.2em;
+    border: 1px solid rgb(76, 62, 95);
+    margin: 0.25em;
+    border-radius: 10px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+    border-color: #e36bae;
+`;
 
 export default MovieGenre;
