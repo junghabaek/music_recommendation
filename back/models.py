@@ -53,9 +53,28 @@ class Songs(db.Model):
   __tablename__ = "Songs"
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-  song_title = db.Column(db.String(150), nullable=False)
   movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
-  artist = db.Column(db.String(150), nullable=False)
+  movie_director = db.Column(db.String(150))
+  album_name = db.Column(db.String(300))
+  track_name = db.Column(db.String(300))
+  popularity = db.Column(db.Integer)
+  acousticness = db.Column(db.Float)
+  danceability = db.Column(db.Float)
+  energy = db.Column(db.Float)
+  tempo = db.Column(db.Float)
+  valence = db.Column(db.Float)
+
+  def __init__(self, movie_id, movie_director, album_name, track_name, popularity, acousticness, danceability, energy, tempo, valence):
+    self.movie_id = movie_id
+    self.movie_director = movie_director
+    self.album_name = album_name
+    self.track_name = track_name
+    self.popularity = popularity
+    self.acousticness = acousticness
+    self.danceability = danceability
+    self.energy = energy
+    self.tempo = tempo
+    self.valence = valence
 
 
 class Favorites (db.Model):

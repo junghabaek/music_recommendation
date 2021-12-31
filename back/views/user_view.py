@@ -28,7 +28,7 @@ def pwdValidation(pwd):
 # 로그인 구현
 @bp.route('/login', methods=["POST"])
 def login():
-  try:
+  # try:
     # result에 받은 데이터를 저장합니다.
     result = request.get_json()
     email = result['email']
@@ -51,29 +51,29 @@ def login():
         }
     # 로그인이 성공한 경우
     else:
-        # ott_list에 유저의 ott가입정보 넣기
-        # 가입된 상태라면 ott_list에 추가해준다.
-        ott_list = []
-        if int(user.Netflix):
-            ott_list.append('NetFlix')
-        if int(user.Disney):
-            ott_list.append('Disney')
-        if int(user.Prime):
-            ott_list.append('Prime')
-        if int(user.Hulu):
-            ott_list.append('Hulu')
-
-        response = {
-            'result': 'login_success',
-            'user_id': user.id,
-            'nickname': user.nickname,
-            'ott': ott_list
-        }
-        session['login'] = user.id
+      # ott_list에 유저의 ott가입정보 넣기
+      # 가입된 상태라면 ott_list에 추가해준다.
+      ott_list = []
+      if user.Netflix:
+        ott_list.append('NetFlix')
+      if user.Disney:
+        ott_list.append('Disney')
+      if user.Prime:
+        ott_list.append('Prime')
+      if user.Hulu:
+        ott_list.append('Hulu')
+      
+      response = {
+        'result': 'login_success',
+        'user_id': user.id,
+        'nickname': user.nickname,
+        'ott': ott_list
+      }
+      session['login'] = user.id
     return jsonify(response)
 
-  except:
-    return jsonify('에러에요~~')
+  # except:
+  #   return jsonify('에러에요~~')
 
 
 # 로그아웃 구현하기
