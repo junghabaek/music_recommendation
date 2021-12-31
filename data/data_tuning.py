@@ -1,21 +1,6 @@
 import pymysql.cursors
 import csv
 
-
-# connection = pymysql.connect(
-#     user='root',
-#     password='root',
-#     host='127.0.0.1',
-#     database='data_project',
-#     charset='utf8',
-#     cursorclass=pymysql.cursors.DictCursor
-# )
-
-# with connection:
-#   with connection.cursor() as cursor:
-#     with open('genres.csv', encoding='utf-8') as datas:
-#       sql = 'INSERT INTO `movies'
-
 genre_dic = {
   'Drama': 1,
   'Comedy': 2,
@@ -65,17 +50,3 @@ writer = csv.writer(f)
 writer.writerows(data)
 f.close()
     
-
-
-
-# con = db_connection
-# cur = con.cursor(pymysql.cursors.DictCursor)
-
-# with open('book_list.csv', encoding='utf-8') as datas:
-#     records = csv.DictReader(datas)
-#     result = [(w['title'], w['publisher'], w['author'], w['publication_date'],
-#                w['pages'], str(w['isbn']), w['description'], w['link']) for w in records]
-
-# cur.executemany("insert into book(title, publisher, author, publication_date, pages, isbn, description, link) values(%s, %s, %s, %s, %s, %s, %s, %s);", result)
-# con.commit()
-# con.close()
