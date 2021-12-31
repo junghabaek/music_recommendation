@@ -35,7 +35,7 @@ with connection:
     with connection.cursor() as cursor:
         sql = "insert into `movies` (`id`, `movie_title`, `movie_year`, `movie_age_rating`, `imdb`, `Netflix`, `Hulu`, `Prime`, `Disney`, `movie_director`, `country`, `Language`, `runtime`, `sound_director`, `poster_url`) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-        with open('jungha_modified_movie.csv') as datas:
+        with open('modified_movie.csv') as datas:
             records = csv.DictReader(datas)
             for row in records:
                 new_row = []
