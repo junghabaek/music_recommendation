@@ -2,6 +2,7 @@ from flask import Flask
 from models import db
 from views import user_view, main_service, mypage_view
 from flask_cors import CORS
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
 
@@ -17,6 +18,7 @@ app.register_blueprint(mypage_view.bp)
 CORS(app)
 
 db.init_app(app)
+Migrate().init_app(app, db)
 
 if __name__ == '__main__':
-  app.run(port=8000, debug=True)
+    app.run(port=8000, debug=True)
