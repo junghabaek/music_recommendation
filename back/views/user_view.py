@@ -28,7 +28,7 @@ def pwdValidation(pwd):
 #로그인 구현
 @bp.route('/login', methods=["POST"])
 def login():
-  try:
+  # try:
     # result에 받은 데이터를 저장합니다.
     result = request.get_json()
     email = result['email']
@@ -65,15 +65,15 @@ def login():
       
       response = {
         'result': 'login_success',
-        'user_id': user.user_id,
+        'user_id': user.id,
         'nickname': user.nickname,
         'ott': ott_list
       }
-      session['login'] = user.user_id
+      session['login'] = user.id
     return jsonify(response)
 
-  except:
-    return jsonify('에러에요~~')
+  # except:
+  #   return jsonify('에러에요~~')
 
 
 # 로그아웃 구현하기
