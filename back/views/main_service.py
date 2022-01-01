@@ -1,6 +1,6 @@
 # 유저가 장르를 선택하고 최종 결과를 확인하는 라우터
 from flask import Blueprint, json, request, session, jsonify
-from models import Movies, Genres, Songs
+from models import Movies, Genres, Songs, Features
 from random import randint
 
 bp = Blueprint('service', __name__, url_prefix='/filter')
@@ -54,10 +54,10 @@ def send_music_data():
       continue
 
     # 빈 값이 없는것을 확인했다면 data객체에 추가해준다.
-    data['장르'] = movie_genre
-    data['트랙주소'] = song.preview_url
-    data['포스터'] = movie.poster_url
-    data['트랙이름'] = song.track_name
+    data['genre'] = movie_genre
+    data['track_url'] = song.preview_url
+    data['cover_img'] = movie.poster_url
+    data['track_title'] = song.track_name
 
     # response에 추가해주고 index를 1 증가시킨다.
     response.append(data)
@@ -66,9 +66,21 @@ def send_music_data():
   return jsonify(response)
 
 
-# service/movies
-@bp.route('/movies')
+# 유저에게 영화 장르와 음악 세부 정보 데이터를 전달받는다.
+# 해당 정보와 비슷한 영화들을 필터링해서 총 12개의 영화 데이터를 보내주는 api이다.
+@bp.route('/movies', methods=['POST'])
 def send_movies_list():
+  result = request.get_json()
+  print(result)
+
+  # 음악 세부정보는 
+  song = Features.query.filter(Features.acousticness <= 0.1, Features.energy >= 0.8).all()
+  print(song)
+  song2 = song[0].query.filter(song[0].id <= 500).all()
+  print(song2)
+
+
+
 
   # 유저가 선택한 후 12개의 영화 목록을 보내준다.
   # 유저가 선택한 장르 기반으로 보여준다.

@@ -1,6 +1,10 @@
 import pymysql.cursors
 import csv
 
+# def utf_8_encoder(file):
+#   for line in file:
+#     yield line.encode('utf-8')
+
 connection = pymysql.connect(
   host = 'localhost',
   user = 'root',
@@ -14,7 +18,7 @@ with connection:
   with connection.cursor() as cursor:
     sql = 'insert into `songs` (`movie_id`, `music_director`, `album_name`, `track_name`, `preview_url`, `popularity`) values (%s, %s, %s, %s, %s, %s)'
 
-    with open('final-song.csv', encoding='utf8') as datas:
+    with open('encode_song.csv', encoding='utf-8') as datas:
       records = csv.reader(datas, delimiter=',')
       next(records)
       for row in records:
@@ -24,6 +28,7 @@ with connection:
             continue
           new_row.append(row[i])
         # print(new_row)
+        print(new_row)
         cursor.execute(sql, tuple(new_row))
       
   connection.commit()
