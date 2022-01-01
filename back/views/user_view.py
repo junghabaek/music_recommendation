@@ -1,5 +1,5 @@
 from flask import Blueprint, json, request, session, jsonify
-from models import Users, db
+from models import Users, Favorites, Movies, db
 from werkzeug.security import check_password_hash, generate_password_hash
 import re
 
@@ -51,25 +51,55 @@ def login():
         }
     # 로그인이 성공한 경우
     else:
-      # ott_list에 유저의 ott가입정보 넣기
-      # 가입된 상태라면 ott_list에 추가해준다.
-      ott_list = []
-      if user.Netflix:
-        ott_list.append('NetFlix')
-      if user.Disney:
-        ott_list.append('Disney')
-      if user.Prime:
-        ott_list.append('Prime')
-      if user.Hulu:
-        ott_list.append('Hulu')
-      
-      response = {
-        'result': 'login_success',
-        'user_id': user.id,
-        'nickname': user.nickname,
-        'ott': ott_list
-      }
-      session['login'] = user.id
+        # ott_list에 유저의 ott가입정보 넣기
+        # 가입된 상태라면 ott_list에 추가해준다.
+        ott_list = []
+        if user.Netflix:
+            ott_list.append('NetFlix')
+        if user.Disney:
+            ott_list.append('Disney')
+        if user.Prime:
+            ott_list.append('Prime')
+        if user.Hulu:
+            ott_list.append('Hulu')
+
+        response = {
+            'result': 'login_success',
+            'user_id': user.id,
+            'nickname': user.nickname,
+            'ott': ott_list
+        }
+
+    session['login'] = user.id
+
+    # result_view에서 참고함
+    # 유저가 영화 선택 페이지에서 선택한 영화의 id
+    # movie_id = result['movie_id']  # 배열로 들어온다
+    # did_like = result['did_like']  # 배열로 들어온다
+
+    # mypage에서 필요한 정보들을 front에 보내줘야함
+
+    # 유저가 좋아요 누른 영화의 리스트, 회원 메인페이지로 이동시에 사용될 로직입니다.
+    favorite_movies_id = Favorites.query.filter(
+        Favorites.user_id == session['login']).all()
+
+    li = [x.movie_id for x in favorite_movies_id]
+    print(li)
+    favorite_movies = Movies.query.filter(
+        Movies.id.in_(li)).all()
+    print(favorite_movies)
+    #[{영화1}, {영화2},...]
+    response = []
+    for i in favorite_movies:
+        response.append(
+            {
+                'favorite_movies_id': i.id,
+                'favorite_movies_title': i.movie_title,
+                'favorite_movies_poster_url': i.poster_url
+
+            }
+        )
+
     return jsonify(response)
 
   # except:
