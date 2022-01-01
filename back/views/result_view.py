@@ -3,7 +3,8 @@ from models import Favorites, Movies, db
 
 bp = Blueprint('result', __name__, url_prefix='/result')
 
-@bp.route('/mypage', methods=['GET'])
+
+@bp.route('/mypage', methods=['POST'])
 def add_like_info():
     result = request.get_json()
     movie_id = result['movie_id']
@@ -21,12 +22,17 @@ def add_like_info():
     # 유저가 좋아요 누른 영화의 리스트
     favorite_movies_id = Favorites.query.filter(
         Favorites.user_id == session['login']).all()
+
+    li = [x.movie_id for x in favorite_movies_id]
+
     favorite_movies = Movies.query.filter(
-        Movies.id.in_(favorite_movies_id)).all()
+        Movies.id.in_(li)).all()
+
+    favorite_movies_title = [x.movie_title for x in favorite_movies]
 
     response = {
-        'favorite_movies_title': favorite_movies.movie_title,
-
+        'favorite_movies_title': favorite_movies_title,
+        # 'favorite_movies_id': favorite_movies_id,
         'thriller': 'http://thriller',
         'comedy': 'http://comedy',
         'sf': 'http://sf',
