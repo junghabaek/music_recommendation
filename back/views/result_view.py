@@ -19,7 +19,7 @@ def add_like_info():
 
     # mypage에서 필요한 정보들을 front에 보내줘야함
 
-    # 유저가 좋아요 누른 영화의 리스트
+    # 유저가 좋아요 누른 영화의 리스트, 회원 메인페이지로 이동시에 사용될 로직입니다.
     favorite_movies_id = Favorites.query.filter(
         Favorites.user_id == session['login']).all()
 
@@ -28,14 +28,18 @@ def add_like_info():
     favorite_movies = Movies.query.filter(
         Movies.id.in_(li)).all()
 
-    favorite_movies_title = [x.movie_title for x in favorite_movies]
+    # favorite_movies_title = [x.movie_title for x in favorite_movies]
+    # favorite_movies_movie_poster = [x.poster_url for x in favorite_movies]
 
-    response = {
-        'favorite_movies_title': favorite_movies_title,
-        # 'favorite_movies_id': favorite_movies_id,
-        'thriller': 'http://thriller',
-        'comedy': 'http://comedy',
-        'sf': 'http://sf',
-    }
+    #[{영화1}, {영화2},...]
+    response = []
+    for i in favorite_movies:
+        response.append(
+            {
+                'favorite_movies_id': i.id,
+                'favorite_movies_title': i.movie_title,
+                'favorite_movies_poster_url': i.poster_url
 
+            }
+        )
     return jsonify(response)
