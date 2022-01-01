@@ -94,6 +94,16 @@ class Features(db.Model):
     self.liveness = liveness
     self.loudness = loudness
     self.speechiness = speechiness
+  
+  def get_feature(self, feature):
+    if feature == 'danceability':
+      return self.danceability
+    elif feature == 'energy':
+      return self.energy
+    elif feature == 'tempo':
+      return self.tempo
+    elif feature == 'valence':
+      return self.valence
 
 
 class Favorites (db.Model):

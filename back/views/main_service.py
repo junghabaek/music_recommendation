@@ -15,6 +15,77 @@ def select_movie_by_genre(genre_id):
 
   return selected_movie.movie_id, selected_movie.genre
 
+# 전달받은 속성의 값에 따라 db에 조건을 줄 boundary의 시작과 끝을 설정해주는 함수
+def make_boundary(value, feature):
+  if feature == 'danceability':
+    if value <= 30:
+      start = 0
+      end = 0.197
+    elif value <= 50:
+      start = 0.197
+      end = 0.351
+    elif value <= 70:
+      start = 0.351
+      end = 0.564
+    else:
+      start = 0.564
+      end = 1
+  elif feature == 'energy':
+    if value <= 30:
+      start = 0
+      end = 0.104
+    elif value <= 50:
+      start = 0.104
+      end = 0.233
+    elif value <= 70:
+      start = 0.233
+      end = 0.452
+    else:
+      start = 0.452
+      end = 1
+  elif feature == 'tempo':
+    if value <= 30:
+      start = 0
+      end = 0.377
+    elif value <= 50:
+      start = 0.377
+      end = 0.498
+    elif value <= 70:
+      start = 0.498
+      end = 0.601
+    else:
+      start = 0.601
+      end = 1
+  else:
+    if value <= 30:
+      start = 0
+      end = 0.039
+    elif value <= 50:
+      start = 0.039
+      end = 0.086
+    elif value <= 70:
+      start = 0.086
+      end = 0.272
+    else:
+      start = 0.272
+      end = 1
+  return start, end
+
+# 한 특성 (예를들어 energy)을 지정하고 해당 boundary에 값을 갖는 song을 가져오는 함수
+# 이때 만약 song에 preview_url값이 없다면 제외 시킨다.
+def filter_songs(feature, start, end, song):
+  check_song = Songs.query.filter(Songs.movie_id == song.movie_id).first()
+
+  if check_song.preview_url == '':
+    return False
+  else:
+    # Features모델에서 정의한 get_feature를 이용해 특성값을 가져온다.
+    attr = song.get_feature(feature)
+    if attr >= start and attr <= end:
+      return song
+  
+  return False
+
 
 
 # 처음 유저가 서비스를 시작했을때 장르를 선택하게 하는 부분에 필요한 정보를 주는 api이다.
@@ -71,32 +142,73 @@ def send_music_data():
 @bp.route('/movies', methods=['POST'])
 def send_movies_list():
   result = request.get_json()
-  print(result)
+  
+  # result 형태
+  # result = {
+  #   'genre': 12,
+  #   "music_features": {
+  #     "danceability" : 100,
+  #     "energy": 60,
+  #     "tempo": 10,
+  #     "valence": 70,
+  #   }
+  # }
+
+  # 변수에 전달받은 값 담기
+  # 장르 id는 1, 2, 3, 4, 5, 12 중 하나 [ Comedy(2)  Thriller(3)   Romance(4)  Action(5)  Sci-Fi(12)]
+  genre_id = result['genre']
+  features = result['music_features']
+  danceability = features['danceability']
+  energy = features['energy']
+  tempo = features['tempo']
+  valence = features['valence']
+
+  # 유저가 선택한 장르에 해당하는 영화 id 를 가져온다.
+  genre_filter = Genres.query.filter(Genres.genre_id == genre_id).all()
+
+  movie_ids = [genre.movie_id for genre in genre_filter]  
+  
+  # songs에 유저가 선택한 장르의 영화들의 음악정보들이 담겨있다.
+  songs = []
+  for movie_id in movie_ids:
+    songs += Features.query.filter(Features.movie_id == movie_id).all()
+
 
   # 음악 세부정보는 acousticness,danceability,energy,tempo,valence
-  songs = Features.query.filter(Features.acousticness >= 0.2, Features.acousticness <= 0.5).all()
-  print('song: ', len(songs))
-  dance_filter_songs = [song for song in songs if song.danceability > 0.7 and song.danceability < 1]
-  print('song: ', len(dance_filter_songs))
-  energy_filter_songs = [song for song in dance_filter_songs if song.energy > 0.5 and song.energy < 0.7]
-  print('song: ', len(energy_filter_songs))
+  cycle = 0
+  feature_list1 = [danceability, energy, tempo, valence]   # 실제 특성 값들이 들어감
+  feature_list2 = ['danceability', 'energy', 'tempo', 'valence']   # 특성 값들의 이름이 들어감
+  while cycle < 4:
+    new_songs = []
+    for song in songs:
+      start, end = make_boundary(feature_list1[cycle], feature_list2[cycle])
+      new_song = filter_songs(feature_list2[cycle], start, end, song)
 
-  for song in energy_filter_songs:
-    print(song.energy)
+      if new_song:
+        new_songs.append(new_song)
     
+    # 필터링 된 곡들의 리스트 즉, new_songs가 빈 리스트라면 혹은 3개 이하라면 while문을 멈추고 이전 songs를 반환한다.
+    if new_songs == [] or len(new_songs) < 4:
+      break
+    # new_songs의 값이 하나라도 있으면 cycle을 1 증가시키고 songs를 new_songs로 바꾼다.
+    else:
+      songs = new_songs
+      cycle += 1
 
 
+  # 여기서 반환된 songs에는 모든 필터를 거친 영화의 음악 특성이 들어있는 배열의 형태이다.
+  response = []
+  print(len(songs))
+  
+  for song in songs:
+    # print(song.movie_id)
+    data = {}
+    movie = Movies.query.filter(Movies.id == song.movie_id).first()
+    song_url = Songs.query.filter(Songs.movie_id == song.movie_id).first()
+    
+    data['movie_id'] = song.movie_id
+    data['poster_url'] = movie.poster_url
+    data['preview_url'] = song_url.preview_url
+    response.append(data)
 
-
-  # 유저가 선택한 후 12개의 영화 목록을 보내준다.
-  # 유저가 선택한 장르 기반으로 보여준다.
-  movie1 = {
-    'id': 'movie_id',
-    'movie_title': 'movie_title',
-    'movie_director': 'movie_director',
-    'sound_director': 'sound_director',
-    'img_url': 'img_url',
-  }
-
-  response = [movie1] * 12
   return jsonify(response)
