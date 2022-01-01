@@ -1,0 +1,6 @@
+1. movie_load.py 실행하기
+2. song_data_input.py 실행하기
+3. song_feature_data_input.py 실행하기
+4. genre_data_input.py 실행하기
+
+cf) 1번을 항상 먼저 해야하고 나머지는 순서 상관없이 실행하면 각각 movies, songs, features, genres 테이블에 데이터를 추가해준다.
