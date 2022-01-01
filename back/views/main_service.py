@@ -73,11 +73,17 @@ def send_movies_list():
   result = request.get_json()
   print(result)
 
-  # 음악 세부정보는 
-  song = Features.query.filter(Features.acousticness <= 0.1, Features.energy >= 0.8).all()
-  print(song)
-  song2 = song[0].query.filter(song[0].id <= 500).all()
-  print(song2)
+  # 음악 세부정보는 acousticness,danceability,energy,tempo,valence
+  songs = Features.query.filter(Features.acousticness >= 0.2, Features.acousticness <= 0.5).all()
+  print('song: ', len(songs))
+  dance_filter_songs = [song for song in songs if song.danceability > 0.7 and song.danceability < 1]
+  print('song: ', len(dance_filter_songs))
+  energy_filter_songs = [song for song in dance_filter_songs if song.energy > 0.5 and song.energy < 0.7]
+  print('song: ', len(energy_filter_songs))
+
+  for song in energy_filter_songs:
+    print(song.energy)
+    
 
 
 
