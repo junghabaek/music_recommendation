@@ -44,17 +44,16 @@ with connection:
                     # print(i)
                     # print(movie_dict[2])
                     # print(row['id'])
-                    if row[movie_dict[i]] == 'True':
+                    if row[movie_dict[i]] == 'TRUE':
                         # print(movie_dict[f"{i}"])
                         new_row.append(True)
-                    elif row[movie_dict[i]] == 'False':
+                    elif row[movie_dict[i]] == 'FALSE':
                         new_row.append(False)
                     else:
                         new_row.append(row[movie_dict[i]])
 
                 if new_row[4] == '':
                     new_row[4] = 0.0
-
                 # print(new_row)
                 cursor.execute(sql, tuple(new_row))
         #         break
