@@ -2,25 +2,20 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useRecoilState } from "recoil";
-import { genreState, filterMovieState } from "../state/atoms";
+import { genresState, filterMovieState } from "../state/atoms";
 import axios from "axios";
 
-const MusicGenre = ({ onPrev, onNext }) => {
-    const [genre, setGenre] = useRecoilState(genreState);
+const MusicGenres = ({ onPrev, onNext }) => {
+    const [genres, setGenres] = useRecoilState(genresState);
     const [movieData, setMovieData] = useRecoilState(filterMovieState);
     const [input, setInput] = useState();
 
     function valuetext(value) {
-        return `${value}도`;
+        return `${value}`;
     }
 
-    const MusicSet = [
-        "acousticness",
-        "danceability",
-        "energy",
-        "tempo",
-        "valence",
-    ];
+    //음악 필터하는 속성으로는 danceability, energy, tempo, valence 했습니다.
+    const MusicSet = ["energy", "danceability", "valence", "tempo"];
 
     const onChangeHandle = (e) => {
         const { value, name } = e.target;
@@ -33,9 +28,9 @@ const MusicGenre = ({ onPrev, onNext }) => {
     };
 
     const onClickHandler = async (e) => {
-        setGenre({
-            ...genre,
-            music_genre: input,
+        setGenres({
+            ...genres,
+            music_features: input,
         });
 
         //axios post
@@ -47,8 +42,8 @@ const MusicGenre = ({ onPrev, onNext }) => {
     };
     console.log(input);
     useEffect(() => {
-        console.log(genre);
-    }, [genre]);
+        console.log(genres);
+    }, [genres]);
 
     return (
         <div>
@@ -58,7 +53,7 @@ const MusicGenre = ({ onPrev, onNext }) => {
                     <div key={index}>
                         <label htmlFor="mg">{mg}</label>
                         <Slider
-                            aria-label="Temperature"
+                            aria-label="equalizer"
                             defaultValue={30}
                             getAriaValueText={valuetext}
                             valueLabelDisplay="auto"
@@ -80,4 +75,4 @@ const MusicGenre = ({ onPrev, onNext }) => {
     );
 };
 
-export default MusicGenre;
+export default MusicGenres;
