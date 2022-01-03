@@ -4,8 +4,12 @@ import GridCards from "./GridCards";
 import Loading from "./Spninner";
 import { Row } from "antd";
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
+import { useRecoilState, useRecoilValue } from "recoil";
+import { genresState, filterMovieState } from "../state/atoms";
 
 const FilterMovie = ({ onPrev, onNext }) => {
+    const genres = useRecoilValue(genresState);
+    const [movieData, setMovieData] = useRecoilState(filterMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState("selected");
@@ -15,13 +19,16 @@ const FilterMovie = ({ onPrev, onNext }) => {
         array.sort(() => Math.random() - 0.5);
     } // api 로 받아온 영화 섞은 함수
 
+    let testapi = `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`;
+    let api = `http://localhost:8000/filter/movies`;
+
+    console.log("받아온", genres);
+
     useEffect(() => {
         async function loadData() {
             try {
-                const response = await axios.get(
-                    `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`
-                );
-                setMovies(response.data.data.movies);
+                const response = await axios.post(api, genres);
+                setMovies(response.data);
                 console.log("API 가져온 data", movies);
                 setLoading(false);
             } catch (e) {
@@ -30,6 +37,21 @@ const FilterMovie = ({ onPrev, onNext }) => {
         }
         loadData();
     }, []);
+    console.log("movies: ", movies)
+    // mock api tes 버전
+    // useEffect(() => {
+    //     async function loadData() {
+    //         try {
+    //             const response = await axios.get(testapi);
+    //             setMovies(response.data.data.movies);
+    //             console.log("API 가져온 data", movies);
+    //             setLoading(false);
+    //         } catch (e) {
+    //             console.log("axios get Error");
+    //         }
+    //     }
+    //     loadData();
+    // }, []);
 
     useEffect(() => {
         shuffle(movies);
