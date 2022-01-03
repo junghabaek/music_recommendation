@@ -16,7 +16,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     useEffect(() => {
         async function loadTrack() {
             try {
-                let api = "";
+                let api = "/filter/genre";
                 const response = await axios.get(api);
                 setPreviewTrack(response.data);
                 console.log("get track api");
