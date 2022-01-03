@@ -63,7 +63,7 @@ const Regist = ({ history }) => {
             console.log("res.data.result :: ", res.data.result);
             if (res.info === "ok") {
                 alert(`안녕하세요,${Name}님 반가워요`);
-                history.push("login")
+                history.push("/login");
             }
         });
     };

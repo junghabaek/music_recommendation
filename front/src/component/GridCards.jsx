@@ -18,7 +18,7 @@ const GridCards = (props) => {
     };
     // let url =
     //     "https://p.scdn.co/mp3-preview/eb463247243646de10aa4d9b3f2c0c8b836c1dc8?cid=0e18970867524f1fba6634279dd9e5b2";
-    let audioTrack = new Audio(Always);
+    let audioTrack = new Audio(props.track);
 
     return (
         <Col span={8} lg={8} md={8} xs={12}>
@@ -70,6 +70,8 @@ const HHover = styled.div`
     }
     :hover img {
         -webkit-filter: blur(5px);
+        transform: scale(1.1);
+        transition: transform 0.35s;
         
     }
     &:hover {

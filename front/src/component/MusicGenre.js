@@ -27,23 +27,12 @@ const MusicGenres = ({ onPrev, onNext }) => {
         });
     };
 
-    const onClickHandler = async (e) => {
+    useEffect(() => {
         setGenres({
             ...genres,
             music_features: input,
         });
-        onNext();
-        //axios post
-        // const res = await axios
-        //     .post(null)
-        //     .then((res) => setMovieData(res.data))
-        //     .catch((e) => console.log(e))
-        //     .then(() => onNext());
-    };
-    console.log(input);
-    useEffect(() => {
-        console.log(genres);
-    }, [genres]);
+    }, [input]);
 
     return (
         <div>
@@ -68,7 +57,7 @@ const MusicGenres = ({ onPrev, onNext }) => {
                 ))}
             </Box>
             <button onClick={onPrev}>뒤로가기 버튼</button>
-            <button disabled={!input} onClick={onClickHandler}>
+            <button disabled={!input} onClick={onNext}>
                 좋아하는 영화 선택으로
             </button>
         </div>
