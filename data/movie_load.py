@@ -4,7 +4,7 @@ import csv
 
 connection = pymysql.connect(
     user='root',
-    passwd='root',
+    passwd='ghwnsfl1',
     host='127.0.0.1',
     db='data_project',
     charset='utf8',

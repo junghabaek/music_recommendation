@@ -4,7 +4,7 @@ import csv
 connection = pymysql.connect(
   host = 'localhost',
   user = 'root',
-  password = 'root',
+  password = 'ghwnsfl1',
   database = 'data_project',
   charset = 'utf8',
   cursorclass = pymysql.cursors.DictCursor

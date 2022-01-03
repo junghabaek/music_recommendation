@@ -32,6 +32,13 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     console.log(previewTrack);
 
     //TODO Sci-Fi : 12, Comedy : 2, Thriller : 3, Romance : 4, Action : 5 이 들어갈것같아요
+    const Colors = [
+        { name: "Sci-Fi", id: 12, hex: "#ffb598" },
+        { name: "Comedy", id: 2, hex: "#ffdcaa" },
+        { name: "Thriller", id: 3, hex: "#d7beff" },
+        { name: "Romance", id: 4, hex: "#c7f5ed" },
+        { name: "Action", id: 5, hex: "#c2dbff" },
+    ];
 
     const onChangeHandle = (e) => {
         setGenres({
@@ -50,37 +57,34 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                     <Loading />
                 ) : (
                     <Stations>
-                        {previewTrack &&
-                            previewTrack.map((mgenre) => (
-                                <Station key={mgenre.genre}>
+                        {Colors.map((mgenre) => (
+                            <Station key={mgenre.name}>
+                                <div>
                                     <div>
-                                        <div>
-                                            <Audios track={mgenre.track_url} />
-                                        </div>
-                                        <input
-                                            id={mgenre.genre}
-                                            type="radio"
-                                            name="color-selector"
-                                            value={mgenre.id}
-                                            checked={
-                                                genres.genre === mgenre.id
-                                                    ? true
-                                                    : false
-                                            }
-                                            onChange={onChangeHandle}
-                                        />
-                                        <label htmlFor={mgenre.genre}>
-                                            {mgenre.genre}
-                                            <br />
-                                            {mgenre.track_title}
-                                            <img
-                                                src={mgenre.cover_img}
-                                                alt={mgenre.genre}
-                                            />
-                                        </label>
+                                        <Audios />
                                     </div>
-                                </Station>
-                            ))}
+                                    <input
+                                        id={mgenre.name}
+                                        type="radio"
+                                        name="color-selector"
+                                        value={mgenre.id}
+                                        checked={
+                                            genres.genre === mgenre.id
+                                                ? true
+                                                : false
+                                        }
+                                        onChange={onChangeHandle}
+                                    />
+                                    <label htmlFor={mgenre.name}>
+                                        {mgenre.name}
+                                        <img
+                                            src="https://placeimg.com/200/100/animals/sepia"
+                                            alt=""
+                                        />
+                                    </label>
+                                </div>
+                            </Station>
+                        ))}
                     </Stations>
                 )}
 

@@ -2,11 +2,11 @@ import React from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
-const Audios = () => {
+const Audios = ({ track }) => {
     return (
         <div>
             <AudioPlayer
-                src="https://p.scdn.co/mp3-preview/eb463247243646de10aa4d9b3f2c0c8b836c1dc8?cid=0e18970867524f1fba6634279dd9e5b2"
+                src={track}
                 showJumpControls={false}
                 layout="stacked"
                 customProgressBarSection={[]}
