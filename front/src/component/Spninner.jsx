@@ -6,7 +6,7 @@ const Loading = () => {
     const Spinner = () => {
         return (
             <Flex>
-                <RingLoader color="#CC455C" size="120" />
+                <RingLoader color="#CC455C" size="120px" />
             </Flex>
         );
     };
