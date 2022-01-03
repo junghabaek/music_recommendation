@@ -7,7 +7,7 @@ import axios from "axios";
 
 const MusicGenres = ({ onPrev, onNext }) => {
     const [genres, setGenres] = useRecoilState(genresState);
-    const [movieData, setMovieData] = useRecoilState(filterMovieState);
+
     const [input, setInput] = useState();
 
     function valuetext(value) {
@@ -32,13 +32,13 @@ const MusicGenres = ({ onPrev, onNext }) => {
             ...genres,
             music_features: input,
         });
-
+        onNext();
         //axios post
-        const res = await axios
-            .post(null)
-            .then((res) => setMovieData(res.data))
-            .catch((e) => console.log(e))
-            .then(() => onNext());
+        // const res = await axios
+        //     .post(null)
+        //     .then((res) => setMovieData(res.data))
+        //     .catch((e) => console.log(e))
+        //     .then(() => onNext());
     };
     console.log(input);
     useEffect(() => {
