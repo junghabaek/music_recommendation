@@ -46,7 +46,7 @@ class Movies(db.Model):
     runtime = db.Column(db.String(10), nullable=True)
     movie_age_rating = db.Column(db.String(10), nullable=True)
     poster_url = db.Column(db.String(200), nullable=True)
-    like_count = db.Column(db.Integer)
+    like_count = db.Column(db.Integer, default=0)
 
 
 class Songs(db.Model):

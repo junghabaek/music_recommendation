@@ -1,8 +1,6 @@
 from flask import Flask
 from models import db
 import os
-print(1)
-print(os.getcwd()) #현재 워킹 디렉토리를 반환한다.
 os.path.join(os.getcwd(), 'functions')
 
 from views import user_view, main_service, mypage_view, result_view, recommend_view
@@ -10,13 +8,6 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 
-
-# >>> os.path.join(os.getcwd(), "temp")
-# 'C:\\Users\\peter\\temp'
-
-# import sys
-# sys.path.append('C://Users/user/Desktop/project-template/back/functions')
-# print(sys.path)
 
 load_dotenv()
 

@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify
-from models import Movies, Songs
+from flask import Blueprint, request, jsonify, session
+from models import Movies, Songs, User_features, Features
 from cluster import get_nearest_movie
 from movie_plot import return_synopsis
 
@@ -50,5 +50,11 @@ def recommend(movie_id):
     data['preview_url'] = song.preview_url
 
     response.append(data)
+  
+  # 로그인 상태라면 첫번째 추천 영화 user_features 테이블에 저장하기
+  if session['login']:
+    user_id = session['login']
+    feature = Features.query.filter(Features.movie_id == movie_id1).first()
+    user_feature = User_features(movie_id1, user_id, feature.acouticness,)
 
   return jsonify(response)
