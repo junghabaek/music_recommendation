@@ -8,6 +8,8 @@ import { Row } from "antd";
 const FilterMovie = ({ onPrev, onNext }) => {
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
+    const [selectedMovie, setSelectedMovie] = useState("selected");
+    const [selectedMovieTitle, setSelectedMovieTitle] = useState();
 
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
@@ -20,7 +22,7 @@ const FilterMovie = ({ onPrev, onNext }) => {
                     `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`
                 );
                 setMovies(response.data.data.movies);
-                console.log("get api");
+                console.log("API 가져온 data", movies);
                 setLoading(false);
             } catch (e) {
                 console.log("axios get Error");
@@ -33,10 +35,12 @@ const FilterMovie = ({ onPrev, onNext }) => {
         shuffle(movies);
     }, [movies]);
 
-    console.log(movies);
-
     const firstMovies = movies.slice(0, 6);
-    console.log(firstMovies);
+    console.log("6개 슬라이싱 data", firstMovies);
+
+    useEffect(() => {
+        console.log("선택된 영화id", selectedMovie);
+    }, [selectedMovie]);
 
     return (
         <div>
@@ -45,6 +49,9 @@ const FilterMovie = ({ onPrev, onNext }) => {
             ) : (
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
+                    {selectedMovieTitle ? (
+                        <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
+                    ) : null}
                     <div>
                         <Row gutter={[16, 16]}>
                             {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
@@ -55,6 +62,11 @@ const FilterMovie = ({ onPrev, onNext }) => {
                                             image={movie.medium_cover_image}
                                             movieName={movie.title}
                                             url={movie.url}
+                                            id={movie.id}
+                                            setSelectedMovie={setSelectedMovie}
+                                            setSelectedMovieTitle={
+                                                setSelectedMovieTitle
+                                            }
                                         />
                                     </React.Fragment>
                                 ))}
