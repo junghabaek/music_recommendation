@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { genresState, previewTrackState } from "../state/atoms";
 import { useResetRecoilState, useRecoilState } from "recoil";
 import PageLayout from "../component/PageLayout";
-import HoverEff from "../component/HoverEff";
 
 const Home = ({ history }) => {
     const resetGenre = useResetRecoilState(genresState);
