@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from cluster import get_nearest_movie
 from models import Movies, Songs
+from cluster import get_nearest_movie
+from movie_plot import return_synopsis
 
 bp = Blueprint('recommend', __name__, url_prefix='/filter')
 
@@ -43,6 +44,7 @@ def recommend(movie_id):
     data['runtime'] = movie.runtime
     data['movie_age_rating'] = movie.movie_age_rating
     data['poster_url'] = movie.poster_url
+    data['movie_plot'] = return_synopsis(movie.id)
     data['album_name'] = song.album_name
     data['track_name'] = song.track_name
     data['preview_url'] = song.preview_url

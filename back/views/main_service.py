@@ -125,6 +125,7 @@ def send_music_data():
       continue
 
     # 빈 값이 없는것을 확인했다면 data객체에 추가해준다.
+    data['id'] = genre_ids[index]
     data['genre'] = movie_genre
     data['track_url'] = song.preview_url
     data['cover_img'] = movie.poster_url
@@ -142,6 +143,7 @@ def send_music_data():
 @bp.route('/movies', methods=['POST'])
 def send_movies_list():
   result = request.get_json()
+  print(result)
   # result 형태
   # result = {
   #   'genre': 12,

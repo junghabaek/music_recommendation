@@ -3,10 +3,10 @@ from scipy.spatial import distance
 import pandas as pd
 import ast
 from math import dist
-import time
-import datetime
+
 # title, 정규화된 features, cluster, feature값들이 들어간 리스트가 들어간 csv
-data = pd.read_csv('feature_id_list.csv') 
+data = pd.read_csv('./feature_id_list.csv') 
+
 
 # idx는 movie index
 def get_nearest_movie(idx):
