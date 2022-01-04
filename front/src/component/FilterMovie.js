@@ -84,15 +84,10 @@ const FilterMovie = ({ onPrev }) => {
             ) : (
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
-                    {selectedMovieTitle ? (
-                        <div>
-                            <h2>
-                                관심있는 영화의 OST를 들어보고 제목을
-                                클릭해주세요.
-                            </h2>
-                            <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
-                        </div>
-                    ) : null}
+                    <h2>관심있는 영화의 OST를 들어보고 제목을 클릭해주세요.</h2>
+                    {selectedMovieTitle === null ? null : (
+                        <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
+                    )}
                     <div>
                         <Row gutter={[16, 16]}>
                             {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}

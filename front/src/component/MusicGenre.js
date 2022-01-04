@@ -58,7 +58,7 @@ const MusicGenres = ({ onPrev, onNext }) => {
             </Box>
             <button onClick={onPrev}>뒤로가기 버튼</button>
             <button
-                disabled={!input || Object.keys(input).length < 3}
+                disabled={!input || Object.keys(input).length < 4}
                 onClick={onNext}
             >
                 좋아하는 영화 선택으로

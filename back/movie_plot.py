@@ -29,5 +29,7 @@ def return_synopsis(id):
         pass
     else:
         soup = BeautifulSoup(html, 'html.parser')
+        if not soup.find('p', {'class':'con_tx'}):
+            return '0'
         result = soup.find('p', {'class':'con_tx'}).text.replace('\r\xa0', '<br>')
         return result

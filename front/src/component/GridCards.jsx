@@ -21,7 +21,7 @@ const GridCards = (props) => {
     let audioTrack = new Audio(props.track);
 
     return (
-        <Col span={8} lg={8} md={8} xs={12}>
+        <Col span={8} lg={8} md={8} xs={8}>
             {/*브라우저의 크기가 가장클때는 24중에 6만쓰겠다는의미 중간은 8 가장작을때는 24를 다쓰겠다는의미*/}
             <div style={{ position: "relative" }}>
                 <HHover>
