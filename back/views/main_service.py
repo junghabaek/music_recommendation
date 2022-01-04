@@ -209,6 +209,7 @@ def send_movies_list():
     song_url = Songs.query.filter(Songs.movie_id == song.movie_id).first()
     
     data['movie_id'] = song.movie_id
+    data['movie_title'] = movie.movie_title
     data['poster_url'] = movie.poster_url
     data['preview_url'] = song_url.preview_url
     response.append(data)
