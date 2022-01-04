@@ -1,10 +1,13 @@
 from flask import Flask
 from models import db
+import os
+os.path.join(os.getcwd(), 'functions')
+
 from views import user_view, main_service, mypage_view, result_view, recommend_view
 from flask_cors import CORS
 from flask_migrate import Migrate
 from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 

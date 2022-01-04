@@ -1,6 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
+from models import Movies, Songs, User_features, Features, db
 from cluster import get_nearest_movie
-from models import Movies, Songs
+from movie_plot import return_synopsis
 
 bp = Blueprint('recommend', __name__, url_prefix='/filter')
 
@@ -43,10 +44,21 @@ def recommend(movie_id):
     data['runtime'] = movie.runtime
     data['movie_age_rating'] = movie.movie_age_rating
     data['poster_url'] = movie.poster_url
+    data['movie_plot'] = return_synopsis(movie.id)
     data['album_name'] = song.album_name
     data['track_name'] = song.track_name
     data['preview_url'] = song.preview_url
 
     response.append(data)
+  
+  # 로그인 상태라면 첫번째 추천 영화 user_features 테이블에 저장하기
+  # if session.get('login'):
+    # user_id = session['login']
+  user_id = 1
+  feature = Features.query.filter(Features.movie_id == movie_id1).first()
+  user_feature = User_features(user_id,movie_id1, feature.acousticness, feature.danceability, feature.energy, feature.tempo, feature.valence, feature.instrumentalness, feature.liveness, feature.loudness, feature.speechiness)
+
+  db.session.add(user_feature)
+  db.session.commit()
 
   return jsonify(response)

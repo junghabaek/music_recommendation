@@ -143,6 +143,7 @@ def send_music_data():
 @bp.route('/movies', methods=['POST'])
 def send_movies_list():
   result = request.get_json()
+  print(result)
   # result 형태
   # result = {
   #   'genre': 12,
