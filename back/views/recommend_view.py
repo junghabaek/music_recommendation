@@ -61,4 +61,12 @@ def recommend(movie_id):
   db.session.add(user_feature)
   db.session.commit()
 
+  # 첫번째 영화의 feature들만 추가하기
+  response[0]['acousticness'] = feature.acousticness
+  response[0]['loudness'] = feature.loudness
+  response[0]['energy'] = feature.energy
+  response[0]['tempo'] = feature.tempo
+  response[0]['instrumentalness'] = feature.instrumentalness
+  
+
   return jsonify(response)

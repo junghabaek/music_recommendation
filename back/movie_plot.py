@@ -16,7 +16,7 @@ def return_synopsis(id):
     row = movie_info[movie_info['id'] == id]
     movie_url = row['movie_url'].values[0]
     if movie_url == '0':
-        return "영화 줄거리 정보가 없습니다." # movie_url이 없을 때 return 값
+        return "0" # movie_url이 없을 때 return 값
     try:
         session = requests.Session()
         retry = Retry(connect=3, backoff_factor=0.5)
@@ -29,5 +29,7 @@ def return_synopsis(id):
         pass
     else:
         soup = BeautifulSoup(html, 'html.parser')
+        if not soup.find('p', {'class':'con_tx'}):
+            return '0'
         result = soup.find('p', {'class':'con_tx'}).text.replace('\r\xa0', '<br>')
         return result
