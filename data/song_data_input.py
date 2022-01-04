@@ -8,7 +8,7 @@ import csv
 connection = pymysql.connect(
   host = 'localhost',
   user = 'root',
-  password = 'ghwnsfl1',
+  password = 'root',
   database = 'data_project',
   charset = 'utf8',
   cursorclass = pymysql.cursors.DictCursor
