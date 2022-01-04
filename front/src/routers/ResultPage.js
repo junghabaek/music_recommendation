@@ -51,6 +51,7 @@ const ResultPage = () => {
                         url={final.url}
                         id={final.movie_id}
                         track={final.preview_url}
+                        xs={24}
                     />
                     <button>즐겨찾기</button>
                     <h1>{final.movie_title}</h1>
@@ -78,7 +79,7 @@ const ResultPage = () => {
                                         url={movie.url}
                                         id={movie.movie_id}
                                         track={movie.preview_url}
-                                        span={8}
+                                        xs={8}
                                     />
                                 </React.Fragment>
                             ))}

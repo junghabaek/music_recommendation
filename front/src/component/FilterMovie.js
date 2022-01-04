@@ -104,6 +104,7 @@ const FilterMovie = ({ onPrev }) => {
                                                 setSelectedMovieTitle
                                             }
                                             track={movie.preview_url}
+                                            xs={Number(12)}
                                         />
                                     </React.Fragment>
                                 ))}
