@@ -14,7 +14,7 @@ const FilterMovie = ({ onPrev }) => {
     const [movieData, setMovieData] = useRecoilState(resultMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState("selected");
+    const [selectedMovie, setSelectedMovie] = useState();
     const [selectedMovieTitle, setSelectedMovieTitle] = useState();
 
     function shuffle(array) {
@@ -27,7 +27,6 @@ const FilterMovie = ({ onPrev }) => {
     useEffect(() => {
         async function loadData() {
             setGenres({ ...genres });
-            console.log(genres);
             try {
                 const response = await axios.post(api, genres);
                 console.log(response);
@@ -69,6 +68,7 @@ const FilterMovie = ({ onPrev }) => {
     }, [selectedMovie]);
 
     const onClickHandler = async () => {
+        setLoading((cur) => !cur);
         // 최종 결과 영화정보 받아오기
         const res = await axios
             .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
@@ -110,7 +110,9 @@ const FilterMovie = ({ onPrev }) => {
                         </Row>
                     </div>
                     <button onClick={onPrev}>뒤로가기 버튼</button>
-                    <button onClick={onClickHandler}>결과보러가기</button>
+                    <button disabled={!selectedMovie} onClick={onClickHandler}>
+                        결과보러가기
+                    </button>
                 </div>
             )}
         </div>

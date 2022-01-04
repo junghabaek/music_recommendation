@@ -6,6 +6,7 @@ import { resultMovieState } from "../state/atoms";
 import { Row } from "antd";
 import GridCards from "../component/GridCards";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
@@ -17,23 +18,29 @@ const ResultPage = () => {
     const secondMovies = movieData.slice(1, 4);
     console.log("3개 슬라이싱 data", secondMovies);
 
-    const ott_obj = final.ott; //TODO 객체의 value 값으로 key를 가져오기
-    console.log(final.ott);
-    let ott_list = [];
-    if (ott_obj["Netflix"]) {
-        ott_list.push("Netflix");
-    }
-    if (ott_obj["Hulu"]) {
-        ott_list.push("Hulu");
-    }
-    if (ott_obj["Disney"]) {
-        ott_list.push("Disney");
-    }
-    if (ott_obj["Prime"]) {
-        ott_list.push("Prime");
-    }
+    // const ott_obj = final.ott; //TODO 객체의 value 값으로 key를 가져오기
+    // console.log(final.ott);
+    // let ott_list = [];
+    // if (ott_obj["Netflix"]) {
+    //     ott_list.push("Netflix");
+    // }
+    // if (ott_obj["Hulu"]) {
+    //     ott_list.push("Hulu");
+    // }
+    // if (ott_obj["Disney"]) {
+    //     ott_list.push("Disney");
+    // }
+    // if (ott_obj["Prime"]) {
+    //     ott_list.push("Prime");
+    // }
+
+    const ott_list = Object.entries(final.ott).reduce((acc, cur) => {
+        if (cur[1]) acc.push(cur[0]);
+        return acc;
+    }, []);
 
     console.log(ott_list);
+
     return (
         <PageLayout>
             <React.Fragment>
@@ -60,21 +67,23 @@ const ResultPage = () => {
             <div>
                 <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
                 <br />
-                <Row gutter={[16, 16]}>
-                    {movieData &&
-                        secondMovies.map((movie, index) => (
-                            <React.Fragment key={index}>
-                                <GridCards
-                                    image={movie.poster_url}
-                                    movieName={movie.movie_title}
-                                    url={movie.url}
-                                    id={movie.movie_id}
-                                    track={movie.preview_url}
-                                    span={8}
-                                />
-                            </React.Fragment>
-                        ))}
-                </Row>
+                <div>
+                    <Row gutter={[16, 16]}>
+                        {movieData &&
+                            secondMovies.map((movie, index) => (
+                                <React.Fragment key={index}>
+                                    <GridCards
+                                        image={movie.poster_url}
+                                        movieName={movie.movie_title}
+                                        url={movie.url}
+                                        id={movie.movie_id}
+                                        track={movie.preview_url}
+                                        span={8}
+                                    />
+                                </React.Fragment>
+                            ))}
+                    </Row>
+                </div>
             </div>
             <button>
                 <Link to="/">홈으로 가기</Link>

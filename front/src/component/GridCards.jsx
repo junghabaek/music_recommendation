@@ -1,30 +1,32 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Col } from "antd";
 import Always from "../routers/Always.mp3";
 import styled from "styled-components";
+import Image from "./Image";
 
 const GridCards = (props) => {
     const onClickhandler = (e) => {
         props.setSelectedMovie(props.id);
         props.setSelectedMovieTitle(props.movieName);
+        stop();
     };
 
+    let audioTrack = new Audio(props.track);
+
+    const audioPromiseRef = useRef(Promise.resolve());
     const start = () => {
-        audioTrack.play();
+        audioPromiseRef.current.then(() => audioTrack.play());
     };
     const stop = () => {
-        audioTrack.pause();
+        audioPromiseRef.current.then(() => audioTrack.pause());
     };
-    // let url =
-    //     "https://p.scdn.co/mp3-preview/eb463247243646de10aa4d9b3f2c0c8b836c1dc8?cid=0e18970867524f1fba6634279dd9e5b2";
-    let audioTrack = new Audio(props.track);
 
     return (
         <Col span={8} lg={8} md={8} xs={8}>
             {/*브라우저의 크기가 가장클때는 24중에 6만쓰겠다는의미 중간은 8 가장작을때는 24를 다쓰겠다는의미*/}
             <div style={{ position: "relative" }}>
-                <HHover>
+                <HHover onMouseEnter={start} onMouseLeave={stop}>
                     <span className="text">
                         <div onClick={onClickhandler} value={props.id}>
                             <h2>
@@ -33,12 +35,10 @@ const GridCards = (props) => {
                             </h2>
                         </div>
                     </span>
-                    <img
-                        style={{ width: "100%", height: "320px" }}
+                    <Image
+                        // style={{ width: "100%", height: "320px" }}
+                        alt={null} //TODO 이미지 제목 넣어야함
                         src={props.image}
-                        onMouseEnter={start}
-                        onMouseLeave={stop}
-                        //영화의 id
                     />
                 </HHover>
             </div>
@@ -47,9 +47,11 @@ const GridCards = (props) => {
 };
 
 const HHover = styled.div`
-     {
+    {
         position: relative;
-        border: 1px solid rgb(76, 62, 95);
+        border: 1px solid white;
+        text-align: center;
+
     }
     .text {
         position: absolute;

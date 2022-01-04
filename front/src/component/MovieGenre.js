@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { genresState, previewTrackState } from "../state/atoms";
 import Audios from "./MusicPlay";
@@ -6,6 +6,7 @@ import Loading from "./Spninner";
 import Always from "../routers/Always.mp3";
 import styled from "styled-components";
 import axios from "axios";
+import Image from "./Image";
 
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
@@ -52,7 +53,10 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                     <Stations>
                         {previewTrack &&
                             previewTrack.map((mgenre) => (
-                                <Station key={mgenre.genre}>
+                                <Station
+                                    key={mgenre.genre}
+                                    img={mgenre.cover_img}
+                                >
                                     <div>
                                         <div>
                                             <Audios track={mgenre.track_url} />
@@ -73,9 +77,10 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                             {mgenre.genre}
                                             <br />
                                             {mgenre.track_title}
-                                            <img
+                                            <Image
                                                 src={mgenre.cover_img}
-                                                alt={mgenre.genre}
+                                                alt={mgenre.track_title}
+                                                circle="true"
                                             />
                                         </label>
                                     </div>
@@ -100,8 +105,8 @@ const Stations = styled.div`
 `;
 
 const Station = styled.div`
-
-font-size: 1.2em;
+    width: 50%;
+    font-size: 1.2em;
     border: 1px solid rgb(76, 62, 95);
     margin: 0.25em;
     border-radius: 10px;
@@ -110,6 +115,14 @@ font-size: 1.2em;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(
+        to right,
+        rgba(20, 20, 20, 0.1) 10%,
+        rgba(20, 20, 20, 0.7) 70%,
+        rgba(20, 20, 20, 1)
+    ),
+    url(${(props) => props.img});
+background-size: cover;
 
     &:hover {
     border-color: #e36bae;

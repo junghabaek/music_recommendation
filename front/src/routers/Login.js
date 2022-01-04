@@ -108,7 +108,14 @@ const Whole = styled.div`
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-image: url(null);
+    background: linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.1) 10%,
+            rgba(20, 20, 20, 0.7) 70%,
+            rgba(20, 20, 20, 1)
+        ),
+        url(https://source.unsplash.com/random/1920x1080);
+    background-size: cover;
 `;
 
 const LoginContainer = styled.div`
