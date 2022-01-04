@@ -5,11 +5,13 @@ import Loading from "./Spninner";
 import { Row } from "antd";
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
 import { useRecoilState, useRecoilValue } from "recoil";
-import { genresState, filterMovieState } from "../state/atoms";
+import { genresState, resultMovieState } from "../state/atoms";
+import { useHistory } from "react-router-dom";
 
-const FilterMovie = ({ onPrev, onNext }) => {
+const FilterMovie = ({ onPrev }) => {
+    const history = useHistory();
     const [genres, setGenres] = useRecoilState(genresState);
-    const [movieData, setMovieData] = useRecoilState(filterMovieState);
+    const [movieData, setMovieData] = useRecoilState(resultMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState("selected");
@@ -69,10 +71,10 @@ const FilterMovie = ({ onPrev, onNext }) => {
     const onClickHandler = async () => {
         // 최종 결과 영화정보 받아오기
         const res = await axios
-            .get(`/filter/movie/{selectedMovieTitle}`)
+            .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
             .then((res) => setMovieData(res.data))
             .catch((e) => console.log(e))
-            .then(() => onNext());
+            .then(() => history.push("/result"));
     };
 
     return (

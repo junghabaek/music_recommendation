@@ -10,8 +10,8 @@ export const genresState = atom({
     default: {},
 });
 
-export const filterMovieState = atom({
-    key: "filterMovie",
+export const resultMovieState = atom({
+    key: "resultMovie",
     default: [],
 });
 
