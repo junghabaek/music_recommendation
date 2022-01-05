@@ -2,7 +2,7 @@ from flask import Blueprint, json, request, session, jsonify
 from models import Movies, db
 
 
-bp = Blueprint('mypage', __name__, url_prefix='/mypage')
+bp = Blueprint('mypage', __name__, url_prefix='/back')
 
 #user_id는 get으로 받아온 값으로 추후에 query에 이용
 

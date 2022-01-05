@@ -17,8 +17,8 @@ app.secret_key = os.environ.get('SESSION_KEY')
 
 app.register_blueprint(main_service.bp)
 app.register_blueprint(mypage_view.bp)
-
 app.register_blueprint(recommend_view.bp)
+
 CORS(app)
 
 db.init_app(app)
