@@ -22,7 +22,7 @@ const FilterMovie = ({ onPrev }) => {
     } // api 로 받아온 영화 섞은 함수
 
     let testapi = `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`;
-    let api = `http://localhost:5000/back/filter/movies`;
+    let api = `/back/filter/movies`;
 
     useEffect(() => {
         async function loadData() {
@@ -31,7 +31,7 @@ const FilterMovie = ({ onPrev }) => {
                 const response = await axios.post(api, genres);
                 console.log(response);
                 setMovies(response.data);
-                console.log("API 가져온 data", movies);
+                console.log("API 가져온 data", ...movies);
                 setLoading(false);
             } catch (e) {
                 console.log("axios get Error");
@@ -71,7 +71,7 @@ const FilterMovie = ({ onPrev }) => {
         setLoading((cur) => !cur);
         // 최종 결과 영화정보 받아오기
         const res = await axios
-            .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
+            .get(`/back/filter/recommend/${selectedMovie}`)
             .then((res) => setMovieData(res.data))
             .catch((e) => console.log(e))
             .then(() => history.push("/result"));
