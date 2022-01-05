@@ -3,7 +3,7 @@ from flask import Blueprint, json, request, session, jsonify
 from models import Movies, Genres, Songs, Features
 from random import randint
 
-bp = Blueprint('service', __name__, url_prefix='/filter')
+bp = Blueprint('service', __name__, url_prefix='/back/filter')
 
 # 장르에 따라 랜덤으로 한개의 영화 id와 genre제목을 추출해주는 함수
 def select_movie_by_genre(genre_id):
