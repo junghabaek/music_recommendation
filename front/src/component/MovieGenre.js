@@ -3,7 +3,6 @@ import { useRecoilState } from "recoil";
 import { genresState, previewTrackState } from "../state/atoms";
 import Audios from "./MusicPlay";
 import Loading from "./Spninner";
-import Always from "../routers/Always.mp3";
 import styled from "styled-components";
 import axios from "axios";
 import Image from "./Image";
@@ -30,7 +29,9 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         loadTrack();
     }, []);
 
-    console.log(previewTrack);
+    useEffect(() => {
+        console.log(previewTrack);
+    }, []);
 
     //TODO Sci-Fi : 12, Comedy : 2, Thriller : 3, Romance : 4, Action : 5 이 들어갈것같아요
 
@@ -41,14 +42,17 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         });
     };
 
-    console.log(genres);
+    useEffect(() => {
+        console.log(genres);
+    }, [genres]);
 
+    console.log(Object.keys(genres).length);
     return (
         <div>
             <div>
                 <h1>🎞영화장르 선택입니다.</h1>
                 {loading ? (
-                    <Loading />
+                    <Loading color="#CC455C" title="음화당" />
                 ) : (
                     <Stations>
                         {previewTrack &&
@@ -57,10 +61,10 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                     key={mgenre.genre}
                                     img={mgenre.cover_img}
                                 >
+                                    <div style={{ width: "25%" }}>
+                                        <Audios track={mgenre.track_url} />
+                                    </div>
                                     <div>
-                                        <div>
-                                            <Audios track={mgenre.track_url} />
-                                        </div>
                                         <input
                                             id={mgenre.genre}
                                             type="radio"
@@ -77,11 +81,11 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                             {mgenre.genre}
                                             <br />
                                             {mgenre.track_title}
-                                            <Image
+                                            {/* <Image
                                                 src={mgenre.cover_img}
                                                 alt={mgenre.track_title}
                                                 circle="true"
-                                            />
+                                            /> */}
                                         </label>
                                     </div>
                                 </Station>
@@ -89,7 +93,12 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                     </Stations>
                 )}
 
-                <button onClick={onNext}>다음</button>
+                <button
+                    onClick={onNext}
+                    disabled={Object.keys(genres).length === 0}
+                >
+                    다음
+                </button>
             </div>
         </div>
     );
@@ -115,17 +124,17 @@ const Station = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(
-        to right,
-        rgba(20, 20, 20, 0.1) 10%,
-        rgba(20, 20, 20, 0.7) 70%,
-        rgba(20, 20, 20, 1)
-    ),
-    url(${(props) => props.img});
-background-size: cover;
+    
 
     &:hover {
     border-color: #e36bae;
 `;
-
+// //background: linear-gradient(
+//     to right,
+//     rgba(20, 20, 20, 0.1) 10%,
+//     rgba(20, 20, 20, 0.7) 70%,
+//     rgba(20, 20, 20, 1)
+// ),
+// url(${(props) => props.img});
+// background-size: cover;
 export default MovieGenres;

@@ -2,7 +2,7 @@ import React from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
-const Audios = ({ track }) => {
+const Audios = ({ track, autoplay }) => {
     return (
         <div>
             <AudioPlayer
@@ -10,9 +10,11 @@ const Audios = ({ track }) => {
                 showJumpControls={false}
                 layout="stacked"
                 customProgressBarSection={[]}
-                customControlsSection={["MAIN_CONTROLS"]}
+                customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
                 autoPlayAfterSrcChange={false}
                 onPlay={(e) => console.log("onPlay")}
+                autoPlay={autoplay === true ? true : false}
+
                 // other props here
             />
         </div>
