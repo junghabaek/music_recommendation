@@ -46,7 +46,7 @@ class Movies(db.Model):
     runtime = db.Column(db.String(10), nullable=True)
     movie_age_rating = db.Column(db.String(10), nullable=True)
     poster_url = db.Column(db.String(200), nullable=True)
-    like_count = db.Column(db.Integer)
+    like_count = db.Column(db.Integer, default=0)
 
 
 class Songs(db.Model):
@@ -158,9 +158,9 @@ class User_features (db.Model):
   loudness = db.Column(db.Float)
   speechiness = db.Column(db.Float)
 
-  def __init__(self, movie_id, user_id, acousticness, danceability, energy, tempo, valence, instrumentalness, liveness, loudness, speechiness):
-    self.movie_id = movie_id
+  def __init__(self, user_id, movie_id, acousticness, danceability, energy, tempo, valence, instrumentalness, liveness, loudness, speechiness):
     self.user_id= user_id
+    self.movie_id = movie_id
     self.acousticness = acousticness
     self.danceability = danceability
     self.energy = energy

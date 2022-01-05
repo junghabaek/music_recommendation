@@ -5,11 +5,13 @@ import Loading from "./Spninner";
 import { Row } from "antd";
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
 import { useRecoilState, useRecoilValue } from "recoil";
-import { genresState, filterMovieState } from "../state/atoms";
+import { genresState, resultMovieState } from "../state/atoms";
+import { useHistory } from "react-router-dom";
 
-const FilterMovie = ({ onPrev, onNext }) => {
-    const genres = useRecoilValue(genresState);
-    const [movieData, setMovieData] = useRecoilState(filterMovieState);
+const FilterMovie = ({ onPrev }) => {
+    const history = useHistory();
+    const [genres, setGenres] = useRecoilState(genresState);
+    const [movieData, setMovieData] = useRecoilState(resultMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState("selected");
@@ -22,12 +24,13 @@ const FilterMovie = ({ onPrev, onNext }) => {
     let testapi = `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`;
     let api = `http://localhost:8000/filter/movies`;
 
-    console.log("받아온", genres);
-
     useEffect(() => {
         async function loadData() {
+            setGenres({ ...genres });
+            console.log(genres);
             try {
                 const response = await axios.post(api, genres);
+                console.log(response);
                 setMovies(response.data);
                 console.log("API 가져온 data", movies);
                 setLoading(false);
@@ -37,7 +40,8 @@ const FilterMovie = ({ onPrev, onNext }) => {
         }
         loadData();
     }, []);
-    console.log("movies: ", movies)
+    console.log("movies: ", movies);
+
     // mock api tes 버전
     // useEffect(() => {
     //     async function loadData() {
@@ -64,6 +68,15 @@ const FilterMovie = ({ onPrev, onNext }) => {
         console.log("선택된 영화id", selectedMovie);
     }, [selectedMovie]);
 
+    const onClickHandler = async () => {
+        // 최종 결과 영화정보 받아오기
+        const res = await axios
+            .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
+            .then((res) => setMovieData(res.data))
+            .catch((e) => console.log(e))
+            .then(() => history.push("/result"));
+    };
+
     return (
         <div>
             {loading ? (
@@ -72,7 +85,13 @@ const FilterMovie = ({ onPrev, onNext }) => {
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
                     {selectedMovieTitle ? (
-                        <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
+                        <div>
+                            <h2>
+                                관심있는 영화의 OST를 들어보고 제목을
+                                클릭해주세요.
+                            </h2>
+                            <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
+                        </div>
                     ) : null}
                     <div>
                         <Row gutter={[16, 16]}>
@@ -81,21 +100,22 @@ const FilterMovie = ({ onPrev, onNext }) => {
                                 firstMovies.map((movie, index) => (
                                     <React.Fragment key={index}>
                                         <GridCards
-                                            image={movie.medium_cover_image}
+                                            image={movie.poster_url}
                                             movieName={movie.title}
                                             url={movie.url}
-                                            id={movie.id}
+                                            id={movie.movie_id}
                                             setSelectedMovie={setSelectedMovie}
                                             setSelectedMovieTitle={
                                                 setSelectedMovieTitle
                                             }
+                                            track={movie.preview_url}
                                         />
                                     </React.Fragment>
                                 ))}
                         </Row>
                     </div>
                     <button onClick={onPrev}>뒤로가기 버튼</button>
-                    <button onClick={onNext}>결과보러가기</button>
+                    <button onClick={onClickHandler}>결과보러가기</button>
                 </div>
             )}
         </div>

@@ -8,7 +8,7 @@ import axios from "axios";
 const MusicGenres = ({ onPrev, onNext }) => {
     const [genres, setGenres] = useRecoilState(genresState);
 
-    const [input, setInput] = useState();
+    const [input, setInput] = useState(0);
 
     function valuetext(value) {
         return `${value}`;
@@ -27,23 +27,12 @@ const MusicGenres = ({ onPrev, onNext }) => {
         });
     };
 
-    const onClickHandler = async (e) => {
+    useEffect(() => {
         setGenres({
             ...genres,
             music_features: input,
         });
-        onNext();
-        //axios post
-        // const res = await axios
-        //     .post(null)
-        //     .then((res) => setMovieData(res.data))
-        //     .catch((e) => console.log(e))
-        //     .then(() => onNext());
-    };
-    console.log(input);
-    useEffect(() => {
-        console.log(genres);
-    }, [genres]);
+    }, [input]);
 
     return (
         <div>
@@ -68,7 +57,10 @@ const MusicGenres = ({ onPrev, onNext }) => {
                 ))}
             </Box>
             <button onClick={onPrev}>뒤로가기 버튼</button>
-            <button disabled={!input} onClick={onClickHandler}>
+            <button
+                disabled={!input || Object.keys(input).length < 3}
+                onClick={onNext}
+            >
                 좋아하는 영화 선택으로
             </button>
         </div>

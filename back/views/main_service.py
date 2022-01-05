@@ -125,6 +125,7 @@ def send_music_data():
       continue
 
     # 빈 값이 없는것을 확인했다면 data객체에 추가해준다.
+    data['id'] = genre_ids[index]
     data['genre'] = movie_genre
     data['track_url'] = song.preview_url
     data['cover_img'] = movie.poster_url
@@ -142,6 +143,7 @@ def send_music_data():
 @bp.route('/movies', methods=['POST'])
 def send_movies_list():
   result = request.get_json()
+  print(result)
   # result 형태
   # result = {
   #   'genre': 12,
@@ -152,6 +154,7 @@ def send_movies_list():
   #     "valence": 70,
   #   }
   # }
+  print(result)
 
   # 변수에 전달받은 값 담기
   # 장르 id는 1, 2, 3, 4, 5, 12 중 하나 [ Comedy(2)  Thriller(3)   Romance(4)  Action(5)  Sci-Fi(12)]
@@ -206,6 +209,7 @@ def send_movies_list():
     song_url = Songs.query.filter(Songs.movie_id == song.movie_id).first()
     
     data['movie_id'] = song.movie_id
+    data['movie_title'] = movie.movie_title
     data['poster_url'] = movie.poster_url
     data['preview_url'] = song_url.preview_url
     response.append(data)
