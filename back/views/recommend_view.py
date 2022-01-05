@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from models import Movies, Songs, Features
+from models import Movies, Songs, Features, Movie_pcas
 from cluster import get_nearest_movie
 from movie_plot import return_synopsis
 
@@ -16,20 +16,24 @@ def recommend(movie_id):
   movie1 = Movies.query.filter(Movies.id == movie_id1).first()
   movie1_song = Songs.query.filter(Songs.movie_id == movie_id1).first()
   movie1_feature = Features.query.filter(Features.movie_id == movie_id1).first()
+  movie1_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id1).first()
   movie2 = Movies.query.filter(Movies.id == movie_id2).first()
   movie2_song = Songs.query.filter(Songs.movie_id == movie_id2).first()
   movie2_feature = Features.query.filter(Features.movie_id == movie_id2).first()
+  movie2_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id2).first()
   movie3 = Movies.query.filter(Movies.id == movie_id3).first()
   movie3_song = Songs.query.filter(Songs.movie_id == movie_id3).first()
   movie3_feature = Features.query.filter(Features.movie_id == movie_id3).first()
+  movie3_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id3).first()
   movie4 = Movies.query.filter(Movies.id == movie_id4).first()
   movie4_song = Songs.query.filter(Songs.movie_id == movie_id4).first()
   movie4_feature = Features.query.filter(Features.movie_id == movie_id4).first()
+  movie4_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id4).first()
 
   response = []
-  movies = [[movie1, movie1_song, movie1_feature], [movie2, movie2_song, movie2_feature], [movie3, movie3_song, movie3_feature], [movie4, movie4_song, movie4_feature]]
+  movies = [[movie1, movie1_song, movie1_feature, movie1_pca], [movie2, movie2_song, movie2_feature, movie2_pca], [movie3, movie3_song, movie3_feature, movie3_pca], [movie4, movie4_song, movie4_feature, movie4_pca]]
   
-  for movie, song, feature in movies:
+  for movie, song, feature, pcas in movies:
     data = {}
     data['movie_id'] = movie.id
     data['movie_title'] = movie.movie_title
@@ -63,6 +67,10 @@ def recommend(movie_id):
     features['loudness'] = feature.loudness
     features['speechiness'] = feature.speechiness
     data['features'] = features
+    pca = {}
+    pca['x'] = pcas.x
+    pca['y'] = pcas.y
+    data['pca'] = pca
 
     response.append(data)
   
