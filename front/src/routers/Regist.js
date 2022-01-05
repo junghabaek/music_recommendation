@@ -61,7 +61,7 @@ const Regist = ({ history }) => {
             console.log(res);
             console.log("res.data.userId :: ", res.data.user_id);
             console.log("res.data.result :: ", res.data.result);
-            if (res.info === "ok") {
+            if (res.info === "OK") {
                 alert(`안녕하세요,${Name}님 반가워요`);
                 history.push("/login");
             }

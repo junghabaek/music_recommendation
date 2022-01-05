@@ -9,7 +9,7 @@ const Service = ({ history }) => {
 
     return (
         <div>
-            <PageLayout title="Muvie and chill">
+            <PageLayout title="음악을 좋아하는 당신께, 이 영화를 드려요.">
                 <Stepper step={step} onNext={onNext} onPrev={onPrev}>
                     <MovieGenre />
                     <MusicGenre />

@@ -1,5 +1,5 @@
 import React from "react";
-import RadarChart from "../component/RadarChart";
+import RadarChart from "../component/chart/RadarChart";
 import PageLayout from "../component/PageLayout";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { resultMovieState } from "../state/atoms";

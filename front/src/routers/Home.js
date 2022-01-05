@@ -15,7 +15,10 @@ const Home = ({ history }) => {
     return (
         <div>
             {/* <HoverEff /> */}
-            <PageLayout title="신개념 OST 기반 영화추천 서비스">
+            <PageLayout
+                title="음화당, "
+                sub="음악을 좋아하는 당신께, 이 영화를 드려요."
+            >
                 <p>
                     문득 길을 걷다 OST를 듣고 영화가 떠오른 기억이 있으신가요?
                 </p>

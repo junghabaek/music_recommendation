@@ -44,10 +44,10 @@ const Login = ({ history }) => {
             } else if (res.data.userId === inputId) {
                 // id, pw 모두 일치 userId = userId1, msg = undefined
                 console.log("======================", "로그인 성공");
+                Setlogin((cur) => !cur);
+                history.push("/");
                 // sessionStorage.setItem('user_id', inputId)
             }
-            Setlogin((cur) => !cur);
-            history.push("/");
         });
 
         setInputId("");
