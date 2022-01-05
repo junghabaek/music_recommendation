@@ -3,8 +3,6 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-
-
 class Movies(db.Model):
     __tablename__ = "Movies"
 
@@ -87,8 +85,6 @@ class Features(db.Model):
       return self.valence
 
 
-
-
 class Genres(db.Model):
     __tablename__ = "Genres"
 
@@ -103,6 +99,22 @@ class Genres(db.Model):
         self.movie_id = movie_id
         self.genre = genre
         self.genre_id = genre_id
+
+class Movie_pcas(db.Model):
+  
+  __tablename__ = "Movie_pcas"
+
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+  movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
+  movie_title = db.Column(db.String(150), nullable=True)
+  x = db.Column(db.Integer, nullable=False)
+  y = db.Column(db.Integer, nullable=False)
+
+  def __init__(self, movie_id, movie_title, x, y):
+    self.movie_id = movie_id
+    self.movie_title = movie_title
+    self.x = x
+    self.y = y
 
 
 
