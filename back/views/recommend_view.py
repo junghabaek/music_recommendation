@@ -3,7 +3,7 @@ from models import Movies, Songs, Features
 from cluster import get_nearest_movie
 from movie_plot import return_synopsis
 
-bp = Blueprint('recommend', __name__, url_prefix='/filter')
+bp = Blueprint('recommend', __name__, url_prefix='/back/filter')
 
 
 @bp.route('/recommend/<int:movie_id>', methods=["GET"])
