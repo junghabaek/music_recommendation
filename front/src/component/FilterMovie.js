@@ -22,7 +22,7 @@ const FilterMovie = ({ onPrev }) => {
     } // api 로 받아온 영화 섞은 함수
 
     let testapi = `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`;
-    let api = `http://localhost:8000/filter/movies`;
+    let api = `http://localhost:5000/back/filter/movies`;
 
     useEffect(() => {
         async function loadData() {

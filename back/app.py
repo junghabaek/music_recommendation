@@ -1,12 +1,11 @@
+from dotenv import load_dotenv
+from flask_migrate import Migrate
+from flask_cors import CORS
+from views import main_service, mypage_view, recommend_view
 from flask import Flask
 from models import db
 import os
 os.path.join(os.getcwd(), 'functions')
-
-from views import main_service, mypage_view, recommend_view
-from flask_cors import CORS
-from flask_migrate import Migrate
-from dotenv import load_dotenv
 
 
 load_dotenv()
@@ -25,4 +24,4 @@ db.init_app(app)
 Migrate().init_app(app, db)
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port=5000, debug=True)
