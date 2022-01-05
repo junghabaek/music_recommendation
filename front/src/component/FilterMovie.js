@@ -14,7 +14,7 @@ const FilterMovie = ({ onPrev }) => {
     const [movieData, setMovieData] = useRecoilState(resultMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState("selected");
+    const [selectedMovie, setSelectedMovie] = useState();
     const [selectedMovieTitle, setSelectedMovieTitle] = useState();
 
     function shuffle(array) {
@@ -27,7 +27,6 @@ const FilterMovie = ({ onPrev }) => {
     useEffect(() => {
         async function loadData() {
             setGenres({ ...genres });
-            console.log(genres);
             try {
                 const response = await axios.post(api, genres);
                 console.log(response);
@@ -69,6 +68,7 @@ const FilterMovie = ({ onPrev }) => {
     }, [selectedMovie]);
 
     const onClickHandler = async () => {
+        setLoading((cur) => !cur);
         // 최종 결과 영화정보 받아오기
         const res = await axios
             .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
@@ -84,15 +84,10 @@ const FilterMovie = ({ onPrev }) => {
             ) : (
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
-                    {selectedMovieTitle ? (
-                        <div>
-                            <h2>
-                                관심있는 영화의 OST를 들어보고 제목을
-                                클릭해주세요.
-                            </h2>
-                            <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
-                        </div>
-                    ) : null}
+                    <h2>관심있는 영화의 OST를 들어보고 제목을 클릭해주세요.</h2>
+                    {selectedMovieTitle === null ? null : (
+                        <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
+                    )}
                     <div>
                         <Row gutter={[16, 16]}>
                             {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
@@ -109,13 +104,16 @@ const FilterMovie = ({ onPrev }) => {
                                                 setSelectedMovieTitle
                                             }
                                             track={movie.preview_url}
+                                            xs={Number(12)}
                                         />
                                     </React.Fragment>
                                 ))}
                         </Row>
                     </div>
                     <button onClick={onPrev}>뒤로가기 버튼</button>
-                    <button onClick={onClickHandler}>결과보러가기</button>
+                    <button disabled={!selectedMovie} onClick={onClickHandler}>
+                        결과보러가기
+                    </button>
                 </div>
             )}
         </div>

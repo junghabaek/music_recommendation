@@ -7,6 +7,7 @@ import Login from "./routers/Login";
 import Service from "./routers/Service";
 import Regist from "./routers/Regist";
 import ResultPage from "./routers/ResultPage";
+import UserMain from "./routers/UserMain";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/regist" component={Regist} />
                 <Route path="/service" component={Service} />
                 <Route path="/result" component={ResultPage} />
+                <Route path="/main" component={UserMain} />
             </Switch>
         </Router>
     );

@@ -44,10 +44,10 @@ const Login = ({ history }) => {
             } else if (res.data.userId === inputId) {
                 // id, pw 모두 일치 userId = userId1, msg = undefined
                 console.log("======================", "로그인 성공");
+                Setlogin((cur) => !cur);
+                history.push("/");
                 // sessionStorage.setItem('user_id', inputId)
             }
-            Setlogin((cur) => !cur);
-            history.push("/");
         });
 
         setInputId("");
@@ -108,7 +108,14 @@ const Whole = styled.div`
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-image: url(null);
+    background: linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.1) 10%,
+            rgba(20, 20, 20, 0.7) 70%,
+            rgba(20, 20, 20, 1)
+        ),
+        url(https://source.unsplash.com/random/1920x1080);
+    background-size: cover;
 `;
 
 const LoginContainer = styled.div`
