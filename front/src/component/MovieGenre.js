@@ -6,6 +6,8 @@ import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
 import Image from "./Image";
+import Music from "./Music";
+import Player from "./Player";
 
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
@@ -40,13 +42,29 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             ...genres,
             genre: Number(e.target.value),
         });
+        // const label = document.querySelectorAll("label");
+        // const radio = document.querySelectorAll("input");
+
+        // radio.forEach((el, index) => {
+        //     if (el.checked) {
+        //         label.forEach(
+        //             (el) => (
+        //                 (el.style.opacity = "0.5"),
+        //                 (el.style.fontSize = "15px"),
+        //                 (el.style.fontWeight = "normal")
+        //             )
+        //         );
+        //         label[index].style.opacity = "1";
+        //         label[index].style.fontSize = "20px";
+        //         label[index].style.fontWeight = "bold";
+        //     }
+        // });
     };
 
     useEffect(() => {
         console.log(genres);
     }, [genres]);
 
-    console.log(Object.keys(genres).length);
     return (
         <>
             {loading ? (
@@ -54,18 +72,20 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             ) : (
                 <Whole>
                     <Container>
-                        <h1>원하는 분위기를 선택해주세요.</h1>
+                        <h1>음악을 듣고 원하는 분위기를 선택해주세요.</h1>
                         <Stations>
                             {previewTrack &&
                                 previewTrack.map((mgenre) => (
-                                    <Station
+                                    <Box
                                         key={mgenre.genre}
                                         img={mgenre.cover_img}
                                     >
-                                        <div style={{ width: "25%" }}>
-                                            <Audios track={mgenre.track_url} />
-                                        </div>
                                         <div>
+                                            {/* <Audios track={mgenre.track_url} /> */}
+                                            {/* <Music track={mgenre.track_url} /> */}
+                                            <Player url={mgenre.track_url} />
+                                        </div>
+                                        <Radio>
                                             <input
                                                 id={mgenre.genre}
                                                 type="radio"
@@ -81,14 +101,9 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                             <label htmlFor={mgenre.genre}>
                                                 <br />
                                                 {mgenre.track_title}
-                                                {/* <Image
-                                                    src={mgenre.cover_img}
-                                                    alt={mgenre.track_title}
-                                                    circle="true"
-                                                /> */}
                                             </label>
-                                        </div>
-                                    </Station>
+                                        </Radio>
+                                    </Box>
                                 ))}
                         </Stations>
                         <button
@@ -128,7 +143,7 @@ const Container = styled.div`
     color: #663f46;
     h1 {
         font-family: "sub2";
-        font-size: 30px;
+        font-size: 40px;
     }
 `;
 
@@ -136,16 +151,38 @@ const Stations = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+`;
+
+const Radio = styled.div`
+    opacity: 0.5;
+    color: black;
+    > input + label {
+    }
+    > input:checked + label {
+        font-size: 20px;
+        font-weight: bold;
+        color: red;
+        opacity: 1;
+        align-items: flex-start;
+    }
+`;
+
+const Box = styled.div`
+    width: 20%;
+    height: 30vh;
+    margin: 5px;
+    margin-top: 50px;
+    text-align: center;
 `;
 
 const Station = styled.div`
     width: 80%;
     font-size: 1.2em;
     border: 1px solid rgb(76, 62, 95);
-    margin: 0.25em;
+    
     border-radius: 10px;
-    padding: 1em;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -164,4 +201,5 @@ const Station = styled.div`
 // ),
 // url(${(props) => props.img});
 // background-size: cover;
+
 export default MovieGenres;

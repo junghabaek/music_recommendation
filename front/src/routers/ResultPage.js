@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import HeartButton from "../component/HeartButton";
-import D3plot from "../component/chart/D3plot";
+// import D3plot from "../component/chart/D3plot";
 import Audios from "../component/MusicPlay";
 
 const ResultPage = () => {
@@ -71,7 +71,6 @@ const ResultPage = () => {
                 </div>
 
                 <RadarChart />
-                <D3plot />
             </React.Fragment>
             <div>
                 <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
