@@ -10,10 +10,15 @@ const Audios = ({ track, autoplay }) => {
                 showJumpControls={false}
                 layout="stacked"
                 customProgressBarSection={[]}
-                customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                customControlsSection={["MAIN_CONTROLS"]}
                 autoPlayAfterSrcChange={false}
                 onPlay={(e) => console.log("onPlay")}
                 autoPlay={autoplay === true ? true : false}
+                style={{
+                    background: "none",
+                    boxShadow: "none",
+                    display: "inline-block",
+                }}
 
                 // other props here
             />

@@ -16,7 +16,7 @@ const Home = ({ history }) => {
 
         history.push("/service");
     };
-    document.title = "💽음화당,";
+    document.title = "음화당,";
     return (
         <div>
             <VideoPlayer
@@ -28,17 +28,17 @@ const Home = ({ history }) => {
             <Whole>
                 <LoginContainer>
                     <Mainimg src={mainlogo} alt="mainlogo" />
-                    <PageLayout sub="음악을 좋아하는 당신께, 이 영화를 드려요.">
-                        <p>
-                            문득 길을 걷다 OST를 듣고 영화가 떠오른 기억이
-                            있으신가요?
-                        </p>
 
-                        <Btn onClick={onClick} textColor="white">
-                            음악추천받기
-                        </Btn>
-                        <p>(이어폰을 착용해주세요)</p>
-                    </PageLayout>
+                    <p>
+                        음악을 좋아하는 당신께, 이 영화를 드려요.
+                        <br /> 문득 길을 걷다 OST를 듣고 영화가 떠오른 기억이
+                        있으신가요?
+                    </p>
+
+                    <Btn onClick={onClick} textColor="white">
+                        음악추천받기
+                    </Btn>
+                    <p>(이어폰을 착용해주세요)</p>
                 </LoginContainer>
             </Whole>
         </div>
@@ -53,6 +53,7 @@ const Mainimg = styled.img`
     align-items: center;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 20px;
 `;
 
 const Whole = styled.div`
@@ -83,11 +84,14 @@ const LoginContainer = styled.div`
 `;
 
 const Btn = styled.button`
-    width: 160px;
+    display: block;
+    margin: auto;
+
+    width: 170px;
     height: 40px;
     margin-top: 10px;
     border: 0px;
-    margin-bottom: ${(props) => props.marginBottom};
+    margin-bottom: 5px;
     border-radius: 5px;
     color: ${(props) => props.textColor};
     background-color: #304543;

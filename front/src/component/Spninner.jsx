@@ -3,19 +3,25 @@ import { useHistory } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import styled from "styled-components";
+import mainbk from "../component/icon/logo-bk.png";
 
 const Loading = (props) => {
     const Spinner = ({ color }) => {
         return (
             <Flex>
-                <RingLoader color={color} size="120px" />
+                <ScaleLoader
+                    height="100px"
+                    width="15px"
+                    color="#89B0AE"
+                    radius="8"
+                />
             </Flex>
         );
     };
 
     return (
         <Container>
-            <Title> {props.title} </Title>
+            <Mainimg src={mainbk} alt="mainlogo" />
             <Spinner color={props.color}></Spinner>
         </Container>
     );
@@ -44,12 +50,33 @@ export const LastLoading = (props) => {
     }, [history]);
 
     return (
-        <Container>
+        <Whole>
             <Title>{title}</Title>
             <Spinner color={props.color}></Spinner>
-        </Container>
+        </Whole>
     );
 };
+
+const Mainimg = styled.img`
+    display: block;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 20px;
+`;
+
+const Whole = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 92vh;
+    color: white;
+    background: #e9cbc3;
+    background-size: cover;
+`;
 
 const Title = styled.h1`
     font-size: 50px;
@@ -62,23 +89,22 @@ const Title = styled.h1`
 const FlexBox = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
 `;
 const ContainerWrapper = styled.div`
     width: 400px;
-    margin-top: 72px;
+    margin-top: 100px;
 `;
 
 const Container = (props) => (
-    <FlexBox>
+    <Whole>
         <ContainerWrapper>{props.children}</ContainerWrapper>
-    </FlexBox>
+    </Whole>
 );
 
 const Flex = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: null;
 `;
 
 export default Loading;

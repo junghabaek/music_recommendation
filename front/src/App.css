@@ -1,5 +1,5 @@
 @import "~antd/dist/antd.css";
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
 
 .App {
     text-align: center;
@@ -18,4 +18,9 @@
 @font-face {
     font-family: "sub2";
     src: url("./fonts/a펜글씨L.otf");
+}
+
+@font-face {
+    font-family: "Lora", serif;
+    src: url("https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+KR&display=swap");
 }

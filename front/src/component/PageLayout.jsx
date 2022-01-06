@@ -1,15 +1,25 @@
 import React from "react";
-import Navbar from "./Navbar";
+import styled from "styled-components";
 
 export default function PageLayout({ title, sub, children }) {
+    document.title = "음화당,";
     return (
-        <div>
+        <Navbar>
             <div>
-                <h1>{title}</h1>
+                <Title>{title}</Title>
                 <p>{sub}</p>
             </div>
 
             {children}
-        </div>
+        </Navbar>
     );
 }
+
+const Navbar = styled.div`
+    background-color: #304543;
+`;
+
+const Title = styled.h1`
+    color: #89b0ae;
+    font-family: "titlefont";
+`;
