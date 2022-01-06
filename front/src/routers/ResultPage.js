@@ -89,11 +89,11 @@ const ResultPage = () => {
                                         track={movie.preview_url}
                                         xs={8}
                                     />
-                                    <HeartButton
+                                    {/* <HeartButton
                                         like={like}
                                         setLike={setLike}
                                         id={movie.movie_id}
-                                    />
+                                    /> */}
                                 </React.Fragment>
                             ))}
                     </Row>
