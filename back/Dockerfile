@@ -4,8 +4,9 @@ COPY . /app
 
 WORKDIR /app
 
+ENV FLASK_RUN_PORT=8000
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["flask"]
+ENTRYPOINT ["python"]
 
-CMD ["run", "--host", "0.0.0.0"]
+CMD ["app.py"]
