@@ -11,7 +11,7 @@ os.path.join(os.getcwd(), 'functions')
 load_dotenv()
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@localhost:3306/{os.environ.get('DB_DATABASE')}"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+mysqlconnector://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@localhost:3306/{os.environ.get('DB_DATABASE')}"
 app.secret_key = os.environ.get('SESSION_KEY')
 
 app.register_blueprint(main_service.bp)
@@ -24,4 +24,4 @@ db.init_app(app)
 Migrate().init_app(app, db)
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

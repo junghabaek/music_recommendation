@@ -8,12 +8,13 @@ bp = Blueprint('recommend', __name__, url_prefix='/back/filter')
 
 @bp.route('/recommend/<int:movie_id>', methods=["GET"])
 def recommend(movie_id):
+    print('beginning')
     movie_id1, movie_id2, movie_id3, movie_id4 = get_nearest_movie(movie_id)
 
     # 각 영화의 값으로는 movie_id, movie_title, movie_year, movie_director, sound_director, imdb,
     # ott정보 리스트, country, Language, runtime, movie_age_rating, poster_url 정보를 준다.
     # songs테이블에서는 album_name, track_name, preview_url 값을 준다.
-
+    print('데이터베이스 불러오기 전')
     movie1 = Movies.query.filter(Movies.id == movie_id1).first()
     movie1_song = Songs.query.filter(Songs.movie_id == movie_id1).first()
     movie1_feature = Features.query.filter(
@@ -30,11 +31,11 @@ def recommend(movie_id):
     movie4_song = Songs.query.filter(Songs.movie_id == movie_id4).first()
     movie4_feature = Features.query.filter(
         Features.movie_id == movie_id4).first()
-
+    print('db 불러온 후')
     response = []
     movies = [[movie1, movie1_song, movie1_feature], [movie2, movie2_song, movie2_feature], [
         movie3, movie3_song, movie3_feature], [movie4, movie4_song, movie4_feature]]
-
+    
     for movie, song, feature in movies:
         data = {}
         data['movie_id'] = movie.id
@@ -71,5 +72,6 @@ def recommend(movie_id):
         data['features'] = features
 
         response.append(data)
-
+    print(response)
+    print('끝')
     return jsonify(response)
