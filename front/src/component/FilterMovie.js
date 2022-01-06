@@ -8,14 +8,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { genresState, resultMovieState } from "../state/atoms";
 import { useHistory } from "react-router-dom";
 
-const FilterMovie = ({ onPrev }) => {
+const FilterMovie = ({ onPrev, onNext }) => {
     const history = useHistory();
     const [genres, setGenres] = useRecoilState(genresState);
     const [movieData, setMovieData] = useRecoilState(resultMovieState);
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState();
-    const [selectedMovieTitle, setSelectedMovieTitle] = useState();
+    const [selectedMovie, setSelectedMovie] = useState(0);
+    const [selectedMovieTitle, setSelectedMovieTitle] = useState(0);
 
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
@@ -74,21 +74,23 @@ const FilterMovie = ({ onPrev }) => {
             .get(`http://localhost:8000/filter/recommend/${selectedMovie}`)
             .then((res) => setMovieData(res.data))
             .catch((e) => console.log(e))
-            .then(() => history.push("/result"));
+            .then(() => onNext());
     };
 
     return (
         <div>
             {loading ? (
-                <Loading />
+                <Loading color="#CC455C" title="음악 분석 중" />
             ) : (
                 <div>
                     <h1>사용자 영화선택 페이지</h1>
-                    <h2>관심있는 영화의 OST를 들어보고 제목을 클릭해주세요.</h2>
-                    {selectedMovieTitle === null ? null : (
+                    <h2>취향에 맞는 영화음악을 골라주세요.</h2>
+                    {selectedMovieTitle === 0 ? (
+                        <h2>마우스를 올리면 OST가 나와요</h2>
+                    ) : (
                         <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
                     )}
-                    <div>
+                    <div style={{ width: "50%", display: "flex" }}>
                         <Row gutter={[16, 16]}>
                             {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
                             {movies &&
@@ -96,7 +98,7 @@ const FilterMovie = ({ onPrev }) => {
                                     <React.Fragment key={index}>
                                         <GridCards
                                             image={movie.poster_url}
-                                            movieName={movie.title}
+                                            movieName={movie.movie_title}
                                             url={movie.url}
                                             id={movie.movie_id}
                                             setSelectedMovie={setSelectedMovie}
@@ -105,6 +107,7 @@ const FilterMovie = ({ onPrev }) => {
                                             }
                                             track={movie.preview_url}
                                             xs={Number(12)}
+                                            circle="true"
                                         />
                                     </React.Fragment>
                                 ))}

@@ -1,16 +1,53 @@
 import React from "react";
-import Navbar from "./Navbar";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import navLogo from "./icon/nav-logo.png";
 
 export default function PageLayout({ title, sub, children }) {
-    return (
-        <div>
-            <Navbar />
-            <h1>
-                <b>{title}</b>
-                <p>{sub}</p>
-            </h1>
+    const history = useHistory();
 
-            {children}
-        </div>
+    document.title = "음화당,";
+    return (
+        <Navbar>
+            <div>
+                <Navimg
+                    src={navLogo}
+                    alt="로고"
+                    onClick={() => {
+                        history.push("/");
+                    }}
+                />
+            </div>
+            <Whole>{children}</Whole>
+        </Navbar>
     );
 }
+
+const Navimg = styled.img`
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    width: 150px;
+    height: 50%;
+    cursor: pointer;
+`;
+
+const Navbar = styled.div`
+    background-color: #304543;
+`;
+
+const Title = styled.h1`
+    color: #89b0ae;
+    font-family: "titlefont";
+`;
+
+const Whole = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 92vh;
+    color: white;
+    background-color: #f3e7d6;
+    background-size: cover;
+`;

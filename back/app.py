@@ -3,7 +3,7 @@ from models import db
 import os
 os.path.join(os.getcwd(), 'functions')
 
-from views import user_view, main_service, mypage_view, result_view, recommend_view
+from views import main_service, mypage_view, recommend_view
 from flask_cors import CORS
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -15,10 +15,9 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@localhost:3306/{os.environ.get('DB_DATABASE')}"
 app.secret_key = os.environ.get('SESSION_KEY')
 
-app.register_blueprint(user_view.bp)
 app.register_blueprint(main_service.bp)
 app.register_blueprint(mypage_view.bp)
-app.register_blueprint(result_view.bp)
+
 app.register_blueprint(recommend_view.bp)
 CORS(app)
 

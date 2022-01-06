@@ -2,7 +2,7 @@ import React from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
-const Audios = ({ track }) => {
+const Audios = ({ track, autoplay }) => {
     return (
         <div>
             <AudioPlayer
@@ -13,6 +13,13 @@ const Audios = ({ track }) => {
                 customControlsSection={["MAIN_CONTROLS"]}
                 autoPlayAfterSrcChange={false}
                 onPlay={(e) => console.log("onPlay")}
+                autoPlay={autoplay === true ? true : false}
+                style={{
+                    background: "none",
+                    boxShadow: "none",
+                    display: "inline-block",
+                }}
+
                 // other props here
             />
         </div>

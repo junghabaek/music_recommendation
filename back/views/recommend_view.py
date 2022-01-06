@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify, session
-from models import Movies, Songs, User_features, Features, db
+from flask import Blueprint, jsonify
+from models import Movies, Songs, Features, Movie_pcas
 from cluster import get_nearest_movie
 from movie_plot import return_synopsis
 
@@ -15,17 +15,25 @@ def recommend(movie_id):
 
   movie1 = Movies.query.filter(Movies.id == movie_id1).first()
   movie1_song = Songs.query.filter(Songs.movie_id == movie_id1).first()
+  movie1_feature = Features.query.filter(Features.movie_id == movie_id1).first()
+  movie1_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id1).first()
   movie2 = Movies.query.filter(Movies.id == movie_id2).first()
   movie2_song = Songs.query.filter(Songs.movie_id == movie_id2).first()
+  movie2_feature = Features.query.filter(Features.movie_id == movie_id2).first()
+  movie2_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id2).first()
   movie3 = Movies.query.filter(Movies.id == movie_id3).first()
   movie3_song = Songs.query.filter(Songs.movie_id == movie_id3).first()
+  movie3_feature = Features.query.filter(Features.movie_id == movie_id3).first()
+  movie3_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id3).first()
   movie4 = Movies.query.filter(Movies.id == movie_id4).first()
   movie4_song = Songs.query.filter(Songs.movie_id == movie_id4).first()
+  movie4_feature = Features.query.filter(Features.movie_id == movie_id4).first()
+  movie4_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id4).first()
 
   response = []
-  movies = [[movie1, movie1_song], [movie2, movie2_song], [movie3, movie3_song], [movie4, movie4_song]]
+  movies = [[movie1, movie1_song, movie1_feature, movie1_pca], [movie2, movie2_song, movie2_feature, movie2_pca], [movie3, movie3_song, movie3_feature, movie3_pca], [movie4, movie4_song, movie4_feature, movie4_pca]]
   
-  for movie, song in movies:
+  for movie, song, feature, pcas in movies:
     data = {}
     data['movie_id'] = movie.id
     data['movie_title'] = movie.movie_title
@@ -48,25 +56,22 @@ def recommend(movie_id):
     data['album_name'] = song.album_name
     data['track_name'] = song.track_name
     data['preview_url'] = song.preview_url
+    features = {}
+    features['acousticness'] = feature.acousticness
+    features['danceability'] = feature.danceability
+    features['energy'] = feature.energy
+    features['tempo'] = feature.tempo
+    features['valence'] = feature.valence
+    features['instrumentalness'] = feature.instrumentalness
+    features['liveness'] = feature.liveness
+    features['loudness'] = feature.loudness
+    features['speechiness'] = feature.speechiness
+    data['features'] = features
+    pca = {}
+    pca['x'] = pcas.x
+    pca['y'] = pcas.y
+    data['pca'] = pca
 
     response.append(data)
   
-  # 로그인 상태라면 첫번째 추천 영화 user_features 테이블에 저장하기
-  # if session.get('login'):
-    # user_id = session['login']
-  # user_id = 1
-  # feature = Features.query.filter(Features.movie_id == movie_id1).first()
-  # user_feature = User_features(user_id,movie_id1, feature.acousticness, feature.danceability, feature.energy, feature.tempo, feature.valence, feature.instrumentalness, feature.liveness, feature.loudness, feature.speechiness)
-
-  # db.session.add(user_feature)
-  # db.session.commit()
-
-  # 첫번째 영화의 feature들만 추가하기
-  response[0]['acousticness'] = feature.acousticness
-  response[0]['loudness'] = feature.loudness
-  response[0]['energy'] = feature.energy
-  response[0]['tempo'] = feature.tempo
-  response[0]['instrumentalness'] = feature.instrumentalness
-  
-
   return jsonify(response)
