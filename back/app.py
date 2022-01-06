@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@localhost:3306/{os.environ.get('DB_DATABASE')}"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@127.0.0.1:3306/{os.environ.get('DB_DATABASE')}"
 app.secret_key = os.environ.get('SESSION_KEY')
 
 app.register_blueprint(main_service.bp)
@@ -23,6 +23,14 @@ CORS(app)
 
 db.init_app(app)
 Migrate().init_app(app, db)
+
+@app.route('/')
+def hello():
+    return 'welcome flask'
+
+@app.route('/main')
+def main():
+    return 'main page'
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
