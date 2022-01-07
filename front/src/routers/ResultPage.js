@@ -22,8 +22,8 @@ const ResultPage = () => {
     const final = movieData[0];
     console.log("1개 슬라이싱 data", final);
 
-    // const selected_features = movieData[4].selected_features;
-    // console.log(selected_features);
+    const selected_features = movieData[4].selected_features;
+    console.log(selected_features);
 
     const secondMovies = movieData.slice(1, 4);
     console.log("3개 슬라이싱 data", secondMovies);
@@ -78,7 +78,7 @@ const ResultPage = () => {
                 <RadarChart
                     feat={final.features}
                     name={final.movie_title}
-                    // beforefeat={selected_features}
+                    beforefeat={selected_features}
                 />
             </React.Fragment>
             <div>

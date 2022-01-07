@@ -31,7 +31,8 @@ def recommend(movie_id):
   movie4_pca = Movie_pcas.query.filter(Movie_pcas.movie_id == movie_id4).first()
 
   # 이전 영화 정보의 feature들을 추가로 전달한다.
-  selected_movie_feature = Features.query.filter(Features.id == movie_id).first()
+  selected_movie_feature = Features.query.filter(Features.movie_id == movie_id).first()
+
 
   response = []
   movies = [[movie1, movie1_song, movie1_feature, movie1_pca], [movie2, movie2_song, movie2_feature, movie2_pca], [movie3, movie3_song, movie3_feature, movie3_pca], [movie4, movie4_song, movie4_feature, movie4_pca]]
