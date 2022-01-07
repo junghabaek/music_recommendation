@@ -8,6 +8,8 @@ import Image from "./Image";
 import Music from "./Music";
 import Player from "./Player";
 
+import Button from "./styled/btn";
+
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
     const [previewTrack, setPreviewTrack] = useRecoilState(previewTrackState);
@@ -41,23 +43,6 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             ...genres,
             genre: Number(e.target.value),
         });
-        // const label = document.querySelectorAll("label");
-        // const radio = document.querySelectorAll("input");
-
-        // radio.forEach((el, index) => {
-        //     if (el.checked) {
-        //         label.forEach(
-        //             (el) => (
-        //                 (el.style.opacity = "0.5"),
-        //                 (el.style.fontSize = "15px"),
-        //                 (el.style.fontWeight = "normal")
-        //             )
-        //         );
-        //         label[index].style.opacity = "1";
-        //         label[index].style.fontSize = "20px";
-        //         label[index].style.fontWeight = "bold";
-        //     }
-        // });
     };
 
     useEffect(() => {
@@ -105,12 +90,12 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                     </Box>
                                 ))}
                         </Stations>
-                        <button
+                        <Button
                             onClick={onNext}
                             disabled={Object.keys(genres).length === 0}
                         >
                             다음
-                        </button>
+                        </Button>
                     </Container>
                 </>
             )}
@@ -118,21 +103,11 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     );
 };
 
-const Whole = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 92vh;
-    color: white;
-    background: #e9cbc3;
-    background-size: cover;
-`;
-
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
     text-align: center;
+    flex-direction: column;
+    align-items: center
     position: relative;
     width: 80vw;
     height: 70vh;
@@ -154,16 +129,16 @@ const Stations = styled.div`
 `;
 
 const Radio = styled.div`
-    opacity: 0.5;
-    color: black;
+    color: #ced4da;
+
     > input {
+        color: #304543;
+        filter: grayscale(80%);
     }
     > input:checked + label {
         font-size: 20px;
         font-weight: bold;
-        color: red;
-        opacity: 1;
-        align-items: flex-start;
+        color: #daa89b;
     }
 `;
 

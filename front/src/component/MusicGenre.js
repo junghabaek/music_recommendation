@@ -4,6 +4,7 @@ import Slider from "@mui/material/Slider";
 import { useRecoilState } from "recoil";
 import { genresState, filterMovieState } from "../state/atoms";
 import axios from "axios";
+import StyleContainer from "./styled/container";
 
 const MusicGenres = ({ onPrev, onNext }) => {
     const [genres, setGenres] = useRecoilState(genresState);
@@ -14,8 +15,54 @@ const MusicGenres = ({ onPrev, onNext }) => {
         return `${value}`;
     }
 
-    //음악 필터하는 속성으로는 danceability, energy, tempo, valence 했습니다.
-    const MusicSet = ["energy", "danceability", "valence", "tempo"];
+    console.log(input);
+
+    const MusicSet1 = [
+        {
+            title: "오늘 기분이 어때요", //부정 긍정
+            name: "valence",
+            marks: [
+                { value: 0, label: "슬퍼요" },
+                {
+                    value: 100,
+                    label: "행복해요",
+                },
+            ],
+        },
+        {
+            title: "신나는 음악 좋아하세요?",
+            name: "energy",
+            marks: [
+                { value: 0, label: "아니요" },
+                {
+                    value: 100,
+                    label: "좋아요",
+                },
+            ],
+        },
+        {
+            title: "춤 추는건 어때요?",
+            name: "danceability",
+            marks: [
+                { value: 0, label: "듣는게 좋아요" },
+                {
+                    value: 100,
+                    label: "지금 당장",
+                },
+            ],
+        },
+        {
+            title: "템포는 어떻게 할까요?",
+            name: "tempo",
+            marks: [
+                { value: 0, label: "느리게 plz" },
+                {
+                    value: 100,
+                    label: "빠르게 plz",
+                },
+            ],
+        },
+    ];
 
     const onChangeHandle = (e) => {
         const { value, name } = e.target;
@@ -35,49 +82,24 @@ const MusicGenres = ({ onPrev, onNext }) => {
     }, [input]);
 
     return (
-        <div>
-            <h1>🎧음악장르 선택입니다</h1>
-            <p>
-                **energy** 에너지는 0.0에서 1.0 사이의 측정치이며 강도와 활동의
-                지각적 측정을 나타낸다. 전형적으로, 에너지 넘치는 트랙들은
-                빠르고, 시끄럽고, 시끄럽게 느껴집니다. 예를 들어, 데스 메탈은
-                높은 에너지를 가지고 있는 반면, 바흐 서곡은 저울에서 낮은 점수를
-                받는다. 이 속성에 기여하는 지각적 특징에는 동적 범위, 인식된
-                소리, 음색, 시작 속도 및 일반적인 엔트로피가 포함된다.
-            </p>
-            <p>
-                **danceability** 댄서빌리티는 템포, 리듬 안정성, 박자 강도,
-                전반적인 규칙성을 포함한 음악적 요소들의 조합을 바탕으로 트랙이
-                춤에 얼마나 적합한지 설명한다. 0.0 값은 가장 춤출 수 없고 1.0은
-                가장 춤출 수 있습니다.
-            </p>
-            <p>
-                **valence** 트랙이 전달하는 음악적 긍정을 설명하는 0.0에서
-                1.0까지의 척도입니다. 원자가가 높은 트랙은 더 긍정적으로 들리는
-                반면, 원자가가 낮은 트랙은 더 부정적으로 들린다(예: 슬프고,
-                우울하고, 분노함).
-            </p>
-            <p>
-                tempo 트랙의 전체 예상 템포(분당 비트 수)입니다. 음악 용어에서
-                템포(tempo)는 주어진 곡의 속도 또는 속도이며, 평균 비트
-                지속시간에서 직접 파생된다.
-            </p>
+        <StyleContainer>
+            <h1>당신의 기분을 알려주세요</h1>
 
             <Box sx={{ width: 300 }}>
-                {MusicSet.map((mg, index) => (
+                {MusicSet1.map((mg, index) => (
                     <div key={index}>
-                        <label htmlFor="mg">{mg}</label>
+                        <label htmlFor="mg">{mg.title}</label>
                         <Slider
                             aria-label="equalizer"
                             defaultValue={50}
                             getAriaValueText={valuetext}
                             valueLabelDisplay="auto"
                             step={10}
-                            marks
+                            marks={mg.marks}
                             min={0}
                             max={100}
                             onChange={onChangeHandle}
-                            name={mg}
+                            name={mg.name}
                         />
                     </div>
                 ))}
@@ -89,7 +111,7 @@ const MusicGenres = ({ onPrev, onNext }) => {
             >
                 좋아하는 영화 선택으로
             </button>
-        </div>
+        </StyleContainer>
     );
 };
 
