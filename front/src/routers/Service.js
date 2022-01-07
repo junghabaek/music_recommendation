@@ -15,7 +15,7 @@ const Service = ({ history }) => {
                     <MovieGenre />
                     <MusicGenre />
                     <FilterMovie />
-                    <LastLoading color="#D4AFB9" />
+                    <LastLoading color="#304543" />
                 </Stepper>
             </PageLayout>
         </div>

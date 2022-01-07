@@ -4,11 +4,12 @@ import { genresState, previewTrackState } from "../state/atoms";
 import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
-import Image from "./Image";
-import Music from "./Music";
 import Player from "./Player";
 
 import Button from "./styled/btn";
+
+import dot1 from "./icon/dot-1.png";
+import Progress from "./styled/dot";
 
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
@@ -55,19 +56,20 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                 <Loading color="#CC455C" title="음화당" />
             ) : (
                 <>
+                    <Progress src={dot1} alt="progress" />
+
                     <Container>
                         <h1>음악을 듣고 원하는 분위기를 선택해주세요.</h1>
                         <Stations>
                             {previewTrack &&
                                 previewTrack.map((mgenre) => (
-                                    <Box
-                                        key={mgenre.genre}
-                                        img={mgenre.cover_img}
-                                    >
+                                    <Box key={mgenre.genre}>
                                         <div>
-                                            {/* <Audios track={mgenre.track_url} /> */}
-                                            {/* <Music track={mgenre.track_url} /> */}
-                                            <Player url={mgenre.track_url} />
+                                            <Player
+                                                url={mgenre.track_url}
+                                                value={mgenre.id}
+                                                title={mgenre.track_title}
+                                            />
                                         </div>
                                         <Radio>
                                             <input
@@ -117,7 +119,7 @@ const Container = styled.div`
     color: #663f46;
     h1 {
         font-family: "sub2";
-        font-size: 40px;
+        font-size: 2.1rem;
     }
 `;
 
@@ -149,31 +151,5 @@ const Box = styled.div`
     margin-top: 50px;
     text-align: center;
 `;
-
-const Station = styled.div`
-    width: 80%;
-    font-size: 1.2em;
-    border: 1px solid rgb(76, 62, 95);
-    
-    border-radius: 10px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Source Sans Pro', sans-serif;
-    
-
-    &:hover {
-    border-color: #e36bae;
-`;
-// //background: linear-gradient(
-//     to right,
-//     rgba(20, 20, 20, 0.1) 10%,
-//     rgba(20, 20, 20, 0.7) 70%,
-//     rgba(20, 20, 20, 1)
-// ),
-// url(${(props) => props.img});
-// background-size: cover;
 
 export default MovieGenres;

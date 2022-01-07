@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
     /* 공통 스타일 */
-    display: block;
+    display: inline-block;
     margin: auto;
     outline: none;
     border: none;

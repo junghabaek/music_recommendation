@@ -12,6 +12,8 @@ import axios from "axios";
 import HeartButton from "../component/HeartButton";
 // import D3plot from "../component/chart/D3plot";
 // import Audios from "../component/MusicPlay";
+import StyleContainer from "../component/styled/container";
+import HoverImg from "../component/hover";
 
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
@@ -50,71 +52,86 @@ const ResultPage = () => {
 
     return (
         <PageLayout>
-            <React.Fragment>
-                <div>
-                    <div style={{ width: "10%" }}>
-                        {/* <Audios track={final.preview_url} autoplay={true} /> */}
+            <StyleContainer>
+                <h1>음악을 좋아하는 당신께, 이 영화를 드려요.</h1>
+                <h1> &#60;{final.movie_title}&#62;</h1>
+                <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex" }}>
+                        <HoverImg
+                            image={final.poster_url}
+                            movieName={final.movie_title}
+                            url={final.url}
+                            id={final.movie_id}
+                            track={final.preview_url}
+                        />
                     </div>
-                    <GridCards
-                        image={final.poster_url}
-                        movieName={final.movie_title}
-                        url={final.url}
-                        id={final.movie_id}
-                        track={final.preview_url}
-                        xs={24}
-                    />
+                    <Divider />
+                    <div>
+                        <RadarChart
+                            feat={final.features}
+                            name={final.movie_title}
+                            beforefeat={selected_features}
+                        />
+                    </div>
+                </div>
+                <div>
                     <HeartButton like={like} id={resultmovieid} />
-                    <h1>{final.movie_title}</h1>
                     <p>OTT 정보 :: {ott_list}</p>
                     <h3>영화감독 :: {final.movie_director}</h3>
                     <h3>음악감독 :: {final.sound_director}</h3>
                     <h3>메인테마곡 :: {final.track_name}</h3>
+                </div>
 
-                    {codes !== "0" ? (
+                {codes !== "0" ? (
+                    <div>
                         <div dangerouslySetInnerHTML={{ __html: codes }}></div>
-                    ) : null}
-                </div>
+                    </div>
+                ) : null}
 
-                <RadarChart
-                    feat={final.features}
-                    name={final.movie_title}
-                    beforefeat={selected_features}
-                />
-            </React.Fragment>
-            <div>
-                <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
-                <br />
                 <div>
-                    <Row gutter={[16, 16]}>
-                        {movieData &&
-                            secondMovies.map((movie, index) => (
-                                <React.Fragment key={index}>
-                                    <GridCards
-                                        image={movie.poster_url}
-                                        movieName={movie.movie_title}
-                                        url={movie.url}
-                                        id={movie.movie_id}
-                                        track={movie.preview_url}
-                                        xs={8}
-                                    />
-                                    {/* <HeartButton
-                                        like={like}
-                                        setLike={setLike}
-                                        id={movie.movie_id}
-                                    /> */}
-                                </React.Fragment>
-                            ))}
-                    </Row>
+                    <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
+                    <br />
+                    <div>
+                        <Row gutter={[16, 16]}>
+                            {movieData &&
+                                secondMovies.map((movie, index) => (
+                                    <React.Fragment key={index}>
+                                        <GridCards
+                                            image={movie.poster_url}
+                                            movieName={movie.movie_title}
+                                            url={movie.url}
+                                            id={movie.movie_id}
+                                            track={movie.preview_url}
+                                            xs={8}
+                                        />
+                                        {/* <HeartButton
+                                            like={like}
+                                            setLike={setLike}
+                                            id={movie.movie_id}
+                                        /> */}
+                                    </React.Fragment>
+                                ))}
+                        </Row>
+                    </div>
                 </div>
-            </div>
-            <button>
-                <a href="/">집으로</a>
-            </button>
-            <button>
-                <Link to="/main">더보기</Link>
-            </button>
+                <div>
+                    <button>
+                        <a href="/">집으로</a>
+                    </button>
+                    <button>
+                        <Link to="/main">더보기</Link>
+                    </button>
+                </div>
+            </StyleContainer>
         </PageLayout>
     );
 };
+
+const Divider = styled.div`
+    border: 1px solid #89b0ae;
+    width: 0.1px;
+    margin: 0 150px;
+    height: 340px;
+`;
 
 export default ResultPage;

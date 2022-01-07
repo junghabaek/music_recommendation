@@ -38,10 +38,10 @@ const Navbar = styled.div`
 
 const Whole = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 92vh;
+    height: 92.6vh;
     color: white;
     background-color: #f3e7d6;
     background-size: cover;

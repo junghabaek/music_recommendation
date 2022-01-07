@@ -54,11 +54,11 @@ const RadarChart = ({ feat, name, beforefeat }) => {
                     feat.acousticness,
                 ],
                 backgroundColor: "rgba(243, 229, 185, 0.2)",
-                borderColor: "rgb(255, 183, 0)",
+                borderColor: "rgb(65, 153, 0)",
                 borderWidth: 1.5,
             },
             {
-                label: "이전선택음악",
+                label: "취향음악",
                 data: [
                     beforefeat.danceability,
                     beforefeat.energy,
@@ -67,7 +67,7 @@ const RadarChart = ({ feat, name, beforefeat }) => {
                     beforefeat.acousticness,
                 ],
                 backgroundColor: "rgba(223, 219, 115, 0.2)",
-                borderColor: "rgb(65, 153, 0)",
+                borderColor: "rgb(255, 183, 0)",
                 borderWidth: 1.5,
             },
         ],
@@ -76,7 +76,7 @@ const RadarChart = ({ feat, name, beforefeat }) => {
     return (
         <div
             style={{
-                background: "rgb(238,242,245)",
+                background: "none",
                 padding: "30px 0 20px",
                 width: "300px",
             }}
