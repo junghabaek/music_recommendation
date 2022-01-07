@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { genresState, previewTrackState } from "../state/atoms";
-import Audios from "./MusicPlay";
 import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
@@ -70,7 +69,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             {loading ? (
                 <Loading color="#CC455C" title="음화당" />
             ) : (
-                <Whole>
+                <>
                     <Container>
                         <h1>음악을 듣고 원하는 분위기를 선택해주세요.</h1>
                         <Stations>
@@ -113,7 +112,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                             다음
                         </button>
                     </Container>
-                </Whole>
+                </>
             )}
         </>
     );
@@ -157,7 +156,7 @@ const Stations = styled.div`
 const Radio = styled.div`
     opacity: 0.5;
     color: black;
-    > input + label {
+    > input {
     }
     > input:checked + label {
         font-size: 20px;

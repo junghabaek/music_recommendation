@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "./icon/nav-logo.png";
 
 export default function PageLayout({ title, sub, children }) {
     const history = useHistory();
 
-    document.title = "음화당,";
+    document.title = "음화당";
     return (
         <Navbar>
             <div>
@@ -16,7 +16,7 @@ export default function PageLayout({ title, sub, children }) {
                     onClick={() => {
                         history.push("/");
                     }}
-                />
+                ></Navimg>
             </div>
             <Whole>{children}</Whole>
         </Navbar>
@@ -34,11 +34,6 @@ const Navimg = styled.img`
 
 const Navbar = styled.div`
     background-color: #304543;
-`;
-
-const Title = styled.h1`
-    color: #89b0ae;
-    font-family: "titlefont";
 `;
 
 const Whole = styled.div`
