@@ -16,7 +16,7 @@ const Home = ({ history }) => {
 
         history.push("/service");
     };
-    document.title = "음화당,";
+    document.title = "음화당";
     return (
         <div>
             <VideoPlayer

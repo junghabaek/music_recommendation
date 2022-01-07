@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { genresState, previewTrackState } from "../state/atoms";
-import Audios from "./MusicPlay";
 import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
 import Image from "./Image";
 import Music from "./Music";
 import Player from "./Player";
+
+import Button from "./styled/btn";
 
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
@@ -42,23 +43,6 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             ...genres,
             genre: Number(e.target.value),
         });
-        // const label = document.querySelectorAll("label");
-        // const radio = document.querySelectorAll("input");
-
-        // radio.forEach((el, index) => {
-        //     if (el.checked) {
-        //         label.forEach(
-        //             (el) => (
-        //                 (el.style.opacity = "0.5"),
-        //                 (el.style.fontSize = "15px"),
-        //                 (el.style.fontWeight = "normal")
-        //             )
-        //         );
-        //         label[index].style.opacity = "1";
-        //         label[index].style.fontSize = "20px";
-        //         label[index].style.fontWeight = "bold";
-        //     }
-        // });
     };
 
     useEffect(() => {
@@ -70,7 +54,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             {loading ? (
                 <Loading color="#CC455C" title="음화당" />
             ) : (
-                <Whole>
+                <>
                     <Container>
                         <h1>음악을 듣고 원하는 분위기를 선택해주세요.</h1>
                         <Stations>
@@ -106,34 +90,24 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                     </Box>
                                 ))}
                         </Stations>
-                        <button
+                        <Button
                             onClick={onNext}
                             disabled={Object.keys(genres).length === 0}
                         >
                             다음
-                        </button>
+                        </Button>
                     </Container>
-                </Whole>
+                </>
             )}
         </>
     );
 };
 
-const Whole = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 92vh;
-    color: white;
-    background: #e9cbc3;
-    background-size: cover;
-`;
-
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
     text-align: center;
+    flex-direction: column;
+    align-items: center
     position: relative;
     width: 80vw;
     height: 70vh;
@@ -155,16 +129,16 @@ const Stations = styled.div`
 `;
 
 const Radio = styled.div`
-    opacity: 0.5;
-    color: black;
-    > input + label {
+    color: #ced4da;
+
+    > input {
+        color: #304543;
+        filter: grayscale(80%);
     }
     > input:checked + label {
         font-size: 20px;
         font-weight: bold;
-        color: red;
-        opacity: 1;
-        align-items: flex-start;
+        color: #daa89b;
     }
 `;
 

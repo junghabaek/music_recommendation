@@ -11,14 +11,19 @@ import styled from "styled-components";
 import axios from "axios";
 import HeartButton from "../component/HeartButton";
 // import D3plot from "../component/chart/D3plot";
-import Audios from "../component/MusicPlay";
+// import Audios from "../component/MusicPlay";
 
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
     const [like, setLike] = useState(false);
 
+    console.log("금방받아온", movieData);
+
     const final = movieData[0];
     console.log("1개 슬라이싱 data", final);
+
+    const selected_features = movieData[4].selected_features;
+    console.log(selected_features);
 
     const secondMovies = movieData.slice(1, 4);
     console.log("3개 슬라이싱 data", secondMovies);
@@ -42,13 +47,13 @@ const ResultPage = () => {
         setLike((cur) => !cur);
     };
     let codes = final.movie_plot;
-    console.log(codes);
+
     return (
         <PageLayout>
             <React.Fragment>
                 <div>
                     <div style={{ width: "10%" }}>
-                        <Audios track={final.preview_url} autoplay={true} />
+                        {/* <Audios track={final.preview_url} autoplay={true} /> */}
                     </div>
                     <GridCards
                         image={final.poster_url}
@@ -70,7 +75,11 @@ const ResultPage = () => {
                     ) : null}
                 </div>
 
-                <RadarChart />
+                <RadarChart
+                    feat={final.features}
+                    name={final.movie_title}
+                    beforefeat={selected_features}
+                />
             </React.Fragment>
             <div>
                 <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
@@ -99,7 +108,7 @@ const ResultPage = () => {
                 </div>
             </div>
             <button>
-                <Link to="/">홈으로 가기</Link>
+                <a href="/">집으로</a>
             </button>
             <button>
                 <Link to="/main">더보기</Link>

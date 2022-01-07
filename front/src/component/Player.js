@@ -10,8 +10,13 @@ const useAudio = (url) => {
     const toggle = () => setPlaying(!playing);
 
     useEffect(() => {
-        playing ? audio.play() : audio.pause();
+        playing ? playAudio() : audio.pause();
     }, [playing]);
+
+    function playAudio() {
+        audio.volume = 0.2;
+        audio.play();
+    }
 
     useEffect(() => {
         audio.addEventListener("ended", () => setPlaying(false));
