@@ -7,7 +7,15 @@ export const loginState = atom({
 
 export const genresState = atom({
     key: "genres",
-    default: {},
+    default: {
+        genre: "",
+        music_features: {
+            danceability: 50,
+            energy: 50,
+            tempo: 50,
+            valence: 50,
+        },
+    },
 });
 
 export const resultMovieState = atom({

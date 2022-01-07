@@ -54,7 +54,7 @@ const Container = styled.div`
         display: ${(props) => (props.circle ? "block" : null)};
         width: ${(props) => (props.circle ? "10em" : "100%")};
         height: ${(props) => (props.circle ? "10em" : "320px")};
-        border-radius: ${(props) => (props.circle ? null : "10px")};
+        border-radius: ${(props) => (props.circle ? "50%" : "10px")};
         border: ${(props) =>
             props.circle ? "1px solid rgb(76, 62, 95)" : null};
         margin: ${(props) => (props.circle ? "0 0.25em;" : null)};

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import playbtn from "./icon/sound-waves.png";
 import pausebtn from "./icon/sound-waves_1.png";
 import styled from "styled-components";
+import { toggleButtonClasses } from "@mui/material";
+import { genresState, previewTrackState } from "../state/atoms";
+import { useRecoilState } from "recoil";
 
 const useAudio = (url) => {
     const [audio] = useState(new Audio(url));
@@ -28,7 +31,7 @@ const useAudio = (url) => {
     return [playing, toggle];
 };
 
-const Player = ({ url }) => {
+const Player = ({ url, title, value }) => {
     const [playing, toggle] = useAudio(url);
 
     return (
@@ -39,7 +42,9 @@ const Player = ({ url }) => {
                         <WaveImg src={pausebtn} alt="pause" />
                     </div>
                 ) : (
-                    <WaveImg src={playbtn} alt="play" />
+                    <>
+                        <WaveImg src={playbtn} alt="play" name="hoho" />
+                    </>
                 )}
             </div>
         </div>
