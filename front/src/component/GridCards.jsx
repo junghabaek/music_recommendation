@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useRef, useState } from "react";
 import { Col } from "antd";
-import Always from "../routers/Always.mp3";
 import styled from "styled-components";
 import Image from "./Image";
 
@@ -17,6 +16,7 @@ const GridCards = (props) => {
     const audioPromiseRef = useRef(Promise.resolve());
     const start = () => {
         audioPromiseRef.current.then(() => audioTrack.play());
+        audioTrack.volume = 0.1;
     };
     const stop = () => {
         audioPromiseRef.current.then(() => audioTrack.pause());
@@ -36,9 +36,9 @@ const GridCards = (props) => {
                         </div>
                     </span>
                     <Image
-                        // style={{ width: "100%", height: "320px" }}
-                        alt={null} //TODO 이미지 제목 넣어야함
+                        alt={props.id} //TODO 이미지 제목 넣어야함
                         src={props.image}
+                        circle={props.circle}
                     />
                 </HHover>
             </div>
@@ -77,7 +77,7 @@ const HHover = styled.div`
         
     }
     &:hover {
-        border-color: #e36bae;
+    
 `;
 
 export default GridCards;

@@ -107,8 +107,8 @@ class Movie_pcas(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
   movie_id = db.Column(db.Integer, db.ForeignKey('Movies.id'), nullable=False)
   movie_title = db.Column(db.String(150), nullable=True)
-  x = db.Column(db.Integer, nullable=False)
-  y = db.Column(db.Integer, nullable=False)
+  x = db.Column(db.Float, nullable=False)
+  y = db.Column(db.Float, nullable=False)
 
   def __init__(self, movie_id, movie_title, x, y):
     self.movie_id = movie_id
