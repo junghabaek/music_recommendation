@@ -74,22 +74,38 @@ const ResultPage = () => {
                         />
                     </div>
                 </div>
-                <div>
-                    <HeartButton like={like} id={resultmovieid} />
-                    <p>OTT 정보 :: {ott_list}</p>
-                    <h3>영화감독 :: {final.movie_director}</h3>
-                    <h3>음악감독 :: {final.sound_director}</h3>
-                    <h3>메인테마곡 :: {final.track_name}</h3>
-                </div>
-
-                {codes !== "0" ? (
-                    <div>
-                        <div dangerouslySetInnerHTML={{ __html: codes }}></div>
+                <ContentBox>
+                    <div style={{ width: "50%", flexBasis: "50%" }}>
+                        <HeartButton like={like} id={resultmovieid} />
+                        <p>OTT 정보 :: {ott_list}</p>
+                        <h3>영화감독 :: {final.movie_director}</h3>
+                        <h3>음악감독 :: {final.sound_director}</h3>
+                        <h3>메인테마곡 :: {final.track_name}</h3>
                     </div>
-                ) : null}
+
+                    {codes !== "0" ? (
+                        <div
+                            style={{
+                                width: "450px",
+                                textAlign: "center",
+                                margin: "auto",
+                            }}
+                        >
+                            <h3>&#60;줄거리&#62;</h3>
+                            <div
+                                style={{
+                                    width: "450px",
+                                    padding: "0 50px",
+                                    textAlign: "center",
+                                }}
+                                dangerouslySetInnerHTML={{ __html: codes }}
+                            ></div>
+                        </div>
+                    ) : null}
+                </ContentBox>
 
                 <div>
-                    <h3>혹시 몰라 비슷한 영화도 추천해드려요</h3>
+                    <h2>혹시 몰라 비슷한 영화도 추천해드려요</h2>
                     <br />
                     <div>
                         <Row gutter={[16, 16]}>
@@ -132,6 +148,11 @@ const Divider = styled.div`
     width: 0.1px;
     margin: 0 150px;
     height: 340px;
+`;
+
+const ContentBox = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 export default ResultPage;
