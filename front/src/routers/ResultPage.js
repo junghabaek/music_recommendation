@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import RadarChart from "../component/chart/RadarChart";
 import PageLayout from "../component/PageLayout";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -9,10 +8,8 @@ import GridCards from "../component/GridCards";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-
+import AudioPlayer from "react-h5-audio-player";
 import HeartButton from "../component/HeartButton";
-// import D3plot from "../component/chart/D3plot";
-// import Audios from "../component/MusicPlay";
 import StyleContainer from "../component/styled/container";
 import HoverImg from "../component/hover";
 
@@ -21,6 +18,9 @@ import Button from "../component/styled/btn";
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
     const [like, setLike] = useState(false);
+    const [likeNow, setLikeNow] = useState(0);
+
+    console.log("금방받아온", movieData);
 
     console.log("금방받아온", movieData);
 
@@ -49,36 +49,32 @@ const ResultPage = () => {
                 movie_id: resultmovieid,
                 liked: 1,
             };
-            const res = await axios.post("/result/mypage", body);
+
+            const res = await axios
+                .post("/result/mypage", body)
+                .then((res) => setLikeNow(res.data.like_now))
+                .catch((e) => console.log(e));
+
             setLike((cur) => !cur); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
         } else {
             let body = {
                 movie_id: resultmovieid,
                 liked: 0,
             };
-            const res = await axios.post("/result/mypage", body);
+
+            const res = await axios
+                .post("/result/mypage", body)
+                .then((res) => setLikeNow(res.data.like_now))
+                .catch((e) => console.log(e));
+
+
             setLike((cur) => !cur);
         }
     };
+
+    // ... 글자 더보기 기능
     let codes = final.movie_plot;
 
-    // const contentRef = useRef(null);
-    // const [isShowReadMore, setIsShowReadMore] = useState(false);
-    // const observeCallback = (entries) => {
-    //     for (let entry of entries) {
-    //         if (entry.target.scrollHeight > entry.contentRect.height) {
-    //             setIsShowReadMore(true);
-    //         } else {
-    //             setIsShowReadMore(false);
-    //         }
-    //     }
-    // };
-    // useResizeObserver({ callback: observeCallback, element: contentRef });
-    // const onClick = (e) => {
-    //     contentRef.current.classList.add("show");
-    //     setIsShowReadMore(false);
-    // };
-    // console.log(isShowReadMore);
 
     const [limit, setLimit] = useState(50);
     const toggleEllipsis = (str, limit) => {
@@ -178,7 +174,7 @@ const ResultPage = () => {
                             <LikeBox>
                                 {final.like_count === 0
                                     ? final.like_count
-                                    : final.like_count + 1}
+                                    : likeNow}
                             </LikeBox>
                         </div>
                     </div>
@@ -259,6 +255,16 @@ const ResultPage = () => {
                     </Button>
                 </div>
             </Container>
+            <AudioPlayer
+                style={{ display: "none" }}
+                className="player"
+                src={final.preview_url}
+                showJumpControls={false}
+                layout="stacked"
+                autoPlay
+                volume={0.5}
+                autoPlayAfterSrcChange={false}
+            />
         </PageLayout>
     );
 };
