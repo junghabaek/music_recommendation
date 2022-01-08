@@ -15,7 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+mysqlconnector://{os.environ.get
 app.secret_key = os.environ.get('SESSION_KEY')
 
 app.register_blueprint(main_service.bp)
-app.register_blueprint(mypage_view.bp)
+app.register_blueprint(like_count.bp)
 app.register_blueprint(recommend_view.bp)
 
 CORS(app)
