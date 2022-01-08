@@ -37,7 +37,7 @@
   - 
 
   ### 백엔드
-  - 
+  - flask, flask_sqlalchemy, flask_cors, flask_migrate, dotenv
 
   ### 데이터 분석
   - Pandas, Scikit-learn, BeautifulSoup, Spotipy, Matplotlib
