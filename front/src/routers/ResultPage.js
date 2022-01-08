@@ -49,7 +49,7 @@ const ResultPage = () => {
                 liked: 1,
             };
             const res = await axios
-                .post("/result/mypage", body)
+                .post("/back/result/mypage", body)
                 .then((res) => setLikeNow(res.data.like_now))
                 .catch((e) => console.log(e));
 
@@ -60,7 +60,7 @@ const ResultPage = () => {
                 liked: 0,
             };
             const res = await axios
-                .post("/result/mypage", body)
+                .post("/back/result/mypage", body)
                 .then((res) => setLikeNow(res.data.like_now))
                 .catch((e) => console.log(e));
 
