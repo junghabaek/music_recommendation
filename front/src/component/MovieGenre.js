@@ -30,7 +30,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                 let api = "/back/filter/genre";
                 const response = await axios.get(api);
                 setPreviewTrack(response.data);
-                console.log("get track api");
+                // console.log("get track api");
                 setLoading(false);
             } catch (e) {
                 console.log("axios get Error");
@@ -40,9 +40,9 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         loadTrack();
     }, []);
 
-    useEffect(() => {
-        console.log(previewTrack);
-    }, []);
+    // useEffect(() => {
+    //     console.log(previewTrack);
+    // }, []);
 
     //TODO Sci-Fi : 12, Comedy : 2, Thriller : 3, Romance : 4, Action : 5 이 들어갈것같아요
 
@@ -53,9 +53,9 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         });
     };
 
-    useEffect(() => {
-        console.log(genres);
-    }, [genres]);
+    // useEffect(() => {
+    //     console.log(genres);
+    // }, [genres]);
 
     return (
         <>

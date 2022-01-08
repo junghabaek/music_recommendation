@@ -21,19 +21,17 @@ const ResultPage = () => {
     const [likeNow, setLikeNow] = useState(0);
 
     const final = movieData[0];
-    console.log("1개 슬라이싱 data", final);
+    // console.log("결과 data", final);
 
     const selected_features = movieData[4].selected_features;
 
     const secondMovies = movieData.slice(1, 4);
-    console.log("3개 슬라이싱 data", secondMovies);
+    // console.log("3개 슬라이싱 data", secondMovies);
 
     const ott_list = Object.entries(final.ott).reduce((acc, cur) => {
         if (cur[1]) acc.push(cur[0]);
         return acc;
     }, []);
-
-    console.log("likeNow는", likeNow);
 
     const resultmovieid = final.movie_id;
 
@@ -58,7 +56,6 @@ const ResultPage = () => {
             const res = await axios
                 .post("/back/result/mypage", body)
                 .then((res) => setLikeNow(res.data.like_now))
-                .then((res) => console.log(res))
                 .catch((e) => console.log(e));
 
             setLike((cur) => !cur);
@@ -67,7 +64,6 @@ const ResultPage = () => {
 
     // ... 글자 더보기 기능
     let codes = final.movie_plot;
-
     const [limit, setLimit] = useState(50);
     const toggleEllipsis = (str, limit) => {
         return {
@@ -112,44 +108,46 @@ const ResultPage = () => {
                     <div style={{ width: "450px", flexBasis: "50%" }}>
                         <h2>&#47; 영화정보 &#47;</h2>
                         <Table>
-                            <tr style={{ padding: "10px" }}>
-                                <td>OTT정보</td>
-                                <td>
-                                    {ott_list.map((item, index) => {
-                                        if (index === ott_list.length - 1) {
-                                            return (
-                                                <span
-                                                    key={index}
-                                                    style={{
-                                                        marginRight: "5px",
-                                                    }}
-                                                >
-                                                    {item}
-                                                </span>
-                                            );
-                                        } else {
-                                            return (
-                                                <span
-                                                    key={index}
-                                                    style={{
-                                                        marginRight: "5px",
-                                                    }}
-                                                >
-                                                    {item},
-                                                </span>
-                                            );
-                                        }
-                                    })}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>영화감독</td>
-                                <td>{final.movie_director}</td>
-                            </tr>
-                            <tr>
-                                <td>음악감독</td>
-                                <td>{final.sound_director}</td>
-                            </tr>
+                            <tbody>
+                                <tr style={{ padding: "10px" }}>
+                                    <td>OTT정보</td>
+                                    <td>
+                                        {ott_list.map((item, index) => {
+                                            if (index === ott_list.length - 1) {
+                                                return (
+                                                    <span
+                                                        key={index}
+                                                        style={{
+                                                            marginRight: "5px",
+                                                        }}
+                                                    >
+                                                        {item}
+                                                    </span>
+                                                );
+                                            } else {
+                                                return (
+                                                    <span
+                                                        key={index}
+                                                        style={{
+                                                            marginRight: "5px",
+                                                        }}
+                                                    >
+                                                        {item},
+                                                    </span>
+                                                );
+                                            }
+                                        })}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>영화감독</td>
+                                    <td>{final.movie_director}</td>
+                                </tr>
+                                <tr>
+                                    <td>음악감독</td>
+                                    <td>{final.sound_director}</td>
+                                </tr>
+                            </tbody>
                         </Table>
                         <div
                             style={{
@@ -235,11 +233,6 @@ const ResultPage = () => {
                         <a style={{ color: "white" }} href="/">
                             홈으로
                         </a>
-                    </Button>
-                    <Button style={{ color: "white" }}>
-                        <Link to="/main" style={{ color: "white" }}>
-                            더보기
-                        </Link>
                     </Button>
                 </div>
             </Container>

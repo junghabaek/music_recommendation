@@ -39,9 +39,10 @@ const FilterMovie = ({ onPrev, onNext }) => {
             setGenres({ ...genres });
             try {
                 const response = await axios.post(api, genres);
-                console.log(response);
+                // console.log(response);
                 setMovies(response.data);
-                console.log("API 가져온 data", ...movies);
+                // console.log("API 가져온 data", movies);
+
                 setLoading(false);
             } catch (e) {
                 console.log("axios get Error");
@@ -49,18 +50,20 @@ const FilterMovie = ({ onPrev, onNext }) => {
         }
         loadData();
     }, []);
-    console.log("movies: ", movies);
+
+    // api 받아온 값 영화리스트
+    // console.log("movies: ", movies);
 
     useEffect(() => {
         shuffle(movies);
     }, [movies]);
 
     const firstMovies = movies.slice(0, 6);
-    console.log("6개 슬라이싱 data", firstMovies);
+    // console.log("6개 슬라이싱 data", firstMovies);
 
-    useEffect(() => {
-        console.log("선택된 영화id", selectedMovie);
-    }, [selectedMovie]);
+    // useEffect(() => {
+    //     console.log("선택된 영화id", selectedMovie);
+    // }, [selectedMovie]);
 
     const onClickHandler = async () => {
         // 최종 결과 영화정보 받아오기
