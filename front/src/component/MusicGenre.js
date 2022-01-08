@@ -93,7 +93,6 @@ const MusicGenres = ({ onPrev, onNext }) => {
             </div>
             <StyleContainer>
                 <h1>당신의 기분을 알려주세요</h1>
-
                 <Slidebox>
                     {MusicSet1.map((mg, index) => (
                         <Box key={index}>

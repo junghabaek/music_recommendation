@@ -8,8 +8,8 @@ const StyleContainer = styled.div`
     align-items: center;
     position: relative;
     width: 80vw;
-    height: 75vh;
-    padding: 70px;
+    padding: 1.8vh 0;
+
     background-color: rgb(255, 255, 255, 0.7);
 
     color: #663f46;
@@ -26,5 +26,8 @@ const StyleContainer = styled.div`
 function Container({ children, ...rest }) {
     return <StyleContainer {...rest}>{children}</StyleContainer>;
 }
+
+//    height: 75vh;
+//padding: 70px;
 
 export default StyleContainer;

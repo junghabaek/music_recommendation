@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import EmptyHeartImg from "./icon/vinyl.png";
-import HeartImg from "./icon/like_vinyl.png";
+import EmptyHeartImg from "./icon/heart.png";
+import HeartImg from "./icon/heart1.png";
 import axios from "axios";
 
 const Heart = styled.img`
@@ -11,12 +11,12 @@ const Heart = styled.img`
 
 const HeartButton = ({ like, onClick, setLike, id }) => {
     const toggleLike = async (e) => {
-        let body = {
-            movie_id: id,
-            liked: 1,
-        };
-        console.log(body);
-        const res = await axios.post("/result/mypage", body); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
+        // let body = {
+        //     movie_id: id,
+        //     liked: 1,
+        // };
+        // console.log(body);
+        // const res = await axios.post("/result/mypage", body); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
         setLike((cur) => !cur);
     };
 
@@ -24,10 +24,10 @@ const HeartButton = ({ like, onClick, setLike, id }) => {
         <div>
             <Heart
                 src={like ? HeartImg : EmptyHeartImg}
-                onClick={toggleLike}
+                onClick={onClick}
                 name="like"
             />
-            ;<label htmlFor="like">like</label>
+            <label htmlFor="like"></label>
         </div>
     );
 };
