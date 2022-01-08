@@ -10,18 +10,16 @@ import styled from "styled-components";
 import axios from "axios";
 
 import HeartButton from "../component/HeartButton";
-
 import HoverImg from "../component/hover";
-
 import Button from "../component/styled/btn";
 
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
     const [like, setLike] = useState(false);
-    const [likeNow, setLikeNow] = useState(0);
 
     const final = movieData[0];
-    // console.log("결과 data", final);
+
+    const [likeNow, setLikeNow] = useState(final.like_count);
 
     const selected_features = movieData[4].selected_features;
 
@@ -44,7 +42,7 @@ const ResultPage = () => {
             const res = await axios
                 .post("/back/result/mypage", body)
                 .then((res) => setLikeNow(res.data.like_now))
-                .then((res) => console.log(res))
+
                 .catch((e) => console.log(e));
 
             setLike((cur) => !cur); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
@@ -161,7 +159,11 @@ const ResultPage = () => {
                                 id={resultmovieid}
                                 onClick={toggleLike}
                             />{" "}
-                            <LikeBox>{likeNow === final.like_count ? final.like_count : likeNow}</LikeBox>
+                            <LikeBox>
+                                {likeNow === final.like_count
+                                    ? final.like_count
+                                    : likeNow}
+                            </LikeBox>
                         </div>
                     </div>
 
@@ -229,11 +231,9 @@ const ResultPage = () => {
                     </div>
                 </ContentBox2>
                 <div>
-                    <Button color="white">
-                        <a style={{ color: "white" }} href="/">
-                            홈으로
-                        </a>
-                    </Button>
+                    <a style={{ color: "white" }} href="/">
+                        <Button color="white">홈으로</Button>
+                    </a>
                 </div>
             </Container>
         </PageLayout>
