@@ -12,10 +12,14 @@ def showData():
     result = request.get_json()
     movie_id = result['movie_id']
     liked = result['liked']
-    movie = Movies.query.filter(Movies.id == movie_id).first()
-    movie.like_count += 1
-    db.session.add()
-    db.session.commit()
+    if liked==1:
+        movie = Movies.query.filter(Movies.id == movie_id).first()
+        movie.like_count += 1
+        db.session.commit()
+    else:
+        movie = Movies.query.filter(Movies.id == movie_id).first()
+        movie.like_count -= 1
+        db.session.commit()
 
     response = {
         'like_now': movie.like_count
