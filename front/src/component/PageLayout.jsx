@@ -3,8 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "./icon/nav-logo.png";
 
-export default function PageLayout({ title, sub, children }) {
+export default function PageLayout({ long, title, sub, children }) {
     const history = useHistory();
+
+    console.log("long은", long);
 
     document.title = "음화당";
     return (
@@ -18,7 +20,7 @@ export default function PageLayout({ title, sub, children }) {
                     }}
                 ></Navimg>
             </div>
-            <Whole>{children}</Whole>
+            <Whole long={long}>{children}</Whole>
         </Navbar>
     );
 }
@@ -41,7 +43,7 @@ const Whole = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 92.6vh;
+    height: ${(props) => (props.long ? "210vh" : "92.6vh")};
     color: white;
     background-color: #f3e7d6;
     background-size: cover;

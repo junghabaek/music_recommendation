@@ -16,7 +16,7 @@ const GridCards = (props) => {
     const audioPromiseRef = useRef(Promise.resolve());
     const start = () => {
         audioPromiseRef.current.then(() => audioTrack.play());
-        audioTrack.volume = 0.1;
+        audioTrack.volume = 0.05;
     };
     const stop = () => {
         audioPromiseRef.current.then(() => audioTrack.pause());
@@ -48,7 +48,7 @@ const GridCards = (props) => {
 export const HHover = styled.div`
     {
         position: relative;
-        border: 1px solid white;
+        
         text-align: center;
 
     }

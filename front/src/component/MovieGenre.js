@@ -1,6 +1,12 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, {
+    Fragment,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useRecoilState } from "recoil";
-import { genresState, previewTrackState } from "../state/atoms";
+import { genresState, previewTrackState, AudioState } from "../state/atoms";
 import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
@@ -15,6 +21,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
     const [previewTrack, setPreviewTrack] = useRecoilState(previewTrackState);
     const [genres, setGenres] = useRecoilState(genresState);
+    const [pauseaudio, setPauseaudio] = useRecoilState(AudioState);
     // 미리듣기 음악 불러오기 API
     // genre / track_url / cover_img / track_title
     useEffect(() => {
@@ -44,6 +51,11 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
             ...genres,
             genre: Number(e.target.value),
         });
+    };
+
+    const onClickHandler = () => {
+        setPauseaudio((cur) => !cur);
+        onNext();
     };
 
     useEffect(() => {
@@ -93,7 +105,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                 ))}
                         </Stations>
                         <Button
-                            onClick={onNext}
+                            onClick={onClickHandler}
                             disabled={Object.keys(genres).length === 0}
                         >
                             다음

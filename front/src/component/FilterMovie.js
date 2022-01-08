@@ -79,7 +79,6 @@ const FilterMovie = ({ onPrev, onNext }) => {
                     </div>
                     <StyleContainer>
                         <h1>당신의 취향에 맞는 음악을 가져왔어요.</h1>
-
                         <GridBox>
                             <Row gutter={[60, 30]}>
                                 {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
@@ -112,7 +111,7 @@ const FilterMovie = ({ onPrev, onNext }) => {
                                 {selectedMovieTitle} OST를 선택 하셨어요.
                             </h2>
                         )}
-                        <div>
+                        <div style={{ marginBottom: "5px" }}>
                             <Button onClick={onPrev}>뒤로가기</Button>
                             <Button
                                 disabled={!selectedMovie}

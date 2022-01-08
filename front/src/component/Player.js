@@ -3,12 +3,13 @@ import playbtn from "./icon/sound-waves.png";
 import pausebtn from "./icon/sound-waves_1.png";
 import styled from "styled-components";
 import { toggleButtonClasses } from "@mui/material";
-import { genresState, previewTrackState } from "../state/atoms";
+import { AudioState, genresState, previewTrackState } from "../state/atoms";
 import { useRecoilState } from "recoil";
 
 const useAudio = (url) => {
     const [audio] = useState(new Audio(url));
     const [playing, setPlaying] = useState(false);
+    const [pauseaudio, setPauseaudio] = useRecoilState(AudioState);
 
     const toggle = () => setPlaying(!playing);
 
@@ -16,8 +17,14 @@ const useAudio = (url) => {
         playing ? playAudio() : audio.pause();
     }, [playing]);
 
+    useEffect(() => {
+        pauseaudio ? audio.pause() : audio.pause();
+    }, [pauseaudio]);
+
+    console.log(pauseaudio);
+
     function playAudio() {
-        audio.volume = 0.2;
+        audio.volume = 0.03;
         audio.play();
     }
 
