@@ -11,6 +11,7 @@ import Loading from "./Spninner";
 import styled from "styled-components";
 import axios from "axios";
 import Player from "./Player";
+import HoverImg1 from "./hover2";
 
 import Button from "./styled/btn";
 
@@ -21,7 +22,6 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
     const [previewTrack, setPreviewTrack] = useRecoilState(previewTrackState);
     const [genres, setGenres] = useRecoilState(genresState);
-    const [pauseaudio, setPauseaudio] = useRecoilState(AudioState);
     // 미리듣기 음악 불러오기 API
     // genre / track_url / cover_img / track_title
     useEffect(() => {
@@ -53,11 +53,6 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         });
     };
 
-    const onClickHandler = () => {
-        setPauseaudio((cur) => !cur);
-        onNext();
-    };
-
     useEffect(() => {
         console.log(genres);
     }, [genres]);
@@ -77,7 +72,12 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                 previewTrack.map((mgenre) => (
                                     <Box key={mgenre.genre}>
                                         <div>
-                                            <Player
+                                            {/* <Player
+                                                url={mgenre.track_url}
+                                                value={mgenre.id}
+                                                title={mgenre.track_title}
+                                            /> */}
+                                            <HoverImg1
                                                 url={mgenre.track_url}
                                                 value={mgenre.id}
                                                 title={mgenre.track_title}
@@ -105,7 +105,7 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
                                 ))}
                         </Stations>
                         <Button
-                            onClick={onClickHandler}
+                            onClick={onNext}
                             disabled={Object.keys(genres).length === 0}
                         >
                             다음

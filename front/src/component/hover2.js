@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useRef, useState } from "react";
-import { Col } from "antd";
 import styled from "styled-components";
 import Image from "./Image";
+import playbtn from "./icon/sound-waves.png";
+import pausebtn from "./icon/sound-waves_1.png";
 
-const GridCards = (props) => {
+const HoverImg1 = (props) => {
     const onClickhandler = (e) => {
-        props.setSelectedMovie(props.id);
-        props.setSelectedMovieTitle(props.movieName);
         stop();
     };
 
-    let audioTrack = new Audio(props.track);
+    let audioTrack = new Audio(props.url);
 
     const audioPromiseRef = useRef(Promise.resolve());
     const start = () => {
@@ -23,37 +22,47 @@ const GridCards = (props) => {
     };
 
     return (
-        <Col span={8} lg={8} md={8} xs={props.xs}>
-            {/*브라우저의 크기가 가장클때는 24중에 6만쓰겠다는의미 중간은 8 가장작을때는 24를 다쓰겠다는의미*/}
-
+        <React.Fragment>
             <HHover onMouseEnter={start} onMouseLeave={stop}>
-                <span className="text">
+                <span className="hoverimg">
                     <Box onClick={onClickhandler} value={props.id}>
-                        <h2>
-                            🎶
-                            <br /> {props.movieName}
-                        </h2>
+                        <WaveImg
+                            alt={props.title} //TODO 이미지 제목 넣어야함
+                            src={pausebtn}
+                        />
                     </Box>
                 </span>
-                <Image
-                    alt={props.id} //TODO 이미지 제목 넣어야함
-                    src={props.image}
-                    circle={props.circle}
+                <WaveImg
+                    alt={props.title} //TODO 이미지 제목 넣어야함
+                    src={playbtn}
                 />
             </HHover>
-        </Col>
+        </React.Fragment>
     );
 };
+
+const WaveImg = styled.img`
+    display: block;
+    margin: 0 auto;
+    width: 7em;
+    height: 7em;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+`;
 
 export const HHover = styled.div`
     {
         position: relative;
         
         text-align: center;
+        padding : 10px;
+        box-sizing : border-box;
+
 
     }
 
-    .text {
+    .hoverimg {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -67,13 +76,14 @@ export const HHover = styled.div`
         color: white;
 
     }
-    :hover .text {
+    :hover .hoverimg {
         opacity: 1;
-        cursor:pointer;
+        
+
     }
     :hover img {
-        -webkit-filter: blur(5px);
-        transform: scale(1.1);
+        
+        transform: scale(0.9);
         transition: transform 0.35s;
         
     }
@@ -86,4 +96,4 @@ const Box = styled.div`
     margin: 0 auto;
 `;
 
-export default GridCards;
+export default HoverImg1;
