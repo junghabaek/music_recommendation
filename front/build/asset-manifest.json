@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.091c76d0.css",
-    "main.js": "./static/js/main.97202065.js",
+    "main.js": "./static/js/main.2429977a.js",
     "static/media/main_video.mp4": "./static/media/main_video.b03323ad015bf2f06eff.mp4",
     "static/media/a펜글씨L.otf": "./static/media/a펜글씨L.8a49a911839d6b8e4ecc.otf",
     "static/media/a이끌림M.otf": "./static/media/a이끌림M.4be95f8380e47d904413.otf",
@@ -17,10 +17,10 @@
     "static/media/sound-waves_1.png": "./static/media/sound-waves_1.c9145ea7e3c014a10a1e.png",
     "index.html": "./index.html",
     "main.091c76d0.css.map": "./static/css/main.091c76d0.css.map",
-    "main.97202065.js.map": "./static/js/main.97202065.js.map"
+    "main.2429977a.js.map": "./static/js/main.2429977a.js.map"
   },
   "entrypoints": [
     "static/css/main.091c76d0.css",
-    "static/js/main.97202065.js"
+    "static/js/main.2429977a.js"
   ]
 }
