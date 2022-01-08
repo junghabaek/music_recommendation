@@ -63,23 +63,35 @@ const ResultPage = () => {
     };
     let codes = final.movie_plot;
 
-    const contentRef = useRef(null);
-    const [isShowReadMore, setIsShowReadMore] = useState(false);
-    const observeCallback = (entries) => {
-        for (let entry of entries) {
-            if (entry.target.scrollHeight > entry.contentRect.height) {
-                setIsShowReadMore(true);
-            } else {
-                setIsShowReadMore(false);
-            }
-        }
+    // const contentRef = useRef(null);
+    // const [isShowReadMore, setIsShowReadMore] = useState(false);
+    // const observeCallback = (entries) => {
+    //     for (let entry of entries) {
+    //         if (entry.target.scrollHeight > entry.contentRect.height) {
+    //             setIsShowReadMore(true);
+    //         } else {
+    //             setIsShowReadMore(false);
+    //         }
+    //     }
+    // };
+    // useResizeObserver({ callback: observeCallback, element: contentRef });
+    // const onClick = (e) => {
+    //     contentRef.current.classList.add("show");
+    //     setIsShowReadMore(false);
+    // };
+    // console.log(isShowReadMore);
+
+    const [limit, setLimit] = useState(50);
+    const toggleEllipsis = (str, limit) => {
+        return {
+            string: str.slice(0, limit),
+            isShowMore: 200 > limit,
+        };
     };
-    useResizeObserver({ callback: observeCallback, element: contentRef });
-    const onClick = (e) => {
-        contentRef.current.classList.add("show");
-        setIsShowReadMore(false);
+
+    const onClickMore = (str) => () => {
+        setLimit(200);
     };
-    console.log(isShowReadMore);
 
     return (
         <PageLayout long="true">
@@ -136,10 +148,27 @@ const ResultPage = () => {
                             }}
                         >
                             <h3>&#60;줄거리&#62;</h3>
-                            {/* <div
-                                dangerouslySetInnerHTML={{ __html: codes }}
-                            ></div> */}
-                            <Wrap>
+                            {/* <div dangerouslySetInnerHTML={{ __html: codes }} /> */}
+
+                            <div>
+                                <div>
+                                    {toggleEllipsis(codes, limit).string}
+                                    {/* {toggleEllipsis(codes, limit)
+                                        .isShowMore && (
+                                        <Button onClick={onClickMore(codes)}>
+                                            ...더보기
+                                        </Button>
+                                    )} */}
+                                    {toggleEllipsis(codes, limit).isShowMore ? (
+                                        <Button onClick={onClickMore(codes)}>
+                                            ...더보기
+                                        </Button>
+                                    ) : (
+                                        " ...생략"
+                                    )}
+                                </div>
+                            </div>
+                            {/* <Wrap>
                                 <Ellipsis ref={contentRef}>
                                     <div
                                         dangerouslySetInnerHTML={{
@@ -152,7 +181,7 @@ const ResultPage = () => {
                                         ...더보기
                                     </Button1>
                                 )}
-                            </Wrap>
+                            </Wrap> */}
                         </div>
                     ) : null}
                 </ContentBox>
