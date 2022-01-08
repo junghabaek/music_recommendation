@@ -1,14 +1,26 @@
 {
   "files": {
-    "main.css": "./static/css/main.fe1d82a2.css",
-    "main.js": "./static/js/main.8d4363c5.js",
-    "static/media/Always.mp3": "./static/media/Always.2a46c324ecc3b623a5ff.mp3",
+    "main.css": "./static/css/main.091c76d0.css",
+    "main.js": "./static/js/main.97202065.js",
+    "static/media/main_video.mp4": "./static/media/main_video.b03323ad015bf2f06eff.mp4",
+    "static/media/a펜글씨L.otf": "./static/media/a펜글씨L.8a49a911839d6b8e4ecc.otf",
+    "static/media/a이끌림M.otf": "./static/media/a이끌림M.4be95f8380e47d904413.otf",
+    "static/media/a엄마의편지B.otf": "./static/media/a엄마의편지B.b61ff5f2220a49adc9bd.otf",
+    "static/media/logo-bk.png": "./static/media/logo-bk.f53c4475c98fc57d99f9.png",
+    "static/media/main_logo.png": "./static/media/main_logo.0d4c0d59dd9c50b77880.png",
+    "static/media/heart.png": "./static/media/heart.d581fa05964b6324fa1b.png",
+    "static/media/nav-logo.png": "./static/media/nav-logo.67ec21085464b0611e18.png",
+    "static/media/heart1.png": "./static/media/heart1.56befac7f449cdb2910e.png",
+    "static/media/dot-3.png": "./static/media/dot-3.ae04e0078b6c04c62f60.png",
+    "static/media/dot-1.png": "./static/media/dot-1.54f1dfb5ac721da469e0.png",
+    "static/media/dot-2.png": "./static/media/dot-2.16378759a24d54183dd9.png",
+    "static/media/sound-waves_1.png": "./static/media/sound-waves_1.c9145ea7e3c014a10a1e.png",
     "index.html": "./index.html",
-    "main.fe1d82a2.css.map": "./static/css/main.fe1d82a2.css.map",
-    "main.8d4363c5.js.map": "./static/js/main.8d4363c5.js.map"
+    "main.091c76d0.css.map": "./static/css/main.091c76d0.css.map",
+    "main.97202065.js.map": "./static/js/main.97202065.js.map"
   },
   "entrypoints": [
-    "static/css/main.fe1d82a2.css",
-    "static/js/main.8d4363c5.js"
+    "static/css/main.091c76d0.css",
+    "static/js/main.97202065.js"
   ]
 }
