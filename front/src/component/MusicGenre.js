@@ -19,7 +19,8 @@ const MusicGenres = ({ onPrev, onNext }) => {
         return `${value}`;
     }
 
-    console.log(input);
+    // 사용자 선택 값
+    // console.log(input);
 
     const MusicSet1 = [
         {
@@ -85,7 +86,8 @@ const MusicGenres = ({ onPrev, onNext }) => {
         });
     }, [input]);
 
-    console.log(genres);
+    // api post 보내는 값
+    // console.log(genres);
     return (
         <>
             <div style={{ textAlign: "center" }}>

@@ -6,8 +6,6 @@ import navLogo from "./icon/nav-logo.png";
 export default function PageLayout({ long, title, sub, children }) {
     const history = useHistory();
 
-    console.log("long은", long);
-
     document.title = "음화당";
     return (
         <Navbar>
