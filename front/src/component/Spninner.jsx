@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import RingLoader from "react-spinners/RingLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import styled from "styled-components";
 import mainbk from "../component/icon/logo-bk.png";
@@ -13,7 +13,7 @@ const Loading = (props) => {
                     height="100px"
                     width="15px"
                     color="#89B0AE"
-                    radius="8"
+                    radius="8px"
                 />
             </Flex>
         );
@@ -31,7 +31,7 @@ export const LastLoading = (props) => {
     const Spinner = ({ color }) => {
         return (
             <Flex>
-                <RingLoader color={color} size="120px" />;
+                <BeatLoader size="40px" margin="2px" color={color} />
             </Flex>
         );
     };
@@ -50,10 +50,10 @@ export const LastLoading = (props) => {
     }, [history]);
 
     return (
-        <Whole>
+        <Container>
             <Title>{title}</Title>
             <Spinner color={props.color}></Spinner>
-        </Whole>
+        </Container>
     );
 };
 
@@ -74,16 +74,17 @@ const Whole = styled.div`
     width: 100vw;
     height: 92vh;
     color: white;
-    background: #e9cbc3;
+    background: #f3e7d6;
     background-size: cover;
 `;
 
 const Title = styled.h1`
-    font-size: 50px;
-    font-weight: bold;
+    font-size: 40px;
     margin: 8px;
     margin-bottom: 25px;
     text-align: center;
+    font-family: "sub1";
+    color: "#304543";
 `;
 
 const FlexBox = styled.div`

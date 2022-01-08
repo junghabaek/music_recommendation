@@ -3,10 +3,18 @@ import axios from "axios";
 import GridCards from "./GridCards";
 import Loading from "./Spninner";
 import { Row } from "antd";
+
+import StyleContainer from "./styled/container";
+import Button from "./styled/btn";
+import styled from "styled-components";
+
 //영화,음악 장르를 보내주고 그 기반으로 된 영화를 가져오는 페이지
 import { useRecoilState, useRecoilValue } from "recoil";
 import { genresState, resultMovieState } from "../state/atoms";
 import { useHistory } from "react-router-dom";
+
+import dot3 from "./icon/dot-3.png";
+import Progress from "./styled/dot";
 
 const FilterMovie = ({ onPrev, onNext }) => {
     const history = useHistory();
@@ -21,8 +29,10 @@ const FilterMovie = ({ onPrev, onNext }) => {
         array.sort(() => Math.random() - 0.5);
     } // api 로 받아온 영화 섞은 함수
 
+
     let testapi = `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`;
     let api = `/back/filter/movies`;
+
 
     useEffect(() => {
         async function loadData() {
@@ -41,21 +51,6 @@ const FilterMovie = ({ onPrev, onNext }) => {
     }, []);
     console.log("movies: ", movies);
 
-    // mock api tes 버전
-    // useEffect(() => {
-    //     async function loadData() {
-    //         try {
-    //             const response = await axios.get(testapi);
-    //             setMovies(response.data.data.movies);
-    //             console.log("API 가져온 data", movies);
-    //             setLoading(false);
-    //         } catch (e) {
-    //             console.log("axios get Error");
-    //         }
-    //     }
-    //     loadData();
-    // }, []);
-
     useEffect(() => {
         shuffle(movies);
     }, [movies]);
@@ -68,7 +63,6 @@ const FilterMovie = ({ onPrev, onNext }) => {
     }, [selectedMovie]);
 
     const onClickHandler = async () => {
-        setLoading((cur) => !cur);
         // 최종 결과 영화정보 받아오기
         const res = await axios
             .get(`/back/filter/recommend/${selectedMovie}`)
@@ -82,45 +76,65 @@ const FilterMovie = ({ onPrev, onNext }) => {
             {loading ? (
                 <Loading color="#CC455C" title="음악 분석 중" />
             ) : (
-                <div>
-                    <h1>사용자 영화선택 페이지</h1>
-                    <h2>취향에 맞는 영화음악을 골라주세요.</h2>
-                    {selectedMovieTitle === 0 ? (
-                        <h2>마우스를 올리면 OST가 나와요</h2>
-                    ) : (
-                        <h2>{selectedMovieTitle}을 선택 하셨어요.</h2>
-                    )}
-                    <div style={{ width: "50%", display: "flex" }}>
-                        <Row gutter={[16, 16]}>
-                            {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
-                            {movies &&
-                                firstMovies.map((movie, index) => (
-                                    <React.Fragment key={index}>
-                                        <GridCards
-                                            image={movie.poster_url}
-                                            movieName={movie.movie_title}
-                                            url={movie.url}
-                                            id={movie.movie_id}
-                                            setSelectedMovie={setSelectedMovie}
-                                            setSelectedMovieTitle={
-                                                setSelectedMovieTitle
-                                            }
-                                            track={movie.preview_url}
-                                            xs={Number(12)}
-                                            circle="true"
-                                        />
-                                    </React.Fragment>
-                                ))}
-                        </Row>
+                <>
+                    <div style={{ textAlign: "center" }}>
+                        <Progress src={dot3} alt="progress" />
                     </div>
-                    <button onClick={onPrev}>뒤로가기 버튼</button>
-                    <button disabled={!selectedMovie} onClick={onClickHandler}>
-                        결과보러가기
-                    </button>
-                </div>
+                    <StyleContainer>
+                        <h1>당신의 취향에 맞는 음악을 가져왔어요.</h1>
+                        <GridBox>
+                            <Row gutter={[60, 30]}>
+                                {/*gutter는 Col간의 위 아래여백을 줄때 사용 */}
+                                {movies &&
+                                    firstMovies.map((movie, index) => (
+                                        <React.Fragment key={index}>
+                                            <GridCards
+                                                image={movie.poster_url}
+                                                movieName={movie.movie_title}
+                                                url={movie.url}
+                                                id={movie.movie_id}
+                                                setSelectedMovie={
+                                                    setSelectedMovie
+                                                }
+                                                setSelectedMovieTitle={
+                                                    setSelectedMovieTitle
+                                                }
+                                                track={movie.preview_url}
+                                                xs={Number(12)}
+                                                circle="true"
+                                            />
+                                        </React.Fragment>
+                                    ))}
+                            </Row>
+                        </GridBox>
+                        {selectedMovieTitle === 0 ? (
+                            <div></div>
+                        ) : (
+                            <h2 style={{ marginBottom: "19px" }}>
+                                {selectedMovieTitle} OST를 선택 하셨어요.
+                            </h2>
+                        )}
+                        <div style={{ marginBottom: "5px" }}>
+                            <Button onClick={onPrev}>뒤로가기</Button>
+                            <Button
+                                disabled={!selectedMovie}
+                                onClick={onClickHandler}
+                            >
+                                선택완료
+                            </Button>
+                        </div>
+                    </StyleContainer>
+                </>
             )}
         </div>
     );
 };
+
+const GridBox = styled.div`
+    width: 50%;
+    display: flex;
+    margin-bottom: 30px;
+    margin-top: 30px;
+`;
 
 export default FilterMovie;

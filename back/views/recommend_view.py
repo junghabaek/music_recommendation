@@ -34,6 +34,7 @@ def recommend(movie_id):
   # 이전 영화 정보의 feature들을 추가로 전달한다.
   selected_movie_feature = Features.query.filter(Features.movie_id == movie_id).first()
 
+
   response = []
   movies = [[movie1, movie1_song, movie1_feature, movie1_pca], [movie2, movie2_song, movie2_feature, movie2_pca], [movie3, movie3_song, movie3_feature, movie3_pca], [movie4, movie4_song, movie4_feature, movie4_pca]]
   
@@ -56,6 +57,7 @@ def recommend(movie_id):
     data['runtime'] = movie.runtime
     data['movie_age_rating'] = movie.movie_age_rating
     data['poster_url'] = movie.poster_url
+    data['like_count'] = movie.like_count
     data['movie_plot'] = return_synopsis(movie.id)
     data['album_name'] = song.album_name
     data['track_name'] = song.track_name
