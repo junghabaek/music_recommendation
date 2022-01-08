@@ -40,7 +40,6 @@ const options = {
 };
 
 const RadarChart = ({ feat, name, beforefeat }) => {
-    console.log(beforefeat.danceability);
     const [chartData, setChartData] = useState({
         labels: ["danceability", "energy", "tempo", "valence", "acousticness"],
         datasets: [
