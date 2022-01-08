@@ -3,7 +3,7 @@ from flask import Blueprint, json, request, session, jsonify
 from models import Movies, Genres, Songs, Features
 from random import randint
 
-bp = Blueprint('service', __name__, url_prefix='/filter')
+bp = Blueprint('service', __name__, url_prefix='/back/filter')
 
 # 장르에 따라 랜덤으로 한개의 영화 id와 genre제목을 추출해주는 함수
 def select_movie_by_genre(genre_id):
@@ -125,6 +125,7 @@ def send_music_data():
       continue
 
     # 빈 값이 없는것을 확인했다면 data객체에 추가해준다.
+    data['id'] = genre_ids[index]
     data['genre'] = movie_genre
     data['track_url'] = song.preview_url
     data['cover_img'] = movie.poster_url
@@ -197,15 +198,14 @@ def send_movies_list():
 
   # 여기서 반환된 songs에는 모든 필터를 거친 영화의 음악 특성이 들어있는 배열의 형태이다.
   response = []
-  print(len(songs))
   
   for song in songs:
-    # print(song.movie_id)
     data = {}
     movie = Movies.query.filter(Movies.id == song.movie_id).first()
     song_url = Songs.query.filter(Songs.movie_id == song.movie_id).first()
     
     data['movie_id'] = song.movie_id
+    data['movie_title'] = movie.movie_title
     data['poster_url'] = movie.poster_url
     data['preview_url'] = song_url.preview_url
     response.append(data)

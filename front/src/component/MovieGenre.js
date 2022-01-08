@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {
+    Fragment,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useRecoilState } from "recoil";
-import { genresState, previewTrackState } from "../state/atoms";
-import Audios from "./MusicPlay";
+import { genresState, previewTrackState, AudioState } from "../state/atoms";
 import Loading from "./Spninner";
-import Always from "../routers/Always.mp3";
 import styled from "styled-components";
 import axios from "axios";
+import Player from "./Player";
+import HoverImg1 from "./hover2";
+
+import Button from "./styled/btn";
+
+import dot1 from "./icon/dot-1.png";
+import Progress from "./styled/dot";
 
 const MovieGenres = ({ onPrev, onNext, step }) => {
     const [loading, setLoading] = useState(true);
@@ -16,10 +27,10 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
     useEffect(() => {
         async function loadTrack() {
             try {
-                let api = "/filter/genre";
+                let api = "/back/filter/genre";
                 const response = await axios.get(api);
                 setPreviewTrack(response.data);
-                console.log("get track api");
+                // console.log("get track api");
                 setLoading(false);
             } catch (e) {
                 console.log("axios get Error");
@@ -29,16 +40,11 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         loadTrack();
     }, []);
 
-    console.log(previewTrack);
+    // useEffect(() => {
+    //     console.log(previewTrack);
+    // }, []);
 
     //TODO Sci-Fi : 12, Comedy : 2, Thriller : 3, Romance : 4, Action : 5 이 들어갈것같아요
-    const Colors = [
-        { name: "Sci-Fi", id: 12, hex: "#ffb598" },
-        { name: "Comedy", id: 2, hex: "#ffdcaa" },
-        { name: "Thriller", id: 3, hex: "#d7beff" },
-        { name: "Romance", id: 4, hex: "#c7f5ed" },
-        { name: "Action", id: 5, hex: "#c2dbff" },
-    ];
 
     const onChangeHandle = (e) => {
         setGenres({
@@ -47,76 +53,115 @@ const MovieGenres = ({ onPrev, onNext, step }) => {
         });
     };
 
-    console.log(genres);
+    // useEffect(() => {
+    //     console.log(genres);
+    // }, [genres]);
 
     return (
-        <div>
-            <div>
-                <h1>🎞영화장르 선택입니다.</h1>
-                {loading ? (
-                    <Loading />
-                ) : (
-                    <Stations>
-                        {Colors.map((mgenre) => (
-                            <Station key={mgenre.name}>
-                                <div>
-                                    <div>
-                                        <Audios />
-                                    </div>
-                                    <input
-                                        id={mgenre.name}
-                                        type="radio"
-                                        name="color-selector"
-                                        value={mgenre.id}
-                                        checked={
-                                            genres.genre === mgenre.id
-                                                ? true
-                                                : false
-                                        }
-                                        onChange={onChangeHandle}
-                                    />
-                                    <label htmlFor={mgenre.name}>
-                                        {mgenre.name}
-                                        <img
-                                            src="https://placeimg.com/200/100/animals/sepia"
-                                            alt=""
-                                        />
-                                    </label>
-                                </div>
-                            </Station>
-                        ))}
-                    </Stations>
-                )}
+        <>
+            {loading ? (
+                <Loading color="#CC455C" title="음화당" />
+            ) : (
+                <>
+                    <Progress src={dot1} alt="progress" />
 
-                <button onClick={onNext}>다음</button>
-            </div>
-        </div>
+                    <Container>
+                        <h1>음악을 듣고 원하는 분위기를 선택해주세요.</h1>
+                        <Stations>
+                            {previewTrack &&
+                                previewTrack.map((mgenre) => (
+                                    <Box key={mgenre.genre}>
+                                        <div>
+                                            {/* <Player
+                                                url={mgenre.track_url}
+                                                value={mgenre.id}
+                                                title={mgenre.track_title}
+                                            /> */}
+                                            <HoverImg1
+                                                url={mgenre.track_url}
+                                                value={mgenre.id}
+                                                title={mgenre.track_title}
+                                            />
+                                        </div>
+                                        <Radio>
+                                            <input
+                                                id={mgenre.genre}
+                                                type="radio"
+                                                name="color-selector"
+                                                value={mgenre.id}
+                                                checked={
+                                                    genres.genre === mgenre.id
+                                                        ? true
+                                                        : false
+                                                }
+                                                onChange={onChangeHandle}
+                                            />
+                                            <label htmlFor={mgenre.genre}>
+                                                <br />
+                                                {mgenre.track_title}
+                                            </label>
+                                        </Radio>
+                                    </Box>
+                                ))}
+                        </Stations>
+                        <Button
+                            onClick={onNext}
+                            disabled={Object.keys(genres).length === 0}
+                        >
+                            다음
+                        </Button>
+                    </Container>
+                </>
+            )}
+        </>
     );
 };
 
-const Stations = styled.div`
-    display: grid;
-    grid-template-columns: repeat(1, 50%);
-    width: 100%;
-    display: block;
-    justify-content: center;
-    align-items: center;
+const Container = styled.div`
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center
+    position: relative;
+    width: 80vw;
+    height: 70vh;
+    padding: 70px;
+    background-color: rgb(255, 255, 255, 0.7);
+
+    color: #663f46;
+    h1 {
+        font-family: "sub2";
+        font-size: 2.1rem;
+    }
 `;
 
-const Station = styled.div`
-
-font-size: 1.2em;
-    border: 1px solid rgb(76, 62, 95);
-    margin: 0.25em;
-    border-radius: 10px;
-    padding: 1em;
+const Stations = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
     justify-content: center;
+    align-items: flex-start;
+`;
 
-    &:hover {
-    border-color: #e36bae;
+const Radio = styled.div`
+    color: #ced4da;
+
+    > input {
+        color: #304543;
+        filter: grayscale(80%);
+    }
+    > input:checked + label {
+        font-size: 20px;
+        font-weight: bold;
+        color: #daa89b;
+    }
+`;
+
+const Box = styled.div`
+    width: 20%;
+    height: 30vh;
+    margin: 5px;
+    margin-top: 50px;
+    text-align: center;
 `;
 
 export default MovieGenres;
