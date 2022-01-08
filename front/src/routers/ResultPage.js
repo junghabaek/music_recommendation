@@ -163,7 +163,7 @@ const ResultPage = () => {
                                 id={resultmovieid}
                                 onClick={toggleLike}
                             />{" "}
-                            <LikeBox>{likeNow === 0 ? null : likeNow}</LikeBox>
+                            <LikeBox>{likeNow === final.like_count ? final.like_count : likeNow}</LikeBox>
                         </div>
                     </div>
 
