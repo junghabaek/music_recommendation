@@ -24,7 +24,7 @@ const useAudio = (url) => {
     console.log(pauseaudio);
 
     function playAudio() {
-        audio.volume = 0.03;
+        audio.volume = 0.5;
         audio.play();
     }
 
