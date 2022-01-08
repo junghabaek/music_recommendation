@@ -9,7 +9,6 @@ import GridCards from "../component/GridCards";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import useResizeObserver from "../component/useResizeObserver";
 
 import HeartButton from "../component/HeartButton";
 // import D3plot from "../component/chart/D3plot";
@@ -99,7 +98,7 @@ const ResultPage = () => {
                 <h1>음악을 좋아하는 당신께, 이 영화를 드려요.</h1>
                 <h1>
                     {" "}
-                    <b>&#60;{final.movie_title}&#62;</b>
+                    <b>&#60; {final.track_name} OST &#62;</b>
                 </h1>
                 <div style={{ display: "flex", marginBottom: "40px" }}>
                     <div style={{ display: "flex" }}>
@@ -120,13 +119,50 @@ const ResultPage = () => {
                         />
                     </div>
                 </div>
-                <h1>&#60;영화정보&#62;</h1>
+                <h1>&#60; {final.movie_title} &#62;</h1>
                 <ContentBox>
                     <div style={{ width: "450px", flexBasis: "50%" }}>
-                        <p>OTT 정보 :: {ott_list}</p>
-                        <h3>영화감독 :: {final.movie_director}</h3>
-                        <h3>음악감독 :: {final.sound_director}</h3>
-                        <h3>메인테마곡 :: {final.track_name}</h3>
+                        <h2>&#47; 영화정보 &#47;</h2>
+                        <Table>
+                            <tr style={{ padding: "10px" }}>
+                                <td>OTT정보</td>
+                                <td>
+                                    {ott_list.map((item, index) => {
+                                        if (index === ott_list.length - 1) {
+                                            return (
+                                                <span
+                                                    key={index}
+                                                    style={{
+                                                        marginRight: "5px",
+                                                    }}
+                                                >
+                                                    {item}
+                                                </span>
+                                            );
+                                        } else {
+                                            return (
+                                                <span
+                                                    key={index}
+                                                    style={{
+                                                        marginRight: "5px",
+                                                    }}
+                                                >
+                                                    {item},
+                                                </span>
+                                            );
+                                        }
+                                    })}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>영화감독</td>
+                                <td>{final.movie_director}</td>
+                            </tr>
+                            <tr>
+                                <td>음악감독</td>
+                                <td>{final.sound_director}</td>
+                            </tr>
+                        </Table>
                         <div
                             style={{
                                 display: "flex",
@@ -139,7 +175,11 @@ const ResultPage = () => {
                                 id={resultmovieid}
                                 onClick={toggleLike}
                             />{" "}
-                            {final.like_count}
+                            <LikeBox>
+                                {final.like_count === 0
+                                    ? final.like_count
+                                    : final.like_count + 1}
+                            </LikeBox>
                         </div>
                     </div>
 
@@ -152,8 +192,6 @@ const ResultPage = () => {
                             }}
                         >
                             <h2>&#47; 줄거리 &#47;</h2>
-                            {/* <div dangerouslySetInnerHTML={{ __html: codes }} /> */}
-
                             <div>
                                 <div
                                     style={{
@@ -163,12 +201,6 @@ const ResultPage = () => {
                                     }}
                                 >
                                     {toggleEllipsis(codes, limit).string}
-                                    {/* {toggleEllipsis(codes, limit)
-                                        .isShowMore && (
-                                        <Button onClick={onClickMore(codes)}>
-                                            ...더보기
-                                        </Button>
-                                    )} */}
                                     {toggleEllipsis(codes, limit).isShowMore ? (
                                         <Morebtn
                                             cursor="pointer"
@@ -181,20 +213,6 @@ const ResultPage = () => {
                                     )}
                                 </div>
                             </div>
-                            {/* <Wrap>
-                                <Ellipsis ref={contentRef}>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: codes,
-                                        }}
-                                    ></div>
-                                </Ellipsis>
-                                {isShowReadMore && (
-                                    <Button1 onClick={onClick}>
-                                        ...더보기
-                                    </Button1>
-                                )}
-                            </Wrap> */}
                         </div>
                     ) : null}
                 </ContentBox>
@@ -204,8 +222,8 @@ const ResultPage = () => {
                         <h2>혹시 몰라 비슷한 영화도 추천해드려요</h2>
                         <br />
                     </div>
-                    <div>
-                        <Row gutter={[16, 16]}>
+                    <div style={{ width: "80%", margin: "0 auto" }}>
+                        <Rowresult gutter={[16, 16]}>
                             {movieData &&
                                 secondMovies.map((movie, index) => (
                                     <React.Fragment key={index}>
@@ -216,6 +234,7 @@ const ResultPage = () => {
                                             id={movie.movie_id}
                                             track={movie.preview_url}
                                             xs={8}
+                                            border="ture"
                                         />
                                         {/* <HeartButton
                                             like={like}
@@ -224,21 +243,54 @@ const ResultPage = () => {
                                         /> */}
                                     </React.Fragment>
                                 ))}
-                        </Row>
+                        </Rowresult>
                     </div>
                 </ContentBox2>
                 <div>
-                    <Button>
-                        <a href="/">집으로</a>
+                    <Button color="white">
+                        <a style={{ color: "white" }} href="/">
+                            홈으로
+                        </a>
                     </Button>
-                    <Button>
-                        <Link to="/main">더보기</Link>
+                    <Button style={{ color: "white" }}>
+                        <Link to="/main" style={{ color: "white" }}>
+                            더보기
+                        </Link>
                     </Button>
                 </div>
             </Container>
         </PageLayout>
     );
 };
+
+const LikeBox = styled.div`
+    width: 2.5em;
+    height: 2.5em;
+    justify-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-family: sans-serif;
+`;
+
+const Rowresult = styled(Row)({
+    "& .ant-row": {
+        width: "80%",
+    },
+});
+
+const Table = styled.table`
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-color: #89b0ae;
+    padding: 10px;
+    width: 320px;
+    margin: 20px auto;
+
+    td {
+        padding: 5px;
+        font-family: "sans-serif";
+    }
+`;
 
 const Morebtn = styled.span`
     color: gray;
@@ -263,7 +315,7 @@ const ContentBox = styled.div`
 `;
 
 const ContentBox2 = styled.div`
-    display: flex;
+    display: block;
     justify-content: center;
     font-size: 1.2rem;
     flex-wrap: ${(props) => props.wrap};

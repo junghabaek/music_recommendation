@@ -21,6 +21,9 @@ const StyleContainer = styled.div`
         font-family: "sub1";
         font-size: 1.5rem;
     }
+    h3 {
+        font-family: "sans-serif";
+    }
 `;
 
 function Container({ children, ...rest }) {
