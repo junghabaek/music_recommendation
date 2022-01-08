@@ -34,7 +34,8 @@
 ## 4. 기술 스택
 
   ### 프론트엔드
-  - 
+  - react, axios, styled-components, recoil
+  라이브러리 : react-background-video-player, "@mui/material, antd
 
   ### 백엔드
   - flask, flask_sqlalchemy, flask_cors, flask_migrate, dotenv
