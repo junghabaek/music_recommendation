@@ -38,7 +38,7 @@ const ResultPage = () => {
             liked: 1,
         };
         console.log(body);
-        const res = await axios.post("/result/mypage", body); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
+        const res = await axios.post("/back/result/mypage", body); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
         setLike((cur) => !cur);
     };
     let codes = final.movie_plot;
