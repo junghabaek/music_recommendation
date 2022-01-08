@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import RadarChart from "../component/chart/RadarChart";
 import PageLayout from "../component/PageLayout";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { resultMovieState } from "../state/atoms";
 import { Row } from "antd";
 import GridCards from "../component/GridCards";
@@ -11,9 +10,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import HeartButton from "../component/HeartButton";
-// import D3plot from "../component/chart/D3plot";
-// import Audios from "../component/MusicPlay";
-import StyleContainer from "../component/styled/container";
+
 import HoverImg from "../component/hover";
 
 import Button from "../component/styled/btn";
@@ -21,15 +18,12 @@ import Button from "../component/styled/btn";
 const ResultPage = () => {
     const movieData = useRecoilValue(resultMovieState);
     const [like, setLike] = useState(false);
-
-    console.log("금방받아온", movieData);
+    const [likeNow, setLikeNow] = useState(0);
 
     const final = movieData[0];
     console.log("1개 슬라이싱 data", final);
-    console.log("like", final.like_count);
 
     const selected_features = movieData[4].selected_features;
-    console.log(selected_features);
 
     const secondMovies = movieData.slice(1, 4);
     console.log("3개 슬라이싱 data", secondMovies);
@@ -39,7 +33,7 @@ const ResultPage = () => {
         return acc;
     }, []);
 
-    console.log(ott_list);
+    console.log("likeNow는", likeNow);
 
     const resultmovieid = final.movie_id;
 
@@ -49,36 +43,30 @@ const ResultPage = () => {
                 movie_id: resultmovieid,
                 liked: 1,
             };
-            const res = await axios.post("/result/mypage", body);
+            const res = await axios
+                .post("http://localhost:8000/result/mypage", body)
+                .then((res) => setLikeNow(res.data.like_now))
+                .then((res) => console.log(res))
+                .catch((e) => console.log(e));
+
             setLike((cur) => !cur); // [POST] 사용자가 좋아요를 누름 -> DB 갱신
         } else {
             let body = {
                 movie_id: resultmovieid,
                 liked: 0,
             };
-            const res = await axios.post("/result/mypage", body);
+            const res = await axios
+                .post("http://localhost:8000/result/mypage", body)
+                .then((res) => setLikeNow(res.data.like_now))
+                .then((res) => console.log(res))
+                .catch((e) => console.log(e));
+
             setLike((cur) => !cur);
         }
     };
-    let codes = final.movie_plot;
 
-    // const contentRef = useRef(null);
-    // const [isShowReadMore, setIsShowReadMore] = useState(false);
-    // const observeCallback = (entries) => {
-    //     for (let entry of entries) {
-    //         if (entry.target.scrollHeight > entry.contentRect.height) {
-    //             setIsShowReadMore(true);
-    //         } else {
-    //             setIsShowReadMore(false);
-    //         }
-    //     }
-    // };
-    // useResizeObserver({ callback: observeCallback, element: contentRef });
-    // const onClick = (e) => {
-    //     contentRef.current.classList.add("show");
-    //     setIsShowReadMore(false);
-    // };
-    // console.log(isShowReadMore);
+    // ... 글자 더보기 기능
+    let codes = final.movie_plot;
 
     const [limit, setLimit] = useState(50);
     const toggleEllipsis = (str, limit) => {
@@ -175,11 +163,7 @@ const ResultPage = () => {
                                 id={resultmovieid}
                                 onClick={toggleLike}
                             />{" "}
-                            <LikeBox>
-                                {final.like_count === 0
-                                    ? final.like_count
-                                    : final.like_count + 1}
-                            </LikeBox>
+                            <LikeBox>{likeNow === 0 ? null : likeNow}</LikeBox>
                         </div>
                     </div>
 
@@ -283,7 +267,7 @@ const Table = styled.table`
     border-bottom: 2px solid;
     border-color: #89b0ae;
     padding: 10px;
-    width: 320px;
+    width: 340px;
     margin: 20px auto;
 
     td {
