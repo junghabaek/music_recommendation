@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RadarChart from "../component/chart/RadarChart";
 import PageLayout from "../component/PageLayout";
+import { useRecoilValue } from "recoil";
 import { resultMovieState } from "../state/atoms";
 import { Row } from "antd";
 import GridCards from "../component/GridCards";
