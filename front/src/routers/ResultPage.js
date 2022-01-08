@@ -97,7 +97,10 @@ const ResultPage = () => {
         <PageLayout long="true">
             <Container>
                 <h1>음악을 좋아하는 당신께, 이 영화를 드려요.</h1>
-                <h1> &#60;{final.movie_title}&#62;</h1>
+                <h1>
+                    {" "}
+                    <b>&#60;{final.movie_title}&#62;</b>
+                </h1>
                 <div style={{ display: "flex", marginBottom: "40px" }}>
                     <div style={{ display: "flex" }}>
                         <HoverImg
@@ -117,8 +120,13 @@ const ResultPage = () => {
                         />
                     </div>
                 </div>
+                <h1>&#60;영화정보&#62;</h1>
                 <ContentBox>
                     <div style={{ width: "450px", flexBasis: "50%" }}>
+                        <p>OTT 정보 :: {ott_list}</p>
+                        <h3>영화감독 :: {final.movie_director}</h3>
+                        <h3>음악감독 :: {final.sound_director}</h3>
+                        <h3>메인테마곡 :: {final.track_name}</h3>
                         <div
                             style={{
                                 display: "flex",
@@ -133,10 +141,6 @@ const ResultPage = () => {
                             />{" "}
                             {final.like_count}
                         </div>
-                        <p>OTT 정보 :: {ott_list}</p>
-                        <h3>영화감독 :: {final.movie_director}</h3>
-                        <h3>음악감독 :: {final.sound_director}</h3>
-                        <h3>메인테마곡 :: {final.track_name}</h3>
                     </div>
 
                     {codes !== "0" ? (
@@ -147,11 +151,17 @@ const ResultPage = () => {
                                 margin: "auto",
                             }}
                         >
-                            <h3>&#60;줄거리&#62;</h3>
+                            <h2>&#47; 줄거리 &#47;</h2>
                             {/* <div dangerouslySetInnerHTML={{ __html: codes }} /> */}
 
                             <div>
-                                <div>
+                                <div
+                                    style={{
+                                        padding: "10px",
+                                        fontSize: "17px",
+                                        fontFamily: "sans-serif",
+                                    }}
+                                >
                                     {toggleEllipsis(codes, limit).string}
                                     {/* {toggleEllipsis(codes, limit)
                                         .isShowMore && (
@@ -160,11 +170,14 @@ const ResultPage = () => {
                                         </Button>
                                     )} */}
                                     {toggleEllipsis(codes, limit).isShowMore ? (
-                                        <Button onClick={onClickMore(codes)}>
+                                        <Morebtn
+                                            cursor="pointer"
+                                            onClick={onClickMore(codes)}
+                                        >
                                             ...더보기
-                                        </Button>
+                                        </Morebtn>
                                     ) : (
-                                        " ...생략"
+                                        <Morebtn>...생략</Morebtn>
                                     )}
                                 </div>
                             </div>
@@ -186,9 +199,11 @@ const ResultPage = () => {
                     ) : null}
                 </ContentBox>
 
-                <div>
-                    <h2>혹시 몰라 비슷한 영화도 추천해드려요</h2>
-                    <br />
+                <ContentBox2 color="blue" wrap="wrap">
+                    <div>
+                        <h2>혹시 몰라 비슷한 영화도 추천해드려요</h2>
+                        <br />
+                    </div>
                     <div>
                         <Row gutter={[16, 16]}>
                             {movieData &&
@@ -211,7 +226,7 @@ const ResultPage = () => {
                                 ))}
                         </Row>
                     </div>
-                </div>
+                </ContentBox2>
                 <div>
                     <Button>
                         <a href="/">집으로</a>
@@ -225,35 +240,17 @@ const ResultPage = () => {
     );
 };
 
-const Wrap = styled.div``;
-
-const Ellipsis = styled.div`
-    position: relative;
-    display: -webkit-box;
-    max-height: 6rem;
-    line-height: 2rem;
-    overflow: hidden;
-    -webkit-line-clamp: 3;
-    &.show {
-        display: block;
-        max-height: none;
-        overflow: auto;
-        -webkit-line-clamp: unset;
-    }
-`;
-
-const Button1 = styled.button`
-    max-height: 2rem;
-    line-height: 2rem;
-    &.hide {
-        display: none;
-    }
+const Morebtn = styled.span`
+    color: gray;
+    font-size: 15px;
+    padding-left: 6px;
+    cursor: ${(props) => props.cursor};
 `;
 
 const Divider = styled.div`
     border: 1px solid #89b0ae;
     width: 0.1px;
-    margin: 0 150px;
+    margin: 0 100px;
     height: 340px;
 `;
 
@@ -261,6 +258,23 @@ const ContentBox = styled.div`
     display: flex;
     justify-content: center;
     font-size: 1.2rem;
+    flex-wrap: ${(props) => props.wrap};
+    background: ${(props) => props.color};
+`;
+
+const ContentBox2 = styled.div`
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-wrap: ${(props) => props.wrap};
+    border: solid 3px;
+    border-radius: 5px;
+    border-color: #daa89b;
+    width: 93%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    background: #f9f2f0;
 `;
 
 const Container = styled.div`

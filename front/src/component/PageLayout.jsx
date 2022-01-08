@@ -43,7 +43,7 @@ const Whole = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: ${(props) => (props.long ? "150vh" : "92.6vh")};
+    height: ${(props) => (props.long ? "175vh" : "92.6vh")};
     color: white;
     background-color: #f3e7d6;
     background-size: cover;
