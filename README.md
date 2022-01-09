@@ -53,7 +53,7 @@
 
 
 ## 6. 프로젝트 구성도
-  - [와이어프레임]( 지은님이 만드신 와이어프레임 주소 넣어주세요. ) 
+  - [와이어프레임](https://whimsical.com/final-wireframe-7USzDdZwGbqwxuBVdz6vHF) 
   - [마인드맵](https://whimsical.com/mindmap-TKvX8ZBsDsXFGUCrrd4UVw)
 
 
